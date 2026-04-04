@@ -1,0 +1,76 @@
+{
+    "name": "the-witcher-old-world-tool",
+    "version": "0.1.0",
+    "description": "Tool to help ease the small tedia of the board game The Witcher: Old World",
+    "main": "index.js",
+    "scripts": {
+        "clean": "rm -r dist",
+        "dev": "tsc-watch --onSuccess \"npm start\"",
+        "start": "webpack serve --port 3000",
+        "build": "NODE_ENV=production webpack",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint '*/**/*.ts*'",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist",
+        "i18n": "i18next-locales-sync -p en -s cs de es fr it pl -l src/locales --spaces 4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/swirle13/The-Witcher-Old-World-Tool.git"
+    },
+    "keywords": [
+        "Witcher",
+        "Automations",
+        "Board game"
+    ],
+    "author": {
+        "name": "Matthew Johnson",
+        "url": "https://github.com/swirle13",
+        "email": "swirle13@gmail.com"
+    },
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/swirle13/The-Witcher-Old-World-Tool/issues"
+    },
+    "homepage": "https://swirle13.github.io/The-Witcher-Old-World-Tool/#",
+    "devDependencies": {
+        "@types/node": "^20.9.0",
+        "@types/react": "^18.2.12",
+        "@types/react-dom": "^18.2.5",
+        "@types/webpack-env": "^1.18.1",
+        "@typescript-eslint/eslint-plugin": "^5.59.11",
+        "@typescript-eslint/parser": "^5.59.11",
+        "css-loader": "^6.8.1",
+        "eslint": "^8.42.0",
+        "eslint-config-xo": "^0.43.1",
+        "eslint-config-xo-typescript": "^0.57.0",
+        "eslint-plugin-react": "^7.32.2",
+        "favicons": "^7.1.4",
+        "favicons-webpack-plugin": "^6.0.1",
+        "html-webpack-plugin": "^5.5.3",
+        "i18next-locales-sync": "^2.0.1",
+        "image-minimizer-webpack-plugin": "^3.8.3",
+        "mini-css-extract-plugin": "^2.7.6",
+        "sharp": "^0.32.1",
+        "ts-loader": "^9.4.3",
+        "tsc-watch": "^6.0.4",
+        "typescript": "^5.1.3",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.86.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
+    },
+    "dependencies": {
+        "@vanyapr/react-image-magnifiers": "^1.4.2",
+        "bootstrap": "^5.3.0",
+        "gh-pages": "^5.0.0",
+        "i18next": "^23.4.6",
+        "i18next-browser-languagedetector": "^7.1.0",
+        "i18next-localstorage-backend": "^4.1.1",
+        "react": "^18.2.0",
+        "react-bootstrap": "^2.9.1",
+        "react-dom": "^18.2.0",
+        "react-i18next": "^13.2.0",
+        "react-router-dom": "^6.13.0"
+    }
+}

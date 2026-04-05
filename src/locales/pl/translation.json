@@ -44,6 +44,7 @@
         "monsterRoller": "$t(monsterRoller.title)",
         "lostMount": "$t(lostMount.title)",
         "witcherPicker": "$t(witcherPicker.title)",
+        "opponents": "$t(opponents.title)",
         "browseAllTools": "Zobacz wszystkie narzędzia",
         "projectHelp": "Pomoc projektu",
         "githubIssues": "GitHub Issues",
@@ -99,7 +100,17 @@
         "Ard Modron": "Ard Modron",
         "Ard Skellig": "Ard Skellig",
         "Isle of Mists": "Isle of Mists",
-        "Eyna": "Eyna"
+        "Eyna": "Eyna",
+        "addAction": "Dodaj akcję",
+        "playerNameLabel": "Imię gracza",
+        "noteLabel": "Notatka",
+        "save": "Zapisz",
+        "cancel": "Anuluj",
+        "done": "Wykonane",
+        "tasksTitle": "Akcje",
+        "tokenColumn": "Żeton",
+        "errorEmptyName": "Imię gracza nie może być puste.",
+        "errorEmptyNote": "Notatka nie może być pusta."
     },
     "home": {
         "linkedPages": [
@@ -144,6 +155,12 @@
                 "link": "#/witcherPicker",
                 "desc": "Losowo przypisz szkołę wiedźmina każdemu graczowi i wylosuj gracza zaczynającego.",
                 "btn": "Losuj szkoły"
+            },
+            {
+                "name": "$t(opponents.title)",
+                "link": "#/opponents",
+                "desc": "Wylosuj akcję potwora lub kto przesuwa żeton Dzikiego Gonu.",
+                "btn": "Zmierz się z wrogiem"
             }
         ]
     },
@@ -660,5 +677,24 @@
             "Szkoła Gryfa",
             "Szkoła Mantykory"
         ]
+    },
+    "opponents": {
+        "title": "Przeciwnicy",
+        "monsterAttackTitle": "Atak Potwora",
+        "monsterAttackDesc": "Wylosuj akcję potwora.",
+        "monsterAttackBtn": "Losuj akcję",
+        "monsterBite": "Potwór gryzie!",
+        "monsterCharge": "Potwór szarżuje!",
+        "wildHuntTitle": "Ruch Dzikiego Gonu",
+        "wildHuntDesc": "Wylosuj, kto przesuwa żeton Dzikiego Gonu.",
+        "wildHuntBtn": "Losuj gracza",
+        "playerChooses": "Gracz wybiera",
+        "numPlayersLabel": "Liczba graczy",
+        "playerNameLabel": "Imię gracza {{player}}",
+        "playerNamePlaceholder": "Gracz {{player}}",
+        "savePlayersBtn": "Zapisz graczy",
+        "resetPlayersBtn": "Zmień graczy",
+        "errorEmptyName": "Imię gracza {{player}} nie może być puste.",
+        "currentPlayers": "Gracze"
     }
 }

@@ -57,6 +57,9 @@ export default function Navbar({ t, i18n }) {
                             <NavDropdown.Item href="#/witcherPicker">
                                 {t('navbar.witcherPicker')}
                             </NavDropdown.Item>
+                            <NavDropdown.Item href="#/opponents">
+                                {t('navbar.opponents')}
+                            </NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#/">
                                 {t('navbar.browseAllTools')}

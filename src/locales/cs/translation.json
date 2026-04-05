@@ -44,6 +44,7 @@
         "monsterRoller": "$t(monsterRoller.title)",
         "lostMount": "$t(lostMount.title)",
         "witcherPicker": "$t(witcherPicker.title)",
+        "opponents": "$t(opponents.title)",
         "browseAllTools": "Procházet všechny nástroje",
         "projectHelp": "Nápověda projektu",
         "githubIssues": "Problémy na GitHubu",
@@ -99,7 +100,17 @@
         "Ard Modron": "Ard Modron",
         "Ard Skellig": "Ard Skellig",
         "Isle of Mists": "Isle of Mists",
-        "Eyna": "Eyna"
+        "Eyna": "Eyna",
+        "addAction": "Add Action",
+        "playerNameLabel": "Player name",
+        "noteLabel": "Note",
+        "save": "Save",
+        "cancel": "Cancel",
+        "done": "Done",
+        "tasksTitle": "Actions",
+        "tokenColumn": "Token",
+        "errorEmptyName": "Player name cannot be empty.",
+        "errorEmptyNote": "Note cannot be empty."
     },
     "home": {
         "linkedPages": [
@@ -144,6 +155,12 @@
                 "link": "#/witcherPicker",
                 "desc": "Randomly assign a Witcher School to each player and draw the starting player.",
                 "btn": "Draw Schools"
+            },
+            {
+                "name": "$t(opponents.title)",
+                "link": "#/opponents",
+                "desc": "Draw a monster action or find out who moves the Wild Hunt token.",
+                "btn": "Face Your Foes"
             }
         ]
     },
@@ -660,5 +677,24 @@
             "Griffin School",
             "Manticore School"
         ]
+    },
+    "opponents": {
+        "title": "Opponents",
+        "monsterAttackTitle": "Monster Attack",
+        "monsterAttackDesc": "Draw a random monster action.",
+        "monsterAttackBtn": "Draw Action",
+        "monsterBite": "Monster Bites!",
+        "monsterCharge": "Monster Charges!",
+        "wildHuntTitle": "Wild Hunt Movement",
+        "wildHuntDesc": "Randomly select who moves the Wild Hunt token.",
+        "wildHuntBtn": "Draw Player",
+        "playerChooses": "Player Chooses",
+        "numPlayersLabel": "Number of players",
+        "playerNameLabel": "Player {{player}} name",
+        "playerNamePlaceholder": "Player {{player}}",
+        "savePlayersBtn": "Save Players",
+        "resetPlayersBtn": "Change Players",
+        "errorEmptyName": "Player {{player}} name cannot be empty.",
+        "currentPlayers": "Players"
     }
 }

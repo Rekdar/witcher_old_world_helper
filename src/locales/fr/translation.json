@@ -38,6 +38,7 @@
         "monsterRoller": "$t(monsterRoller.title)",
         "lostMount": "$t(lostMount.title)",
         "witcherPicker": "$t(witcherPicker.title)",
+        "opponents": "$t(opponents.title)",
         "browseAllTools": "Parcourir tous les outils",
         "projectHelp": "Aide du projet",
         "githubIssues": "Bugs sur GitHub",
@@ -93,7 +94,17 @@
         "Ard Modron": "Ard Modron",
         "Ard Skellig": "Ard Skellig",
         "Isle of Mists": "Île des Brumes",
-        "Eyna": "Eyna"
+        "Eyna": "Eyna",
+        "addAction": "Add Action",
+        "playerNameLabel": "Player name",
+        "noteLabel": "Note",
+        "save": "Save",
+        "cancel": "Cancel",
+        "done": "Done",
+        "tasksTitle": "Actions",
+        "tokenColumn": "Token",
+        "errorEmptyName": "Player name cannot be empty.",
+        "errorEmptyNote": "Note cannot be empty."
     },
     "home": {
         "linkedPages": [
@@ -138,6 +149,12 @@
                 "link": "#/witcherPicker",
                 "desc": "Attribue aléatoirement une École de Sorceleur à chaque joueur et tire le joueur de départ.",
                 "btn": "Tirez les Écoles"
+            },
+            {
+                "name": "$t(opponents.title)",
+                "link": "#/opponents",
+                "desc": "Tirez une action de monstre ou découvrez qui déplace le jeton de la Chasse Sauvage.",
+                "btn": "Affrontez vos ennemis"
             }
         ]
     },
@@ -654,5 +671,24 @@
             "École du Griffon",
             "École de la Manticore"
         ]
+    },
+    "opponents": {
+        "title": "Adversaires",
+        "monsterAttackTitle": "Attaque du Monstre",
+        "monsterAttackDesc": "Tirez une action aléatoire du monstre.",
+        "monsterAttackBtn": "Tirer une action",
+        "monsterBite": "Le Monstre Mord !",
+        "monsterCharge": "Le Monstre Charge !",
+        "wildHuntTitle": "Mouvement de la Chasse Sauvage",
+        "wildHuntDesc": "Choisissez aléatoirement qui déplace le jeton de la Chasse Sauvage.",
+        "wildHuntBtn": "Tirer un joueur",
+        "playerChooses": "Le joueur choisit",
+        "numPlayersLabel": "Nombre de joueurs",
+        "playerNameLabel": "Nom du joueur {{player}}",
+        "playerNamePlaceholder": "Joueur {{player}}",
+        "savePlayersBtn": "Enregistrer les joueurs",
+        "resetPlayersBtn": "Changer les joueurs",
+        "errorEmptyName": "Le nom du joueur {{player}} ne peut pas être vide.",
+        "currentPlayers": "Joueurs"
     }
 }

@@ -11,6 +11,7 @@ import SetupHelper from '../pages/SetupHelper';
 import LocationTokens from '../pages/LocationTokens';
 import InventoryChecker from '../pages/InventoryChecker';
 import WitcherPicker from '../pages/WitcherPicker';
+import Opponents from '../pages/Opponents';
 import { useTranslation } from 'react-i18next';
 
 
@@ -55,6 +56,11 @@ export default function App() {
         {
             path: "witcherPicker",
             element: <WitcherPicker t={t} />,
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: "opponents",
+            element: <Opponents t={t} />,
             errorElement: <ErrorPage />,
         },
         {

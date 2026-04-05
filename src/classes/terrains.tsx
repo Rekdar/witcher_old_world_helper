@@ -300,6 +300,10 @@ const WaterTokensSkellige: WaterToken[] = [
     new WaterToken(20, "Isle of Mists", "Water20IsleOfMists")
 ];
 
+export function getTokenImgSrc(imgStr: string): string {
+    return require(`../img/tokens/reducedTerrainTokens/${imgStr}.png`) as string;
+}
+
 export default class TerrainTokenDeck {
     mountainDeck: ReadonlyDeck<MountainToken>;
     forestDeck: ReadonlyDeck<ForestToken>;

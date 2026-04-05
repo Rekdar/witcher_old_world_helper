@@ -35,6 +35,7 @@ No test suite is configured (`npm test` exits with error).
 - `LocationTokens` / `TerrainTokenPicker` — terrain token randomization
 - `InventoryChecker` — expansion inventory reference with card images
 - `CommunityLinks` — external resource links
+- `WitcherPicker` — randomly assigns a unique Witcher School to each player (2–5) and draws the starting player
 
 **Domain classes (`src/classes/`):**
 - `dataClasses.ts` — generic `Deck<T>` abstraction built on `QueueCollection<T>`. `ReadonlyDeck` for fixed-pool decks (monsters, terrain); `MutableDeck` for variable decks (player hands).

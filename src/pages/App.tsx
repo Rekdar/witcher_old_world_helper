@@ -10,6 +10,7 @@ import SetupHelper from '../pages/SetupHelper';
 import LocationTokens from '../pages/LocationTokens';
 import WitcherPicker from '../pages/WitcherPicker';
 import Opponents from '../pages/Opponents';
+import MonsterFight from '../pages/MonsterFight';
 import { useTranslation } from 'react-i18next';
 
 
@@ -49,6 +50,11 @@ export default function App() {
         {
             path: "opponents",
             element: <Opponents t={t} />,
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: "monsterFight",
+            element: <MonsterFight t={t} />,
             errorElement: <ErrorPage />,
         },
         {

@@ -44,6 +44,7 @@
         "lostMount": "$t(lostMount.title)",
         "witcherPicker": "$t(witcherPicker.title)",
         "opponents": "$t(opponents.title)",
+        "monsterFight": "$t(monsterFight.title)",
         "browseAllTools": "Zobacz wszystkie narzędzia",
         "__flag": "🇵🇱"
     },
@@ -139,6 +140,12 @@
                 "link": "#/opponents",
                 "desc": "Wylosuj akcję potwora lub kto przesuwa żeton Dzikiego Gonu.",
                 "btn": "Zmierz się z wrogiem"
+            },
+            {
+                "name": "$t(monsterFight.title)",
+                "link": "#/monsterFight",
+                "desc": "Przygotuj walkę z potworem — wybierz przeciwnika, dostosuj HP i wybierz żetony słabości.",
+                "btn": "Przygotuj się do walki"
             }
         ]
     },
@@ -411,6 +418,19 @@
             "Szkoła Gryfa",
             "Szkoła Mantykory"
         ]
+    },
+    "monsterFight": {
+        "title": "Walka z potworem",
+        "level1Label": "Poziom I",
+        "level2Label": "Poziom II",
+        "level3Label": "Poziom III",
+        "selectPlaceholder": "-- Wybierz potwora --",
+        "monsterTrailLabel": "Dodatek \"Na tropie potworów\"",
+        "hpLabel": "Punkty życia",
+        "weaknessTokensCheckbox": "Wiedźmin posiada żetony słabości",
+        "weaknessTokensTitle": "Wybierz żetony słabości (maks. 6)",
+        "startFightBtn": "Rozpocznij walkę",
+        "resetBtn": "Zresetuj"
     },
     "opponents": {
         "title": "Przeciwnicy",

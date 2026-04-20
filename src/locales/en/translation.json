@@ -32,6 +32,7 @@
         "lostMount": "$t(lostMount.title)",
         "witcherPicker": "$t(witcherPicker.title)",
         "opponents": "$t(opponents.title)",
+        "monsterFight": "$t(monsterFight.title)",
         "browseAllTools": "Browse All Tools",
         "__flag": "🇬🇧"
     },
@@ -127,6 +128,12 @@
                 "link": "#/opponents",
                 "desc": "Draw a monster action or find out who moves the Wild Hunt token.",
                 "btn": "Face Your Foes"
+            },
+            {
+                "name": "$t(monsterFight.title)",
+                "link": "#/monsterFight",
+                "desc": "Set up a monster fight — choose your foe, adjust HP and select weakness tokens.",
+                "btn": "Prepare for Battle"
             }
         ]
     },
@@ -399,6 +406,19 @@
             "Griffin School",
             "Manticore School"
         ]
+    },
+    "monsterFight": {
+        "title": "Monster Fight",
+        "level1Label": "Level I",
+        "level2Label": "Level II",
+        "level3Label": "Level III",
+        "selectPlaceholder": "-- Select monster --",
+        "monsterTrailLabel": "Monster Trail expansion",
+        "hpLabel": "Hit Points",
+        "weaknessTokensCheckbox": "Witcher has weakness tokens",
+        "weaknessTokensTitle": "Select weakness tokens (max 6)",
+        "startFightBtn": "Start Fight",
+        "resetBtn": "Reset"
     },
     "opponents": {
         "title": "Opponents",

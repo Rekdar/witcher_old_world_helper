@@ -1,0 +1,44 @@
+[
+  {
+    "name_pl": "Krabopająk",
+    "level": 1,
+    "base_heal": 10,
+    "front_name": "krabopajak_front",
+    "back_name": "krabopajak_back"
+  },
+  {
+    "name_pl": "Mglak",
+    "level": 1,
+    "base_heal": 10,
+    "front_name": "mglak_front",
+    "back_name": "mglak_back"
+  },
+  {
+    "name_pl": "Prządka",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "przadka_front",
+    "back_name": "przadka_back"
+  },
+  {
+    "name_pl": "Strzyga",
+    "level": 3,
+    "base_heal": 18,
+    "front_name": "strzyga_front",
+    "back_name": "strzyga_back"
+  },
+  {
+    "name_pl": "Skolopendromorf",
+    "level": 3,
+    "base_heal": 18,
+    "front_name": "skolopendromorf_front",
+    "back_name": "skolopendromorf_back"
+  },
+  {
+    "name_pl": "Północnica",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "polnocnica_front",
+    "back_name": "polnocnica_back"
+  }
+]

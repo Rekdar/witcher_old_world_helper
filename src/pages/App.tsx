@@ -8,7 +8,6 @@ import LostMount from '../pages/LostMount';
 import MonsterRoller from '../pages/MonsterRoller';
 import SetupHelper from '../pages/SetupHelper';
 import LocationTokens from '../pages/LocationTokens';
-import InventoryChecker from '../pages/InventoryChecker';
 import WitcherPicker from '../pages/WitcherPicker';
 import Opponents from '../pages/Opponents';
 import { useTranslation } from 'react-i18next';
@@ -35,11 +34,6 @@ export default function App() {
         {
             path: "setupHelper",
             element: <SetupHelper t={t} />,
-            errorElement: <ErrorPage />,
-        },
-        {
-            path: "inventoryChecker",
-            element: <InventoryChecker t={t} />,
             errorElement: <ErrorPage />,
         },
         {

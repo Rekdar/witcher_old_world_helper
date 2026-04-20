@@ -127,12 +127,7 @@
                 "desc": "Masz dość tasowania żetonów, kart potworów i tropienia figurek?",
                 "btn": "Cholera, aleś ty brzydki"
             },
-            {
-                "name": "$t(inventoryChecker.title)",
-                "link": "#/inventoryChecker",
-                "desc": "Aby pomóc tym, którzy właśnie otrzymali grę Wiedźmin: Stary Świat, przedstawiamy szczegółowy przewodnik po tym, co (miejmy nadzieję) otrzymaliście.",
-                "btn": "Medalion wibruje…"
-            },
+
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
@@ -394,133 +389,6 @@
             "tokens": "Obok planszy połóż żetony złota (lub monety), zielone żetony zadań, kości do pokera i żeton/figurkę zamkniętej tawerny.",
             "lostMount": "Ostatni gracz losuje dwa żetony obszarów (jednego z typów), wybiera jeden, w którym ma się znaleźć figurka Zagubionego Wierzchowca, i wtasowuje żetony z powrotem w stos."
         }
-    },
-    "inventoryChecker": {
-        "title": "Zawartość inwentarza",
-        "cardSubtitle": "Karty",
-        "noteTitle": "Notatki",
-        "noteText": [
-            "Jest to obecnie pierwsza wersja tego narzędzia, aby tak szybko jak to możliwe dotarło do rąk odbiorców drugiej fali przesyłek, więc będzie minimalistyczne i (prawdopodobnie) pozbawione tłumaczenia.",
-            "Sekcje dotyczące żetonów i figurek zamierzam dodać niedługo później.",
-            "Obecnie pola wyboru nie są trwałe. Jeśli odświeżysz tę stronę lub ją opuścisz, utracisz swoje dane. Dopóki tego nie rozwiążę przepraszam za niedogodności."
-        ],
-        "legendHeader": "Legenda",
-        "legendBody": {
-            "header": "Jeśli wyświetlane są 2 kolumny – czytaj od lewej do prawej, rzędami od góry do dołu. W ten sposób prawidłowo odczytasz podsumy kart podzielonych na różne paczki (np. „karty potworów: 11 (11/29)”).",
-            "body": [
-                {
-                    "title": "TWOW(XX) Y/Z",
-                    "details": [
-                        "To jest tytuł szarej karty na wierzchu paczki. W ten sposób odnoszę się do całej paczki.",
-                        "XX – kod nadany przez wydawcę dla tej grupy kart.",
-                        "Y – numer paczki wśród wszystkich paczek kart z grupy XX.",
-                        "Z – liczba paczek kart z grupy XX."
-                    ]
-                },
-                {
-                    "title": "$t(common.expansions)",
-                    "details": [
-                        "Lista rozszerzeń, do których należą karty z tej paczki."
-                    ]
-                },
-                {
-                    "title": "karty przykładowe: X (Y/Z) lub X/Z",
-                    "details": [
-                        "„przykładowe” to typ karty wg listy komponentów Go On Board.",
-                        "X – liczba tych kart w danej paczce.",
-                        "Y – podsuma tego typu kart z wszystkich ww paczek. Jeśli pominięto to w danej paczce są wszystkie karty tego typu.",
-                        "Z – całkowita suma kart tego typu, które powinieneś mieć."
-                    ]
-                },
-                {
-                    "title": "(ZP)",
-                    "details": [
-                        "Skrót dla kart z Zestawu Przygód. Karty te można rozpoznać po symbolu gwiazdy w górnej części awersu."
-                    ]
-                }
-            ]
-        },
-        "card": {
-            "numInPack": "# w tej paczce",
-            "numSoFar": "# do tej pory",
-            "numTotal": "# wszystkich"
-        },
-        "notes": {
-            "5 sets of 10 cards per witcher": "Po 10 kart dla każdego z 5 wiedźminów",
-            "5x Dice/turn order cards, 5x Icon Legend cards": "5 kart z opisem tury gracza, 5 kart z legendą ikon",
-            "4 per Witcher x 5 witchers": "Po 4 dla każdego z 5 wiedźminów",
-            "4 cards per Wild Hunt member": "Po 4 karty dla każdego jeźdźca Dzikiego Gonu",
-            "One for each monster ability, 1 through 4": "Jeden na każdą zdolność potwora, od 1 do 4",
-            "Starts at 57": "Zaczyna się od 57",
-            "One for each Wild Hunt member": "Po 1 dla każdego jeźdźca Dzikiego Gonu",
-            "1 per Mage, art on card is of the corresponding Mage": "Po 1 na maga, karta zawiera grafikę odpowiadniego maga",
-            "Troll card": "Karta Trolla",
-            "Manticore": "Mantikora",
-            "Ciri": "Ciri",
-            "Contains text in bottom field on Action cards": "Zawiera tekst w dolnej części karty akcji",
-            "1 per Witcher, art on card is of the corresponding Witcher": "Po 1 na wiedźmina, karta zawiera grafikę odpowiadniego wiedźmina",
-            "10 cards per 5 Mages. Corresponding icons to mage's icon in top right corner": "Po 10 kart dla każdego z 5 magów. karta zawiera w górnym prawym rogu ikonę odpowiadniego maga",
-            "4 per 5 Mages": "Po 4 dla każdego z 5 magów",
-            "Trophy cards with perks gained when defeating Dagon": "Karty bonusów Dagona zdobywanych po pokonaniu Dagona"
-        },
-        "Base Set": "Podstawa",
-        "Adventure Pack, Wild Hunt, Monster Trail": "$t(exps.adventurePack), $t(exps.wildHunt), $t(exps.monsterTrail)",
-        "Adventure Pack": "$t(exps.adventurePack)",
-        "Wild Hunt": "$t(exps.wildHunt)",
-        "Wild Hunt, Mages, Adventure Pack": "$t(exps.wildHunt), $t(exps.mages), $t(exps.adventurePack)",
-        "Monster Trail": "$t(exps.monsterTrail)",
-        "Monster Trail, Adventure Pack, Ciri": "$t(exps.monsterTrail), $t(exps.adventurePack), $t(exps.ciri)",
-        "Ciri": "$t(exps.ciri)",
-        "Monster Trail, Wild Hunt": "$t(exps.monsterTrail), $t(exps.wildHunt)",
-        "Mages": "$t(exps.mages)",
-        "Legendary Hunt": "$t(exps.legendaryHunt)",
-        "Skellige": "$t(exps.skellige)",
-        "cardsInPack": "kart w paczce",
-        "Starting Action cards": "startowe karty akcji",
-        "Action cards": "karty akcji",
-        "Help cards": "karty pomocy",
-        "Solo Help card": "karta pomocy solo",
-        "Monster cards": "karty potworów",
-        "City Exploration cards": "karty eksploracji miast",
-        "Attribute Trophy cards": "karty trofeów atrybutów",
-        "Monster Fight cards": "karty walki potworów",
-        "Event cards": "karty zdarzeń",
-        "Potion cards": "karty eliksirów",
-        "Witcher Trophy cards": "karty trofeów szkół wiedźmińskich",
-        "Wilds Exploration cards": "karty eksploracji dzikich ostępów",
-        "(AP) Wilds Exploration cards": "(ZP) karty eksploracji dzikich ostępów",
-        "Wild Hunt Special Fight cards": "Dziki Gon karty walki jeźdźców",
-        "Special Monster Fight cards": "specjalne karty walki potworów",
-        "(AP) City Exploration cards": "(ZP) karty eksploracji miast",
-        "(AP) Event cards": "(ZP) karty zdarzeń",
-        "Mutagens": "mutageny",
-        "Wild Hunt Help": "Dziki Gon karty pomocy",
-        "Hounds": "Ogary",
-        "Wild Hunt Monsters": "Dziki Gon karty potworów",
-        "Wild Hunt Exploration - Stage 1": "Dziki Gon karty eksploracji etapu I",
-        "Wild Hunt Exploration - Stage 2": "Dziki Gon karty eksploracji etapu II",
-        "Wild Hunt Event": "Dziki Gon karty wydarzeń",
-        "Mage Special Action cards": "karty akcji specjalnych (magowie)",
-        "Lost Mount": "Zagubiony Wierzchowiec",
-        "Monster card (Troll)": "karta potwora (Troll)",
-        "Trophy cards": "karty trofeów",
-        "Bomb cards": "petardy",
-        "Starting Action cards (Manticore)": "startowe karty akcji (Mantikora)",
-        "Advanced Action cards": "zaawansowane karty akcji",
-        "Starting Action cards (Ciri)": "startowe karty akcji (Ciri)",
-        "Witcher Special Action cards": "karty akcji specjalnych (wiedźmini)",
-        "Large Monster cards": "duże karty potworów",
-        "Difficulty Jumbo Reference cards": "duże referencyjne karty trudności",
-        "Mage Starting Action cards": "startowe karty akcji magów",
-        "Mage Trophy cards": "karty trofeów magów",
-        "Mage Action cards": "karty akcji magów",
-        "Legendary Monster movement cards": "karty ruchu legendarnego potwora",
-        "Legendary Hunt Special Fight cards": "specjalne karty walki legendarnego potwora",
-        "Large Legendary Monster cards": "duże karty legendarnych potworów",
-        "Large Fight Reference card": "duża karta pomocy",
-        "Dagon Bonus Monster cards": "karty bonusów Dagona",
-        "Skellige Event cards": "karty zdarzeń Skellige",
-        "Skellige Exploration cards": "karty eksploracji Skellige"
     },
     "lostMount": {
         "title": "Położenie Zagubionego Wierzchowca"

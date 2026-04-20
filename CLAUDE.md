@@ -37,14 +37,12 @@ No test suite is configured (`npm test` exits with error).
 - `LocationTokens` / `LostMount` — both wrap `TerrainTokenPicker` component
 - `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player
 - `Opponents` — Monster Attack (bite/charge random draw) + Wild Hunt Movement (player draw with localStorage persistence)
-- `InventoryChecker` — static card inventory reference
 
 **Domain classes (`src/classes/`):**
 - `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` auto-shuffles and repopulates when exhausted; `MutableDeck` is for variable player hands.
 - `monsters.tsx` — `MonstersDeck` wraps four `ReadonlyDeck` instances (levels 1–3 + legendary). Monster classes extend `monsterClass` which renders token/mini images. Expansion booleans passed to constructor control which monsters are included.
 - `terrains.tsx` — `TerrainLocation` type, named location constants, and `TerrainTokenDeck` class with separate Mountain/Forest/Water `ReadonlyDeck` instances. Skellige expansion adds extra tokens to each deck. `getTokenImgSrc(imgStr)` resolves webpack image paths.
 - `setup.tsx` — `compileSteps()` builds ordered JSX setup instructions per expansion/player count.
-- `inventory.tsx` — static inventory data for `InventoryChecker`.
 
 **Key component: `TerrainTokenPicker`** (`src/components/TerrainTokenPicker.tsx`) — shared by `LocationTokens` and `LostMount`. Maintains a task list (persisted in localStorage key `locationTokens_tasks`) that tracks which token was assigned to which player with a note. Tasks survive page refresh.
 

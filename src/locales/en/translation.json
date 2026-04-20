@@ -115,12 +115,7 @@
                 "desc": "Tired of shuffling your tokens, monster cards, and hunting down the mini?",
                 "btn": "Damn, you're ugly"
             },
-            {
-                "name": "$t(inventoryChecker.title)",
-                "link": "#/inventoryChecker",
-                "desc": "To help those just receiving their The Witcher: Old World game, here's an in-depth guide on what you (hopefully) received.",
-                "btn": "Medallion's humming…"
-            },
+
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
@@ -382,133 +377,6 @@
             "tokens": "Place Gold Tokens, Green Quest Tokens, Poker Dice, and Closed Tavern token or mini near the game board.",
             "lostMount": "The last player draws two Location Tokens (of any 1 type of terrain), chooses one to put the Lost Mount miniature at, and shuffles the tokens back in."
         }
-    },
-    "inventoryChecker": {
-        "title": "Inventory Checker",
-        "cardSubtitle": "Cards",
-        "noteTitle": "Notes",
-        "noteText": [
-            "This is currently a first pass to get this inventory checker into the hands of the second wave of shipments as fast as possible, and as such, will be minimal and (probably) lacking translation.",
-            "I aim to add different sections for the tokens and miniatures shortly after this goes live.",
-            "Currently, the check boxes are not persistent. If you refresh or navigate away from this page, you will lose your progress. Apologies for the inconvenience while I sort this out."
-        ],
-        "legendHeader": "Legend",
-        "legendBody": {
-            "header": "If two columns: read left to right, top to bottom. This will ensure the running totals of cards spread across multiple packs (e.g. \"Monster cards: 11 (11/29)\") are read properly.",
-            "body": [
-                {
-                    "title": "TWOW(XX) Y/Z",
-                    "details": [
-                        "This is the title of the gray card for each pack of cards. This is how I refer to each pack.",
-                        "XX is the arbitrary code that the supplier used to identify the groups of cards.",
-                        "Y is the current number of the pack out of total packs for code XX.",
-                        "Z is the total number of packs for value XX."
-                    ]
-                },
-                {
-                    "title": "$t(common.expansions)",
-                    "details": [
-                        "These are the expansions that the cards belong to in this pack."
-                    ]
-                },
-                {
-                    "title": "Example Type Cards: X (Y/Z) OR X/Z",
-                    "details": [
-                        "Example Type is the type of card, as referred to in Go On Board's \"Components\" lists.",
-                        "X is how many of the cards are found in this pack.",
-                        "Y is the current running total of this type of card across all packs. If excluded, all cards of this type were included in this pack",
-                        "Z is the total number of these cards you should have."
-                    ]
-                },
-                {
-                    "title": "(AP)",
-                    "details": [
-                        "This is a disambiguation for Adventure Pack cards. These are distinguished by the star symbol in the top center of the card face."
-                    ]
-                }
-            ]
-        },
-        "card": {
-            "numInPack": "# in this pack",
-            "numSoFar": "# so far",
-            "numTotal": "# total"
-        },
-        "notes": {
-            "5 sets of 10 cards per witcher": "5 sets of 10 cards per witcher",
-            "5x Dice/turn order cards, 5x Icon Legend cards": "5x Dice/turn order cards, 5x Icon Legend cards",
-            "4 per Witcher x 5 witchers": "4 per Witcher x 5 witchers",
-            "4 cards per Wild Hunt member": "4 cards per Wild Hunt member",
-            "One for each monster ability, 1 through 4": "One for each monster ability, 1 through 4",
-            "Starts at 57": "Starts at 57",
-            "One for each Wild Hunt member": "One for each Wild Hunt member",
-            "1 per Mage, art on card is of the corresponding Mage": "1 per Mage, art on card is of the corresponding Mage",
-            "Troll card": "Troll card",
-            "Manticore": "Manticore",
-            "Ciri": "Ciri",
-            "Contains text in bottom field on Action cards": "Contains text in bottom field on Action cards",
-            "1 per Witcher, art on card is of the corresponding Witcher": "1 per Witcher, art on card is of the corresponding Witcher",
-            "10 cards per 5 Mages. Corresponding icons to mage's icon in top right corner": "10 cards per 5 Mages. Corresponding icons to mage's icon in top right corner",
-            "4 per 5 Mages": "4 per 5 Mages",
-            "Trophy cards with perks gained when defeating Dagon": "Trophy cards with perks gained when defeating Dagon"
-        },
-        "Base Set": "Base Set",
-        "Adventure Pack, Wild Hunt, Monster Trail": "$t(exps.adventurePack), $t(exps.wildHunt), $t(exps.monsterTrail)",
-        "Adventure Pack": "$t(exps.adventurePack)",
-        "Wild Hunt": "$t(exps.wildHunt)",
-        "Wild Hunt, Mages, Adventure Pack": "$t(exps.wildHunt), $t(exps.mages), $t(exps.adventurePack)",
-        "Monster Trail": "$t(exps.monsterTrail)",
-        "Monster Trail, Adventure Pack, Ciri": "$t(exps.monsterTrail), $t(exps.adventurePack), $t(exps.ciri)",
-        "Ciri": "$t(exps.ciri)",
-        "Monster Trail, Wild Hunt": "$t(exps.monsterTrail), $t(exps.wildHunt)",
-        "Mages": "$t(exps.mages)",
-        "Legendary Hunt": "$t(exps.legendaryHunt)",
-        "Skellige": "$t(exps.skellige)",
-        "cardsInPack": "Cards in pack",
-        "Starting Action cards": "Starting Action cards",
-        "Action cards": "Action cards",
-        "Help cards": "Help cards",
-        "Solo Help card": "Solo Help card",
-        "Monster cards": "Monster cards",
-        "City Exploration cards": "City Exploration cards",
-        "Attribute Trophy cards": "Attribute Trophy cards",
-        "Monster Fight cards": "Monster Fight cards",
-        "Event cards": "Event cards",
-        "Potion cards": "Potion cards",
-        "Witcher Trophy cards": "Witcher Trophy cards",
-        "Wilds Exploration cards": "Wilds Exploration cards",
-        "(AP) Wilds Exploration cards": "(AP) Wilds Exploration cards",
-        "Wild Hunt Special Fight cards": "Wild Hunt Special Fight cards",
-        "Special Monster Fight cards": "Special Monster Fight cards",
-        "(AP) City Exploration cards": "(AP) City Exploration cards",
-        "(AP) Event cards": "(AP) Event cards",
-        "Mutagens": "Mutagens",
-        "Wild Hunt Help": "Wild Hunt Help",
-        "Hounds": "Hounds",
-        "Wild Hunt Monsters": "Wild Hunt Monsters",
-        "Wild Hunt Exploration - Stage 1": "Wild Hunt Exploration - Stage 1",
-        "Wild Hunt Exploration - Stage 2": "Wild Hunt Exploration - Stage 2",
-        "Wild Hunt Event": "Wild Hunt Event",
-        "Mage Special Action cards": "Mage Special Action cards",
-        "Lost Mount": "Lost Mount",
-        "Monster card (Troll)": "Monster card (Troll)",
-        "Trophy cards": "Trophy cards",
-        "Bomb cards": "Bomb cards",
-        "Starting Action cards (Manticore)": "Starting Action cards (Manticore)",
-        "Advanced Action cards": "Advanced Action cards",
-        "Starting Action cards (Ciri)": "Starting Action cards (Ciri)",
-        "Witcher Special Action cards": "Witcher Special Action cards",
-        "Large Monster cards": "Large Monster cards",
-        "Difficulty Jumbo Reference cards": "Difficulty Jumbo Reference cards",
-        "Mage Starting Action cards": "Mage Starting Action cards",
-        "Mage Trophy cards": "Mage Trophy cards",
-        "Mage Action cards": "Mage Action cards",
-        "Legendary Monster movement cards": "Legendary Monster movement cards",
-        "Legendary Hunt Special Fight cards": "Legendary Hunt Special Fight cards",
-        "Large Legendary Monster cards": "Large Legendary Monster cards",
-        "Large Fight Reference card": "Large Fight Reference card",
-        "Dagon Bonus Monster cards": "Dagon Bonus Monster cards",
-        "Skellige Event cards": "Skellige Event cards",
-        "Skellige Exploration cards": "Skellige Exploration cards"
     },
     "lostMount": {
         "title": "Lost Mount Locations"

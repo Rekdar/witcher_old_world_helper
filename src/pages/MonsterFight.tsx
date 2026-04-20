@@ -356,16 +356,28 @@ export default function MonsterFight({ t }): JSX.Element {
                     {/* Monster card image + HP */}
                     {selectedMonster && (
                         <>
-                            <div className="text-center mb-3">
-                                <Image
-                                    src={monsterCardImages[selectedMonster.name_pl + ':front']}
-                                    fluid
-                                    style={{ maxWidth: '300px', cursor: 'zoom-in' }}
-                                    alt={selectedMonster.name_pl}
-                                    rounded
-                                    onClick={() => setEnlargedImage(monsterCardImages[selectedMonster.name_pl + ':front'])}
-                                />
-                            </div>
+                            <Row className="justify-content-center mb-3 g-2">
+                                <Col xs={6} className="text-center">
+                                    <Image
+                                        src={monsterCardImages[selectedMonster.name_pl + ':front']}
+                                        fluid
+                                        style={{ maxWidth: '300px', cursor: 'zoom-in' }}
+                                        alt={selectedMonster.name_pl}
+                                        rounded
+                                        onClick={() => setEnlargedImage(monsterCardImages[selectedMonster.name_pl + ':front'])}
+                                    />
+                                </Col>
+                                <Col xs={6} className="text-center">
+                                    <Image
+                                        src={monsterCardImages[selectedMonster.name_pl + ':back']}
+                                        fluid
+                                        style={{ maxWidth: '300px', cursor: 'zoom-in' }}
+                                        alt={selectedMonster.name_pl + ' back'}
+                                        rounded
+                                        onClick={() => setEnlargedImage(monsterCardImages[selectedMonster.name_pl + ':back'])}
+                                    />
+                                </Col>
+                            </Row>
 
                             <Form.Group className="mb-3">
                                 <Form.Label>{t('monsterFight.hpLabel')}</Form.Label>

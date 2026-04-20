@@ -430,7 +430,13 @@
         "weaknessTokensCheckbox": "Wiedźmin posiada żetony słabości",
         "weaknessTokensTitle": "Wybierz żetony słabości (maks. 6)",
         "startFightBtn": "Rozpocznij walkę",
-        "resetBtn": "Zresetuj"
+        "resetBtn": "Zresetuj",
+        "fightHpLabel": "Punkty życia",
+        "endFightBtn": "Koniec walki",
+        "weaknessTokensLabel": "Żetony słabości",
+        "deckLabel": "Talia potworów",
+        "deckEmptyLabel": "Talia wyczerpana",
+        "currentCardLabel": "Ostatnia karta"
     },
     "opponents": {
         "title": "Przeciwnicy",

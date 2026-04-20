@@ -40,7 +40,6 @@ export default function Navbar({ t, i18n }) {
                 <BSNavbar.Toggle aria-controls="basic-navbar-nav" />
                 <BSNavbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto text-center">
-                        <Nav.Link href="#/communityLinks">{t('navbar.communityLinks')}</Nav.Link>
                         <NavDropdown title={t("navbar.gameplayTools")} id="collapsible-nav-dropdown">
                             <NavDropdown.Item href="#/setupHelper">
                                 {t('navbar.setupHelper')}
@@ -63,17 +62,6 @@ export default function Navbar({ t, i18n }) {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#/">
                                 {t('navbar.browseAllTools')}
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown title={t("navbar.projectHelp")} id="collapsible-nav-dropdown">
-                            <NavDropdown.Item href="https://github.com/swirle13/The-Witcher-Old-World-Tool/issues">
-                                {t('navbar.githubIssues')}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="https://github.com/swirle13/The-Witcher-Old-World-Tool/discussions">
-                                {t('navbar.githubDiscussions')}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="https://github.com/users/swirle13/projects/2/views/3">
-                                {t('navbar.projectTimeline')}
                             </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={t("navbar.__flag")} id="collapsible-nav-dropdown">

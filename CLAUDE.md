@@ -15,12 +15,14 @@ npm run dev          # TypeScript watch + auto-restart dev server
 npm run build        # Production webpack build → dist/
 npm run lint         # ESLint on all .ts/.tsx files
 npm run deploy       # Build + push dist/ to gh-pages branch
-npm run i18n         # Sync translation keys from EN to all other locales
 npm run clean        # Remove dist/
 npx tsc --noEmit    # Type-check without building (fast validation)
 ```
 
 No test suite is configured (`npm test` exits with error).
+
+> **Note:** The `npm run i18n` script in `package.json` still references removed locales (cs, de, es, fr, it). To sync EN → PL manually, run:
+> `npx i18next-locales-sync -p en -s pl -l src/locales --spaces 4`
 
 ## Architecture
 
@@ -36,7 +38,6 @@ No test suite is configured (`npm test` exits with error).
 - `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player
 - `Opponents` — Monster Attack (bite/charge random draw) + Wild Hunt Movement (player draw with localStorage persistence)
 - `InventoryChecker` — static card inventory reference
-- `CommunityLinks` — external link list
 
 **Domain classes (`src/classes/`):**
 - `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` auto-shuffles and repopulates when exhausted; `MutableDeck` is for variable player hands.
@@ -47,7 +48,7 @@ No test suite is configured (`npm test` exits with error).
 
 **Key component: `TerrainTokenPicker`** (`src/components/TerrainTokenPicker.tsx`) — shared by `LocationTokens` and `LostMount`. Maintains a task list (persisted in localStorage key `locationTokens_tasks`) that tracks which token was assigned to which player with a note. Tasks survive page refresh.
 
-**i18n:** 7 locales (cs, de, en, es, fr, it, pl) in `src/locales/[lang]/translation.json`. Always edit `en` first, then run `npm run i18n` to propagate new keys to other locales. Home page tiles are driven by the `home.linkedPages` array in each locale file — adding a tile requires editing all 7 files. Navbar dropdown links also require a `navbar.*` key in all 7 files.
+**i18n:** 2 locales (en, pl) in `src/locales/[lang]/translation.json`. Always edit `en` first, then sync to `pl`. Home page tiles are driven by the `home.linkedPages` array in each locale file. Navbar dropdown links require a `navbar.*` key in both locale files. Note: `LostMount` is intentionally absent from `home.linkedPages` but remains accessible via the navbar dropdown.
 
 **Utilities (`src/util/`):** `generic.ts` exports `shuffle<T>()` (Fisher-Yates) used by all randomization pages.
 
@@ -66,14 +67,14 @@ Pattern: module-level `loadX()` / `saveX()` functions with try/catch, passed as 
 1. Create `src/pages/MyPage.tsx` — accept `{ t }` prop, use `<PageTitle>` and Bootstrap grid
 2. Add route in `src/pages/App.tsx` — import + entry in `createHashRouter` array before the `"*"` catch-all
 3. Add navbar item in `src/components/Navbar.tsx` — `<NavDropdown.Item href="#/myPage">` before `<NavDropdown.Divider />`
-4. Add `navbar.myPage` key and a `home.linkedPages` tile object to all 7 locale files
-5. Add page-specific translation keys to `en/translation.json`, run `npm run i18n`
+4. Add `navbar.myPage` key and a `home.linkedPages` tile object to both locale files (`en` and `pl`)
+5. Add page-specific translation keys to `en/translation.json`, sync to `pl`
 
 ## Adding New Expansions
 
 1. Add monster data in `src/classes/monsters.tsx` — create instances of the appropriate level class and add an expansion flag to `MonstersDeck` constructor.
 2. Add terrain tokens in `src/classes/terrains.tsx` — new `XToken` instances in the `*TokensSkellige`-style arrays, add images to `src/img/tokens/reducedTerrainTokens/`.
-3. Add setup steps in `src/locales/en/translation.json`, then run `npm run i18n`.
+3. Add setup steps in `src/locales/en/translation.json`, sync to `pl`.
 4. Add expansion checkbox to `SetupHelper` and thread the boolean through `compileSteps()` in `src/classes/setup.tsx`.
 
 ## UI Patterns

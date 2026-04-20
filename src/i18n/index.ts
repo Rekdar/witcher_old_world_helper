@@ -3,12 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import LocalStorageBackend from 'i18next-localstorage-backend';
 import { initReactI18next } from "react-i18next";
 
-import translationCS from '../locales/cs/translation.json';
-import translationDE from '../locales/de/translation.json';
 import translationEN from '../locales/en/translation.json';
-import translationES from '../locales/es/translation.json';
-import translationFR from '../locales/fr/translation.json';
-import translationIT from '../locales/it/translation.json';
 import translationPL from '../locales/pl/translation.json';
 
 /*
@@ -24,22 +19,12 @@ Use i18next-parser to locate and generate locales JSON files: https://github.com
 
 export const defaultNS = "translation";
 export const resources = {
-    cs: { translation: translationCS },
-    de: { translation: translationDE },
     en: { translation: translationEN },
-    es: { translation: translationES },
-    fr: { translation: translationFR },
-    it: { translation: translationIT },
     pl: { translation: translationPL },
 } as const;
 
 export const myLangs: object = {
-    cs: "CS",
-    de: "DE",
     en: "EN",
-    es: "ES",
-    fr: "FR",
-    it: "IT",
     pl: "PL"
 };
 

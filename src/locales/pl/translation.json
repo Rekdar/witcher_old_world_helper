@@ -37,7 +37,6 @@
     "navbar": {
         "titleLong": "Pomocnik do Wiedźmina: Starego Świata",
         "titleShort": "Pomocnik Starego Świata",
-        "communityLinks": "$t(communityLinks.title)",
         "gameplayTools": "Narzędzia rozgrywki",
         "setupHelper": "$t(setupHelper.title)",
         "locationTokens": "$t(locationTokens.title)",
@@ -46,10 +45,6 @@
         "witcherPicker": "$t(witcherPicker.title)",
         "opponents": "$t(opponents.title)",
         "browseAllTools": "Zobacz wszystkie narzędzia",
-        "projectHelp": "Pomoc projektu",
-        "githubIssues": "GitHub Issues",
-        "githubDiscussions": "GitHub Discussions",
-        "projectTimeline": "$t(footer.projectTimeline)",
         "__flag": "🇵🇱"
     },
     "monsterPicker": {
@@ -133,22 +128,10 @@
                 "btn": "Cholera, aleś ty brzydki"
             },
             {
-                "name": "$t(communityLinks.title)",
-                "link": "#/communityLinks",
-                "desc": "Zbiór ciekawych i przydatnych linków od społeczności. Wciąż ich przybywa!",
-                "btn": "Pokaż mi"
-            },
-            {
                 "name": "$t(inventoryChecker.title)",
                 "link": "#/inventoryChecker",
                 "desc": "Aby pomóc tym, którzy właśnie otrzymali grę Wiedźmin: Stary Świat, przedstawiamy szczegółowy przewodnik po tym, co (miejmy nadzieję) otrzymaliście.",
                 "btn": "Medalion wibruje…"
-            },
-            {
-                "name": "$t(lostMount.title)",
-                "link": "#/lostMount",
-                "desc": "Bardziej szczegółowy wariant strony Żetony obszarów – z dwoma żetonami do wyboru.",
-                "btn": "Chodź, Płotko"
             },
             {
                 "name": "$t(witcherPicker.title)",
@@ -539,125 +522,8 @@
         "Skellige Event cards": "karty zdarzeń Skellige",
         "Skellige Exploration cards": "karty eksploracji Skellige"
     },
-    "communityLinks": {
-        "title": "Linki społecznościowe",
-        "contentType": {
-            "link": "Link",
-            "video": "Wideo",
-            "pdf": "PDF",
-            "member": "Utworzone przez graczy"
-        },
-        "officialDiscord": "Oficjalny kanał na Discordzie",
-        "links": [
-            {
-                "title": "$t(communityLinks.officialDiscord)",
-                "subtitle": "$t(communityLinks.contentType.link)",
-                "desc": "Oficjalny kanał Go On Board na Dicordzie. Dyskutuj o zasadach, udostępniaj swoje pomalowane figurki lub po prostu porozmawiaj o grze.",
-                "link": "https://discord.com/invite/mX8yvYQTuq"
-            },
-            {
-                "title": "Oficjalny poradnik: organizacja kart w Big Box-ie",
-                "subtitle": "$t(communityLinks.contentType.video)",
-                "desc": "Bardziej szczegółowy przewodnik na temat tego, jak zmieścić wszystkie karty w Big Boxie.",
-                "link": "https://youtu.be/Hj7oTXJOFfg"
-            },
-            {
-                "title": "Oficjalne FAQ: uściślenie niejasnych zasad i sytuacji",
-                "subtitle": "$t(communityLinks.contentType.pdf)",
-                "desc": "Odpowiedzi i wyjaśnienia dotyczące potencjalnie mylących lub trudnych sytuacji.",
-                "link": "https://www.dropbox.com/s/6fxx058x76kc9rn/FAQ_ENG_v01.pdf?dl=0"
-            },
-            {
-                "title": "Pliki na BoardGameGeeku",
-                "subtitle": "$t(communityLinks.contentType.link)",
-                "desc": "Kolejna społeczność, której członkowie przesyłają własne dzieła, automaty, przewodniki i nie tylko.",
-                "link": "https://boardgamegeek.com/boardgame/331106/witcher-old-world/files"
-            },
-            {
-                "title": "Organizacja wypraski potworów",
-                "subtitle": "$t(communityLinks.contentType.member)",
-                "desc": "Szczegółowy spis wszystkich figurek potworów i ich położenia w odpowiednich wypraskach Big Boxa.",
-                "link": "https://boardgamegeek.com/filepage/259976/witcher-monster-tray-position"
-            },
-            {
-                "title": "Organizery na karty i żetony",
-                "subtitle": "$t(communityLinks.contentType.member)",
-                "desc": "Pliki do druku 3D z organizerami do kart, aby lepiej pasowały w Big Boxie, a także organizerami do żetonów.",
-                "link": "https://thingiverse.com/thing:6078120"
-            }
-        ]
-    },
     "lostMount": {
         "title": "Położenie Zagubionego Wierzchowca"
-    },
-    "footer": {
-        "aboutTitle": "O mnie",
-        "aboutBody": [
-            "Jestem „jednoosobowym zespołem” i to nieoficjalne narzędzie tworzę w swoim wolnym czasie. Jeśli doceniasz moją pracę, rozważ zafundowanie mi kawy!",
-            "Aktualizacje tego narzędzia będą wprowadzane na bieżąco. Jeśli chciałbyś je ulepszyć lub współtworzyć, obok znajdziesz linki do miejsc na GitHubie, gdzie możesz zgłosić błędy, sugestie, zobaczyć moje bieżące zadania i pomysły, wziąć udział w ankietach na temat kolejnych ważnych ulepszeń lub funkcji, nad którymi pracuję, oraz wiele więcej!"
-        ],
-        "github": "GitHub",
-        "projectTimeline": "Harmonogram projektu",
-        "githubLinks": [
-            {
-                "text": "Widzisz błąd?",
-                "link": "https://github.com/swirle13/The-Witcher-Old-World-Tool/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=%5BBUG%5D+"
-            },
-            {
-                "text": "Masz sugestie?",
-                "link": "https://github.com/swirle13/The-Witcher-Old-World-Tool/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=%5BENHANCEMENT%5D+"
-            },
-            {
-                "text": "Dyskusje",
-                "link": "https://github.com/swirle13/The-Witcher-Old-World-Tool/discussions"
-            },
-            {
-                "text": "$t(footer.projectTimeline)",
-                "link": "https://github.com/users/swirle13/projects/2/views/3"
-            },
-            {
-                "text": "Lista zadań",
-                "link": "https://github.com/users/swirle13/projects/2/views/1"
-            },
-            {
-                "text": "Lista zgłoszonych błędów i propozycji",
-                "link": "https://github.com/swirle13/The-Witcher-Old-World-Tool/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"
-            },
-            {
-                "text": "Kod źródłowy",
-                "link": "https://github.com/swirle13/The-Witcher-Old-World-Tool"
-            }
-        ],
-        "communities": "Społeczności",
-        "communitiesLinks": [
-            {
-                "text": "$t(communityLinks.officialDiscord)",
-                "link": "https://discord.com/invite/mX8yvYQTuq"
-            },
-            {
-                "text": "Oficjalny profil na Twitterze",
-                "link": "https://twitter.com/board_go26242"
-            },
-            {
-                "text": "Oficjalny profil na Instagramie",
-                "link": "https://www.instagram.com/go.on.board"
-            },
-            {
-                "text": "Kickstarter",
-                "link": "https://www.kickstarter.com/projects/goonboard/the-witcher"
-            },
-            {
-                "text": "BoardGameGeek",
-                "link": "https://boardgamegeek.com/boardgame/331106/witcher-old-world"
-            }
-        ],
-        "supportTitle": "Wesprzyj mnie",
-        "supportLinks": [
-            {
-                "text": "Kup mi kawę ☕️",
-                "link": "https://bmc.link/swirle13"
-            }
-        ]
     },
     "witcherPicker": {
         "title": "Wybór Wiedźmina",

@@ -5,7 +5,6 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import ErrorPage from '../pages/ErrorPage';
 import LostMount from '../pages/LostMount';
-import CommunityLinks from '../pages/CommunityLinks';
 import MonsterRoller from '../pages/MonsterRoller';
 import SetupHelper from '../pages/SetupHelper';
 import LocationTokens from '../pages/LocationTokens';
@@ -21,11 +20,6 @@ export default function App() {
         {
             path: "/",
             element: <Home t={t} />,
-            errorElement: <ErrorPage />,
-        },
-        {
-            path: "communityLinks",
-            element: <CommunityLinks t={t} />,
             errorElement: <ErrorPage />,
         },
         {

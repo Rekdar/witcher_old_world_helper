@@ -424,7 +424,8 @@
         "weaknessTokensLabel": "Weakness Tokens",
         "deckLabel": "Monster Deck",
         "deckEmptyLabel": "Deck exhausted",
-        "currentCardLabel": "Last Card"
+        "currentCardLabel": "Last Card",
+        "addCardBtn": "Add Card"
     },
     "opponents": {
         "title": "Opponents",

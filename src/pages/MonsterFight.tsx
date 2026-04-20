@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Button, Col, Container, Form, Image, InputGroup, Modal, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Image, InputGroup, Modal, Row } from 'react-bootstrap';
 import PageTitle from '../components/PageTitle';
+import '../css/Opponents.css';
 import monstersData from '../monsters.json';
 import { shuffle } from '../util/generic';
 
@@ -119,6 +120,8 @@ function buildDeck(level: number, monsterTrail: boolean, hp: number): string[] {
 export default function MonsterFight({ t }): JSX.Element {
     const [state, setState] = useState<MonsterFightState>(loadState);
     const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+    const [monsterAttackResult, setMonsterAttackResult] = useState<string | null>(null);
+    const [monsterAttackKey, setMonsterAttackKey] = useState(0);
 
     const selectedMonster = monsters.find(m => m.name_pl === state.selectedMonsterName) ?? null;
 
@@ -193,6 +196,21 @@ export default function MonsterFight({ t }): JSX.Element {
         }));
     }
 
+    function handleAddCard() {
+        const allMain = MAIN_CARDS.map(f => `main:${f}`);
+        const used = new Set([...state.fightDeck, ...state.revealedCards]);
+        const available = allMain.filter(k => !used.has(k));
+        if (available.length === 0) return;
+        const picked = shuffle([...available])[0];
+        setState(s => ({ ...s, fightDeck: [...s.fightDeck, picked] }));
+    }
+
+    function handleMonsterAttack() {
+        const options = [t('opponents.monsterBite'), t('opponents.monsterCharge')];
+        setMonsterAttackResult(shuffle([...options])[0]);
+        setMonsterAttackKey(k => k + 1);
+    }
+
     function handleEndFight() {
         setState(DEFAULT_STATE);
         localStorage.removeItem(STORAGE_KEY);
@@ -232,10 +250,18 @@ export default function MonsterFight({ t }): JSX.Element {
                             </Col>
                         </Row>
 
-                        {/* HP */}
-                        <div className="mb-3 fs-4 fw-bold text-center">
-                            {t('monsterFight.fightHpLabel')}: {state.fightHp}
+                        {/* HP + Monster Attack */}
+                        <div className="mb-3 text-center d-flex align-items-center justify-content-center gap-3">
+                            <span className="fs-4 fw-bold">{t('monsterFight.fightHpLabel')}: {state.fightHp}</span>
+                            <Button variant="outline-danger" size="sm" onClick={handleMonsterAttack}>
+                                {t('opponents.monsterAttackTitle')}
+                            </Button>
                         </div>
+                        {monsterAttackResult && (
+                            <Alert key={monsterAttackKey} variant="dark" className="text-center fs-5 fw-bold result-pop mb-3">
+                                {monsterAttackResult}
+                            </Alert>
+                        )}
 
                         {/* Weakness tokens */}
                         {state.selectedTokens.length > 0 && (
@@ -259,7 +285,12 @@ export default function MonsterFight({ t }): JSX.Element {
                         {/* Deck + revealed card */}
                         <Row className="justify-content-center mb-4 g-3 align-items-start">
                             <Col xs={6} className="text-center">
-                                <div className="mb-1 fw-semibold">{t('monsterFight.deckLabel')} ({state.fightDeck.length})</div>
+                                <div className="mb-1 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    {t('monsterFight.deckLabel')} ({state.fightDeck.length})
+                                    <Button variant="outline-secondary" size="sm" onClick={handleAddCard}>
+                                        {t('monsterFight.addCardBtn')}
+                                    </Button>
+                                </div>
                                 {deckEmpty ? (
                                     <div className="text-muted fst-italic py-4">{t('monsterFight.deckEmptyLabel')}</div>
                                 ) : (

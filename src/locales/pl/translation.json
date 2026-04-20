@@ -436,7 +436,8 @@
         "weaknessTokensLabel": "Żetony słabości",
         "deckLabel": "Talia potworów",
         "deckEmptyLabel": "Talia wyczerpana",
-        "currentCardLabel": "Ostatnia karta"
+        "currentCardLabel": "Ostatnia karta",
+        "addCardBtn": "Dodaj kartę"
     },
     "opponents": {
         "title": "Przeciwnicy",

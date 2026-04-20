@@ -32,6 +32,10 @@ module.exports = {
                 test: /\.(jpe?g|png)$/i,
                 type: "asset/resource",
             },
+            {
+                test: /\.mp3$/,
+                type: "asset/resource",
+            },
         ]
     },
     devtool: prod ? undefined : 'source-map',

@@ -425,7 +425,12 @@
         "deckLabel": "Monster Deck",
         "deckEmptyLabel": "Deck exhausted",
         "currentCardLabel": "Last Card",
-        "addCardBtn": "Add Card"
+        "addCardBtn": "Add Card",
+        "peekDeckBtn": "Scout Deck",
+        "peekDeckTitle": "Scout Deck",
+        "peekCountLabel": "How many top cards to reveal?",
+        "peekConfirmBtn": "Reveal",
+        "peekReturnBtn": "Return to Fight"
     },
     "opponents": {
         "title": "Opponents",

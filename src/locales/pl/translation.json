@@ -437,7 +437,12 @@
         "deckLabel": "Talia potworów",
         "deckEmptyLabel": "Talia wyczerpana",
         "currentCardLabel": "Ostatnia karta",
-        "addCardBtn": "Dodaj kartę"
+        "addCardBtn": "Dodaj kartę",
+        "peekDeckBtn": "Podejrzyj talię",
+        "peekDeckTitle": "Podejrzyj talię",
+        "peekCountLabel": "Ile wierzchnich kart odkryć?",
+        "peekConfirmBtn": "Odkryj",
+        "peekReturnBtn": "Wróć do walki"
     },
     "opponents": {
         "title": "Przeciwnicy",

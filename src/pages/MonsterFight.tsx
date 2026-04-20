@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Alert, Button, Col, Container, Form, Image, InputGroup, Modal, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Image, InputGroup, ListGroup, Modal, Row } from 'react-bootstrap';
 import PageTitle from '../components/PageTitle';
 import '../css/Opponents.css';
 import monstersData from '../monsters.json';
@@ -123,6 +123,11 @@ export default function MonsterFight({ t }): JSX.Element {
     const [monsterAttackResult, setMonsterAttackResult] = useState<string | null>(null);
     const [monsterAttackKey, setMonsterAttackKey] = useState(0);
     const [musicPlaying, setMusicPlaying] = useState(false);
+    const [peekOpen, setPeekOpen] = useState(false);
+    const [peekCount, setPeekCount] = useState(1);
+    const [peekPhase, setPeekPhase] = useState<'input' | 'arrange'>('input');
+    const [peekCards, setPeekCards] = useState<string[]>([]);
+    const [peekOriginalCount, setPeekOriginalCount] = useState(0);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -224,6 +229,41 @@ export default function MonsterFight({ t }): JSX.Element {
         setState(s => ({ ...s, fightDeck: [...s.fightDeck, picked] }));
     }
 
+    function handleOpenPeek() {
+        setPeekPhase('input');
+        setPeekCount(Math.min(3, state.fightDeck.length));
+        setPeekOpen(true);
+    }
+
+    function handleConfirmPeek() {
+        const count = Math.max(1, Math.min(peekCount, state.fightDeck.length));
+        setPeekOriginalCount(count);
+        setPeekCards(state.fightDeck.slice(0, count));
+        setPeekPhase('arrange');
+    }
+
+    function handlePeekRemove(idx: number) {
+        setPeekCards(cards => cards.filter((_, i) => i !== idx));
+    }
+
+    function handlePeekMove(idx: number, dir: -1 | 1) {
+        setPeekCards(cards => {
+            const arr = [...cards];
+            const swap = idx + dir;
+            if (swap < 0 || swap >= arr.length) return arr;
+            [arr[idx], arr[swap]] = [arr[swap], arr[idx]];
+            return arr;
+        });
+    }
+
+    function handlePeekSave() {
+        setState(s => ({
+            ...s,
+            fightDeck: [...peekCards, ...s.fightDeck.slice(peekOriginalCount)],
+        }));
+        setPeekOpen(false);
+    }
+
     function handleMonsterAttack() {
         const options = [t('opponents.monsterBite'), t('opponents.monsterCharge')];
         setMonsterAttackResult(shuffle([...options])[0]);
@@ -311,6 +351,9 @@ export default function MonsterFight({ t }): JSX.Element {
                                     <Button variant="outline-secondary" size="sm" onClick={handleAddCard}>
                                         {t('monsterFight.addCardBtn')}
                                     </Button>
+                                    <Button variant="outline-secondary" size="sm" disabled={state.fightDeck.length === 0} onClick={handleOpenPeek}>
+                                        {t('monsterFight.peekDeckBtn')}
+                                    </Button>
                                 </div>
                                 {deckEmpty ? (
                                     <div className="text-muted fst-italic py-4">{t('monsterFight.deckEmptyLabel')}</div>
@@ -349,6 +392,52 @@ export default function MonsterFight({ t }): JSX.Element {
 
                     </Col>
                 </Row>
+
+                {/* Peek deck modal */}
+                <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{t('monsterFight.peekDeckTitle')}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {peekPhase === 'input' ? (
+                            <Form onSubmit={e => { e.preventDefault(); handleConfirmPeek(); }}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>{t('monsterFight.peekCountLabel')}</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        min={1}
+                                        max={state.fightDeck.length}
+                                        value={peekCount}
+                                        onChange={e => setPeekCount(Math.max(1, Math.min(Number(e.target.value), state.fightDeck.length)))}
+                                        autoFocus
+                                    />
+                                </Form.Group>
+                                <Button variant="secondary" type="submit" className="w-100">
+                                    {t('monsterFight.peekConfirmBtn')}
+                                </Button>
+                            </Form>
+                        ) : (
+                            <>
+                                <ListGroup style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                                    {peekCards.map((card, idx) => (
+                                        <ListGroup.Item key={card} className="d-flex align-items-center gap-2 py-2">
+                                            <span className="text-muted fw-bold" style={{ minWidth: '1.5rem' }}>{idx + 1}.</span>
+                                            <Image src={getCardImage(card)} height={70} style={{ objectFit: 'contain', cursor: 'zoom-in' }} rounded onClick={() => setEnlargedImage(getCardImage(card))} />
+                                            <div className="ms-auto d-flex gap-1">
+                                                <Button size="sm" variant="outline-secondary" disabled={idx === 0} onClick={() => handlePeekMove(idx, -1)}>↑</Button>
+                                                <Button size="sm" variant="outline-secondary" disabled={idx === peekCards.length - 1} onClick={() => handlePeekMove(idx, 1)}>↓</Button>
+                                                <Button size="sm" variant="outline-danger" onClick={() => handlePeekRemove(idx)}>✕</Button>
+                                            </div>
+                                        </ListGroup.Item>
+                                    ))}
+                                </ListGroup>
+                                <Button variant="secondary" className="w-100 mt-3" onClick={handlePeekSave}>
+                                    {t('monsterFight.peekReturnBtn')}
+                                </Button>
+                            </>
+                        )}
+                    </Modal.Body>
+                </Modal>
 
                 {/* Enlarge modal */}
                 <Modal show={enlargedImage !== null} onHide={() => setEnlargedImage(null)} centered size="lg">

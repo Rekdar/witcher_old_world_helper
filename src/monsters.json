@@ -40,5 +40,40 @@
     "base_heal": 14,
     "front_name": "polnocnica_front",
     "back_name": "polnocnica_back"
+  },
+    {
+    "name_pl": "Ghul (gniazd ghuli)",
+    "level": 1,
+    "base_heal": 12,
+    "front_name": "ghul_front",
+    "back_name": "ghul_back"
+  },
+    {
+    "name_pl": "Harpia",
+    "level": 1,
+    "base_heal": 12,
+    "front_name": "harpia_front",
+    "back_name": "harpia_back"
+  },
+    {
+    "name_pl": "Żagnica",
+    "level": 3,
+    "base_heal": 18,
+    "front_name": "zagnica_front",
+    "back_name": "zagnica_back"
+  },
+    {
+    "name_pl": "Troll",
+    "level": 3,
+    "base_heal": 19,
+    "front_name": "troll_front",
+    "back_name": "troll_back"
+  },
+    {
+    "name_pl": "Kuchta",
+    "level": 3,
+    "base_heal": 17,
+    "front_name": "kuchta_front",
+    "back_name": "kuchta_back"
   }
 ]

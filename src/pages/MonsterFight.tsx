@@ -123,6 +123,7 @@ export default function MonsterFight({ t }): JSX.Element {
     const [monsterAttackResult, setMonsterAttackResult] = useState<string | null>(null);
     const [monsterAttackKey, setMonsterAttackKey] = useState(0);
     const [musicPlaying, setMusicPlaying] = useState(false);
+    const [resultModalOpen, setResultModalOpen] = useState(false);
     const [peekOpen, setPeekOpen] = useState(false);
     const [peekCount, setPeekCount] = useState(1);
     const [peekPhase, setPeekPhase] = useState<'input' | 'arrange'>('input');
@@ -384,14 +385,59 @@ export default function MonsterFight({ t }): JSX.Element {
                         </Row>
 
                         {/* End fight button */}
-                        <div className="text-center mb-4">
+                        <div className="text-center mb-4 d-flex justify-content-center gap-2">
                             <Button variant="danger" onClick={handleEndFight}>
                                 {t('monsterFight.endFightBtn')}
+                            </Button>
+                            <Button variant="outline-secondary" onClick={() => setResultModalOpen(true)}>
+                                Wynik walki
                             </Button>
                         </div>
 
                     </Col>
                 </Row>
+
+                {/* Fight result modal */}
+                <Modal show={resultModalOpen} onHide={() => setResultModalOpen(false)} centered size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Wynik walki</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p className="fw-bold">Po każdej walce, bez względu na wynik:</p>
+                        <ul>
+                            <li>tasuje się karty walki potwora i tworzy nową talię,</li>
+                            <li>tasuje się talię wytrzymałości, rękę i stos kart odrzuconych, tworząc nową talię akcji,</li>
+                            <li>wiedźmin wraca do normalnego poziomu tarczy obrony.</li>
+                        </ul>
+                        <hr />
+                        <p className="fw-bold">1. Pokonanie potwora</p>
+                        <ul>
+                            <li>bierze kartę potwora i 2 złota,</li>
+                            <li>zyskuje +1 reputacji i doznaje zmęczenia,</li>
+                            <li>wkłada kartę potwora pod swoją planszetkę jako trofeum,</li>
+                            <li>po walce odkłada stary żeton potwora, a na planszy pojawia się nowy żeton poziomu +1,</li>
+                            <li>odrzuć żeton tropu oraz zadania tropienia tego potwora.</li>
+                        </ul>
+                        <p className="fw-bold">2. Odpędzenie potwora</p>
+                        <p className="text-muted fst-italic" style={{ fontSize: '0.9em' }}>Jeśli wiedźmin zostanie powalony, a w talii wytrzymałości potwora zostało mniej niż 2 kart:</p>
+                        <ul>
+                            <li>bierze 2 złota,</li>
+                            <li>usuwa potwora z gry,</li>
+                            <li>bierze 1 kartę akcji o koszcie 0 na swój stos kart odrzuconych,</li>
+                            <li>na planszy pojawia się nowy potwór tego samego poziomu.</li>
+                        </ul>
+                        <p className="fw-bold">3. Klęska wiedźmina</p>
+                        <p className="text-muted fst-italic" style={{ fontSize: '0.9em' }}>Jeśli wiedźmin zostanie powalony, a potwór ma jeszcze 2 lub więcej kart wytrzymałości:</p>
+                        <ul>
+                            <li>bierze 1 żeton tropu z terenu, na którym stoi potwór,</li>
+                            <li>bierze 1 kartę akcji o koszcie 0 na stos kart odrzuconych,</li>
+                            <li>w tej turze dobiera o 1 kartę mniej w fazie III.</li>
+                        </ul>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setResultModalOpen(false)}>Zamknij</Button>
+                    </Modal.Footer>
+                </Modal>
 
                 {/* Peek deck modal */}
                 <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered size="lg">

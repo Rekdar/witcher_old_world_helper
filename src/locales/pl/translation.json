@@ -415,6 +415,9 @@
         "resultsTitle": "Wyniki",
         "startsFirst": "Zaczyna",
         "resetButton": "Losuj ponownie",
+        "fullResetButton": "Resetuj wszystko",
+        "ciri": "Ciri",
+        "ciriLabel": "Uwzględnij Ciri",
         "errorEmptyName": "Imię gracza {{player}} nie może być puste.",
         "schools": [
             "Szkoła Wilka",

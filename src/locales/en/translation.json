@@ -406,6 +406,9 @@
         "resultsTitle": "Results",
         "startsFirst": "Starts First",
         "resetButton": "Roll Again",
+        "fullResetButton": "Reset All",
+        "ciri": "Ciri",
+        "ciriLabel": "Include Ciri",
         "errorEmptyName": "Player {{player}} name cannot be empty.",
         "schools": [
             "Wolf School",

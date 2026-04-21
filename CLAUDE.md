@@ -35,7 +35,7 @@ No test suite is configured (`npm test` exits with error).
 - `MonsterRoller` — thin wrapper around `MonsterPicker` component
 - `SetupHelper` — ordered setup instructions; expansions/player count drive `compileSteps()` in `src/classes/setup.tsx`
 - `LocationTokens` / `LostMount` — both wrap `TerrainTokenPicker` component; `LostMount` is absent from `home.linkedPages` but accessible via navbar
-- `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player
+- `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player. Optional Ciri checkbox adds her to the pool. Results show school icons (from `src/img/witcher_schools_back/`) and a per-player dropdown for manual school override. Victory track (`tor.png`) uses absolute positioning with `CIRCLE_TOPS_PCT` (% from top) to align icons to the 5 circles. Full state in `witcherPicker_state` localStorage.
 - `Opponents` — Monster Attack (bite/charge random draw) + Wild Hunt Movement (player draw with localStorage persistence)
 - `MonsterFight` — two-phase page: **setup view** (pick monster by level, set HP, select weakness tokens, Monster Trail expansion toggle) → **fight view** (draw cards from deck, HP tracking, monster attack draw, deck scouting). Full state persisted to `monsterFight_state` in localStorage. Combat music (`src/music/combat_music.mp3`) played via `useRef<HTMLAudioElement>`.
 
@@ -57,10 +57,13 @@ No test suite is configured (`npm test` exits with error).
 
 Pattern: module-level `loadX()` / `saveX()` functions with try/catch, passed as lazy initializer to `useState`: `useState<T>(loadX)` (function reference, not call).
 
+When a page has several interdependent state fields, store them as one JSON object and use a single combined-state hook: `useState<MyState>(loadState)`, updating via `setAppState(prev => ({ ...prev, field: value }))`. This avoids calling `loadState()` once per field. See `WitcherPicker` for an example.
+
 Current keys:
 - `locationTokens_tasks` — terrain token task list in `TerrainTokenPicker`
 - `opponents_wildHunt_players` — player names in `Opponents`
 - `monsterFight_state` — full `MonsterFightState` object (setup + fight fields)
+- `witcherPicker_state` — combined state for `WitcherPicker` (player names, results, Ciri toggle, track positions)
 
 ## MonsterFight deck mechanics
 

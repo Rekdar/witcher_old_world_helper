@@ -11,6 +11,7 @@ import LocationTokens from '../pages/LocationTokens';
 import WitcherPicker from '../pages/WitcherPicker';
 import Opponents from '../pages/Opponents';
 import MonsterFight from '../pages/MonsterFight';
+import DicePoker from '../pages/DicePoker';
 import { useTranslation } from 'react-i18next';
 
 
@@ -55,6 +56,11 @@ export default function App() {
         {
             path: "monsterFight",
             element: <MonsterFight t={t} />,
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: "dicePoker",
+            element: <DicePoker t={t} />,
             errorElement: <ErrorPage />,
         },
         {

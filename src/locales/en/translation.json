@@ -33,6 +33,7 @@
         "witcherPicker": "$t(witcherPicker.title)",
         "opponents": "$t(opponents.title)",
         "monsterFight": "$t(monsterFight.title)",
+        "dicePoker": "$t(dicePoker.title)",
         "browseAllTools": "Browse All Tools",
         "__flag": "🇬🇧"
     },
@@ -134,8 +135,17 @@
                 "link": "#/monsterFight",
                 "desc": "Set up a monster fight — choose your foe, adjust HP and select weakness tokens.",
                 "btn": "Prepare for Battle"
+            },
+            {
+                "name": "$t(dicePoker.title)",
+                "link": "#/dicePoker",
+                "desc": "Dice poker rules — instructions, hand rankings and clarifications.",
+                "btn": "Play Poker"
             }
         ]
+    },
+    "dicePoker": {
+        "title": "Dice Poker"
     },
     "monsters": {
         "Nekker's Nest": "Nekker's Nest",
@@ -433,14 +443,9 @@
         "peekReturnBtn": "Return to Fight"
     },
     "opponents": {
-        "title": "Opponents",
-        "monsterAttackTitle": "Monster Attack",
-        "monsterAttackDesc": "Draw a random monster action.",
-        "monsterAttackBtn": "Draw Action",
-        "monsterBite": "Monster Bites!",
-        "monsterCharge": "Monster Charges!",
+        "title": "Wild Hunt",
         "wildHuntTitle": "Wild Hunt Movement",
-        "wildHuntDesc": "Randomly select who moves the Wild Hunt token.",
+        "wildHuntDesc": "Special rules from the Wild Hunt expansion.",
         "wildHuntBtn": "Draw Player",
         "playerChooses": "Player Chooses",
         "numPlayersLabel": "Number of players",

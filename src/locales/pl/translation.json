@@ -45,6 +45,7 @@
         "witcherPicker": "$t(witcherPicker.title)",
         "opponents": "$t(opponents.title)",
         "monsterFight": "$t(monsterFight.title)",
+        "dicePoker": "$t(dicePoker.title)",
         "browseAllTools": "Zobacz wszystkie narzędzia",
         "__flag": "🇵🇱"
     },
@@ -146,6 +147,12 @@
                 "link": "#/monsterFight",
                 "desc": "Przygotuj walkę z potworem — wybierz przeciwnika, dostosuj HP i wybierz żetony słabości.",
                 "btn": "Przygotuj się do walki"
+            },
+            {
+                "name": "$t(dicePoker.title)",
+                "link": "#/dicePoker",
+                "desc": "Zasady kościanego pokera — instrukcja, układy i objaśnienia.",
+                "btn": "Graj w pokera"
             }
         ]
     },
@@ -444,15 +451,13 @@
         "peekConfirmBtn": "Odkryj",
         "peekReturnBtn": "Wróć do walki"
     },
+    "dicePoker": {
+        "title": "Kościany Poker"
+    },
     "opponents": {
-        "title": "Przeciwnicy",
-        "monsterAttackTitle": "Atak Potwora",
-        "monsterAttackDesc": "Wylosuj akcję potwora.",
-        "monsterAttackBtn": "Losuj akcję",
-        "monsterBite": "Potwór gryzie!",
-        "monsterCharge": "Potwór szarżuje!",
+        "title": "Dziki Gon",
         "wildHuntTitle": "Ruch Dzikiego Gonu",
-        "wildHuntDesc": "Wylosuj, kto przesuwa żeton Dzikiego Gonu.",
+        "wildHuntDesc": "Specjalne zasady z dodatku Dziki Gon.",
         "wildHuntBtn": "Losuj gracza",
         "playerChooses": "Gracz wybiera",
         "numPlayersLabel": "Liczba graczy",

@@ -20,8 +20,6 @@ function saveWildHuntPlayers(players: string[]): void {
 }
 
 export default function Opponents({ t }): JSX.Element {
-    const [monsterResult, setMonsterResult] = useState<string | null>(null);
-    const [monsterDrawKey, setMonsterDrawKey] = useState(0);
     const [savedPlayers, setSavedPlayers] = useState<string[] | null>(loadWildHuntPlayers);
     const [isEditing, setIsEditing] = useState(false);
     const [numPlayers, setNumPlayers] = useState(2);
@@ -29,12 +27,6 @@ export default function Opponents({ t }): JSX.Element {
     const [formErrors, setFormErrors] = useState<string[]>([]);
     const [wildHuntResult, setWildHuntResult] = useState<string | null>(null);
     const [wildHuntDrawKey, setWildHuntDrawKey] = useState(0);
-
-    const handleMonsterDraw = () => {
-        const options = [t("opponents.monsterBite"), t("opponents.monsterCharge")];
-        setMonsterResult(shuffle([...options])[0]);
-        setMonsterDrawKey(k => k + 1);
-    };
 
     const handleNumPlayersChange = (n: number) => {
         setNumPlayers(n);
@@ -90,24 +82,6 @@ export default function Opponents({ t }): JSX.Element {
     return (
         <Container id="Opponents">
             <PageTitle HeaderText={t("opponents.title")} />
-
-            <Row className="justify-content-center mb-4">
-                <Col xs={12} md={8} lg={6}>
-                    <Card className="text-center">
-                        <Card.Body>
-                            <div style={{ fontSize: "3rem" }}>🐉</div>
-                            <Card.Title as="h3">{t("opponents.monsterAttackTitle")}</Card.Title>
-                            <Card.Text className="text-muted">{t("opponents.monsterAttackDesc")}</Card.Text>
-                            <Button variant="secondary" size="lg" className="w-100" onClick={handleMonsterDraw}>
-                                {t("opponents.monsterAttackBtn")}
-                            </Button>
-                            {monsterResult && (
-                                <Alert key={monsterDrawKey} variant="dark" className="mt-3 fs-4 fw-bold result-pop">{monsterResult}</Alert>
-                            )}
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
 
             <Row className="justify-content-center mb-4">
                 <Col xs={12} md={8} lg={6}>

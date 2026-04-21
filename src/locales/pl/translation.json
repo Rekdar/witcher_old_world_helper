@@ -118,23 +118,22 @@
                 "btn": "Wiatr wyje…"
             },
             {
-                "name": "$t(locationTokens.title)",
-                "link": "#/locationTokens",
-                "desc": "Jednym kliknięciem wylosuj dowolny typ żetonu obszaru. Całkowita losowość. Bez tasowania kartonowych żetonów.",
-                "btn": "Eksploruj Kontynent"
-            },
-            {
                 "name": "$t(monsterRoller.title)",
                 "link": "#/monsterRoller",
                 "desc": "Masz dość tasowania żetonów, kart potworów i tropienia figurek?",
                 "btn": "Cholera, aleś ty brzydki"
             },
-
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
                 "desc": "Losowo przypisz szkołę wiedźmina każdemu graczowi i wylosuj gracza zaczynającego.",
                 "btn": "Losuj szkoły"
+            },
+            {
+                "name": "$t(locationTokens.title)",
+                "link": "#/locationTokens",
+                "desc": "Jednym kliknięciem wylosuj dowolny typ żetonu obszaru. Całkowita losowość. Bez tasowania kartonowych żetonów.",
+                "btn": "Eksploruj Kontynent"
             },
             {
                 "name": "$t(opponents.title)",

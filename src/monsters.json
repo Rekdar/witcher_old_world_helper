@@ -42,7 +42,7 @@
     "back_name": "polnocnica_back"
   },
     {
-    "name_pl": "Ghul (gniazd ghuli)",
+    "name_pl": "Ghul (Gniazdo ghuli)",
     "level": 1,
     "base_heal": 12,
     "front_name": "ghul_front",
@@ -75,5 +75,131 @@
     "base_heal": 17,
     "front_name": "kuchta_front",
     "back_name": "kuchta_back"
+  },
+  {
+    "name_pl": "Leszy",
+    "level": 3,
+    "base_heal": 19,
+    "front_name": "leszy_front",
+    "back_name": "leszy_back"
+  },
+  {
+    "name_pl": "Bruxa",
+    "level": 3,
+    "base_heal": 17,
+    "front_name": "bruxa_front",
+    "back_name": "bruxa_back"
+  },
+  {
+    "name_pl": "Mantikora",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "mantikora_front",
+    "back_name": "mantikora_back"
+  },
+  {
+    "name_pl": "Szepciucha",
+    "level": 2,
+    "base_heal": 15,
+    "front_name": "szepciucha_front",
+    "back_name": "szepciucha_back"
+  },
+  {
+    "name_pl": "Baba wodna",
+    "level": 2,
+    "base_heal": 15,
+    "front_name": "baba_wodna_front",
+    "back_name": "baba_wodna_back"
+  },
+  {
+    "name_pl": "Bies",
+    "level": 2,
+    "base_heal": 13,
+    "front_name": "bies_front",
+    "back_name": "bies_back"
+  },
+  {
+    "name_pl": "Wilkołak",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "wilkolak_front",
+    "back_name": "wilkolak_back"
+  },
+  {
+    "name_pl": "Południca",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "poludnica_front",
+    "back_name": "poludnica_back"
+  },
+  {
+    "name_pl": "Wiwerna",
+    "level": 2,
+    "base_heal": 15,
+    "front_name": "wiwerna_front",
+    "back_name": "wiwerna_back"
+  },
+  {
+    "name_pl": "Baba cmentarna",
+    "level": 2,
+    "base_heal": 13,
+    "front_name": "baba_cmentarna_front",
+    "back_name": "baba_cmentarna_back"
+  },
+  {
+    "name_pl": "Gryf",
+    "level": 2,
+    "base_heal": 15,
+    "front_name": "gryf_front",
+    "back_name": "gryf_back"
+  },
+  {
+    "name_pl": "Pokutnik",
+    "level": 2,
+    "base_heal": 14,
+    "front_name": "pokutnik_front",
+    "back_name": "pokutnik_back"
+  },
+  {
+    "name_pl": "Ekimma",
+    "level": 1,
+    "base_heal": 12,
+    "front_name": "ekimma_front",
+    "back_name": "ekimma_back"
+  },
+  {
+    "name_pl": "Nekker (Gniazdo nekkerów)",
+    "level": 1,
+    "base_heal": 11,
+    "front_name": "nekker_front",
+    "back_name": "nekker_back"
+  },
+  {
+    "name_pl": "Barghest",
+    "level": 1,
+    "base_heal": 11,
+    "front_name": "barghest_front",
+    "back_name": "barghest_back"
+  },
+  {
+    "name_pl": "Zgnilec",
+    "level": 1,
+    "base_heal": 11,
+    "front_name": "zgnilec_front",
+    "back_name": "zgnilec_back"
+  },
+  {
+    "name_pl": "Archespor",
+    "level": 1,
+    "base_heal": 12,
+    "front_name": "archespor_front",
+    "back_name": "archespor_back"
+  },
+  {
+    "name_pl": "Utopiec (Gniazdo utopców)",
+    "level": 1,
+    "base_heal": 10,
+    "front_name": "utopiec_front",
+    "back_name": "utopiec_back"
   }
 ]

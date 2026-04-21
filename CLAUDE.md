@@ -10,8 +10,8 @@ A React/TypeScript web app that assists players of the board game *The Witcher: 
 
 ```bash
 npm install          # Install dependencies
-npm start            # Dev server on port 3000 (after tsc compiles)
-npm run dev          # TypeScript watch + auto-restart dev server
+npm start            # Dev server on port 3000 (webpack serves + compiles via ts-loader)
+npm run dev          # tsc-watch → restarts webpack serve on TypeScript changes
 npm run build        # Production webpack build → dist/
 npm run lint         # ESLint on all .ts/.tsx files
 npm run deploy       # Build + push dist/ to gh-pages branch
@@ -40,7 +40,7 @@ No test suite is configured (`npm test` exits with error).
 - `MonsterFight` — two-phase page: **setup view** (pick monster by level, set HP, select weakness tokens, Monster Trail expansion toggle) → **fight view** (draw cards from deck, HP tracking, monster attack draw, deck scouting). Full state persisted to `monsterFight_state` in localStorage. Combat music (`src/music/combat_music.mp3`) played via `useRef<HTMLAudioElement>`.
 
 **Domain classes (`src/classes/`):**
-- `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` auto-shuffles and repopulates when exhausted; `MutableDeck` is for variable player hands.
+- `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` enforces immutable `allItems`; `MutableDeck` allows adding items (e.g. player hands). Auto-repopulate-on-exhaustion is implemented in the consuming class (e.g. `MonstersDeck.draw()` calls `repopulate()` when the sub-deck is empty).
 - `monsters.tsx` — `MonstersDeck` wraps four `ReadonlyDeck` instances (levels 1–3 + legendary). Monster classes extend `monsterClass` which renders token/mini images. Expansion booleans passed to constructor control which monsters are included.
 - `terrains.tsx` — `TerrainLocation` type, named location constants, and `TerrainTokenDeck` class with separate Mountain/Forest/Water `ReadonlyDeck` instances. Skellige expansion adds extra tokens to each deck. `getTokenImgSrc(imgStr)` resolves webpack image paths.
 - `setup.tsx` — `compileSteps()` builds ordered JSX setup instructions per expansion/player count.

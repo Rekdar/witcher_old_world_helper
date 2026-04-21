@@ -106,23 +106,22 @@
                 "btn": "Wind's howling…"
             },
             {
-                "name": "$t(locationTokens.title)",
-                "link": "#/locationTokens",
-                "desc": "Easily draw any terrain token type. Always randomized. No shuffling of cardboard tokens.",
-                "btn": "Explore the Continent"
-            },
-            {
                 "name": "$t(monsterRoller.title)",
                 "link": "#/monsterRoller",
                 "desc": "Tired of shuffling your tokens, monster cards, and hunting down the mini?",
                 "btn": "Damn, you're ugly"
             },
-
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
                 "desc": "Randomly assign a Witcher School to each player and draw the starting player.",
                 "btn": "Draw Schools"
+            },
+            {
+                "name": "$t(locationTokens.title)",
+                "link": "#/locationTokens",
+                "desc": "Easily draw any terrain token type. Always randomized. No shuffling of cardboard tokens.",
+                "btn": "Explore the Continent"
             },
             {
                 "name": "$t(opponents.title)",

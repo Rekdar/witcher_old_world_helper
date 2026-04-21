@@ -4,10 +4,126 @@ import PageTitle from "../components/PageTitle";
 
 const pokerImg = require('../img/poker.png') as string;
 
+const DICE_FACES = ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+interface DiceState {
+    dice: number[];
+    selected: boolean[];
+    phase: 'initial' | 'rolled' | 'rerolled';
+}
+
+function initialDiceState(): DiceState {
+    return { dice: [0, 0, 0, 0, 0], selected: [false, false, false, false, false], phase: 'initial' };
+}
+
+function rollFive(): number[] {
+    return Array.from({ length: 5 }, () => Math.floor(Math.random() * 6) + 1);
+}
+
+function evaluateHand(dice: number[]): string {
+    const counts: Record<number, number> = {};
+    for (const d of dice) counts[d] = (counts[d] || 0) + 1;
+    const vals = Object.values(counts).sort((a, b) => b - a);
+    const sorted = [...dice].sort((a, b) => a - b);
+    const isStraight = (arr: number[], target: number[]) =>
+        arr.every((v, i) => v === target[i]);
+    if (vals[0] === 5) return 'Poker';
+    if (vals[0] === 4) return 'Kareta';
+    if (vals[0] === 3 && vals[1] === 2) return 'Full';
+    if (isStraight(sorted, [1, 2, 3, 4, 5])) return 'Mały strit';
+    if (isStraight(sorted, [2, 3, 4, 5, 6])) return 'Duży strit';
+    if (vals[0] === 3) return 'Trójka';
+    if (vals[0] === 2 && vals[1] === 2) return 'Dwie pary';
+    if (vals[0] === 2) return 'Para';
+    return 'Wysoka karta';
+}
+
+interface DiceSectionProps {
+    label: string;
+    state: DiceState;
+    onRoll: () => void;
+    onToggle: (i: number) => void;
+    onReroll: () => void;
+    onMove: (i: number, dir: -1 | 1) => void;
+}
+
+function DiceSection({ label, state, onRoll, onToggle, onReroll, onMove }: DiceSectionProps) {
+    const { dice, selected, phase } = state;
+    const canReroll = phase === 'rolled' && selected.some(Boolean);
+    const hand = phase !== 'initial' ? evaluateHand(dice) : null;
+    return (
+        <Card className="mb-3">
+            <Card.Body>
+                <Card.Title as="h5">{label}</Card.Title>
+                {phase === 'initial' && (
+                    <Button variant="secondary" onClick={onRoll}>Rzuć kośćmi</Button>
+                )}
+                {phase !== 'initial' && (
+                    <>
+                        <div className="d-flex gap-3 flex-wrap mb-3">
+                            {dice.map((val, i) => (
+                                <div key={i} className="d-flex flex-column align-items-center" style={{ gap: '4px' }}>
+                                    <div className="d-flex gap-1">
+                                        <button
+                                            onClick={() => onMove(i, -1)}
+                                            disabled={i === 0}
+                                            style={{ fontSize: '0.8rem', padding: '1px 6px', lineHeight: 1.4, border: '1px solid #ccc', borderRadius: '4px', background: '#f8f9fa', cursor: i === 0 ? 'default' : 'pointer' }}
+                                            title="Przesuń w lewo"
+                                        >◀</button>
+                                        <button
+                                            onClick={() => onMove(i, 1)}
+                                            disabled={i === dice.length - 1}
+                                            style={{ fontSize: '0.8rem', padding: '1px 6px', lineHeight: 1.4, border: '1px solid #ccc', borderRadius: '4px', background: '#f8f9fa', cursor: i === dice.length - 1 ? 'default' : 'pointer' }}
+                                            title="Przesuń w prawo"
+                                        >▶</button>
+                                    </div>
+                                    <div
+                                        onClick={phase === 'rolled' ? () => onToggle(i) : undefined}
+                                        style={{
+                                            fontSize: '8.4rem',
+                                            lineHeight: 1,
+                                            cursor: phase === 'rolled' ? 'pointer' : 'default',
+                                            border: selected[i] ? '4px solid #dc3545' : '4px solid transparent',
+                                            borderRadius: '10px',
+                                            padding: '4px 6px',
+                                            background: selected[i] ? '#fff5f5' : 'transparent',
+                                            userSelect: 'none',
+                                        }}
+                                        title={phase === 'rolled' ? (selected[i] ? 'Odznacz' : 'Zaznacz do przerzutu') : undefined}
+                                    >
+                                        {DICE_FACES[val]}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mb-3">
+                            <span className="fw-semibold">Układ: </span>
+                            <span className="text-primary fs-5">{hand}</span>
+                        </div>
+                        {phase === 'rolled' && (
+                            <div className="d-flex gap-2 flex-wrap">
+                                <Button variant="secondary" onClick={onRoll}>Rzuć kośćmi</Button>
+                                <Button variant="danger" onClick={onReroll} disabled={!canReroll}>
+                                    Przerzuć zaznaczone ({selected.filter(Boolean).length})
+                                </Button>
+                            </div>
+                        )}
+                        {phase === 'rerolled' && (
+                            <p className="text-muted mb-0"><em>Przerzut wykonany.</em></p>
+                        )}
+                    </>
+                )}
+            </Card.Body>
+        </Card>
+    );
+}
+
 export default function DicePoker({ t }): JSX.Element {
     const [enlarged, setEnlarged] = useState(false);
     const [musicPlaying, setMusicPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const [whiteDice, setWhiteDice] = useState<DiceState>(initialDiceState);
+    const [blackDice, setBlackDice] = useState<DiceState>(initialDiceState);
 
     useEffect(() => {
         const audio = new Audio(require('../music/poker.mp3'));
@@ -15,6 +131,33 @@ export default function DicePoker({ t }): JSX.Element {
         audioRef.current = audio;
         return () => { audio.pause(); };
     }, []);
+
+    function makeHandlers(setState: React.Dispatch<React.SetStateAction<DiceState>>) {
+        return {
+            onRoll: () => setState({ dice: rollFive(), selected: [false, false, false, false, false], phase: 'rolled' }),
+            onToggle: (i: number) => setState(prev => {
+                const selected = [...prev.selected];
+                selected[i] = !selected[i];
+                return { ...prev, selected };
+            }),
+            onReroll: () => setState(prev => {
+                const dice = prev.dice.map((v, i) => prev.selected[i] ? Math.floor(Math.random() * 6) + 1 : v);
+                return { dice, selected: [false, false, false, false, false], phase: 'rerolled' };
+            }),
+            onMove: (i: number, dir: -1 | 1) => setState(prev => {
+                const j = i + dir;
+                if (j < 0 || j >= prev.dice.length) return prev;
+                const dice = [...prev.dice];
+                const selected = [...prev.selected];
+                [dice[i], dice[j]] = [dice[j], dice[i]];
+                [selected[i], selected[j]] = [selected[j], selected[i]];
+                return { ...prev, dice, selected };
+            }),
+        };
+    }
+
+    const whiteHandlers = makeHandlers(setWhiteDice);
+    const blackHandlers = makeHandlers(setBlackDice);
 
     function handleMusicToggle() {
         if (!audioRef.current) return;
@@ -86,6 +229,27 @@ export default function DicePoker({ t }): JSX.Element {
                             </p>
                         </Card.Body>
                     </Card>
+                    <hr className="my-4" />
+
+                    <h5 className="mb-3">Rzut kośćmi</h5>
+                    <DiceSection
+                        label="Białe kości"
+                        state={whiteDice}
+                        {...whiteHandlers}
+                    />
+                    <DiceSection
+                        label="Czarne kości"
+                        state={blackDice}
+                        {...blackHandlers}
+                    />
+                    <div className="text-center mt-2">
+                        <Button variant="outline-secondary" onClick={() => {
+                            setWhiteDice(initialDiceState());
+                            setBlackDice(initialDiceState());
+                        }}>
+                            Reset rzutów
+                        </Button>
+                    </div>
                 </Col>
             </Row>
 

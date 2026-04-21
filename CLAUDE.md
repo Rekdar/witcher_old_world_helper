@@ -36,8 +36,10 @@ No test suite is configured (`npm test` exits with error).
 - `SetupHelper` — ordered setup instructions; expansions/player count drive `compileSteps()` in `src/classes/setup.tsx`
 - `LocationTokens` / `LostMount` — both wrap `TerrainTokenPicker` component; `LostMount` is absent from `home.linkedPages` but accessible via navbar
 - `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player. Optional Ciri checkbox adds her to the pool. Results show school icons (from `src/img/witcher_schools_back/`) and a per-player dropdown for manual school override. Victory track (`tor.png`) uses absolute positioning with `CIRCLE_TOPS_PCT` (% from top) to align icons to the 5 circles. Full state in `witcherPicker_state` localStorage.
-- `Opponents` — Monster Attack (bite/charge random draw) + Wild Hunt Movement (player draw with localStorage persistence)
+- `Opponents` — Wild Hunt Movement: player draw (including a "player chooses" option) with localStorage persistence. Player names stored in `opponents_wildHunt_players`.
 - `MonsterFight` — two-phase page: **setup view** (pick monster by level, set HP, select weakness tokens, Monster Trail expansion toggle) → **fight view** (draw cards from deck, HP tracking, monster attack draw, deck scouting). Full state persisted to `monsterFight_state` in localStorage. Combat music (`src/music/combat_music.mp3`) played via `useRef<HTMLAudioElement>`.
+- `DicePoker` — static rules + image (zoomable modal) + background music (`src/music/poker.mp3`). Bottom section has two independent dice-roller panels (white/black) each with: roll 5d6, select dice to reroll, reroll once, reorder dice left/right, hand evaluation (`evaluateHand`). No localStorage. Music toggled via a fixed floating button.
+- `CommunityLinks` — card grid of external links, data-driven from `t("communityLinks.links")`. **Not in the router** — accessible only if linked directly.
 
 **Domain classes (`src/classes/`):**
 - `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` enforces immutable `allItems`; `MutableDeck` allows adding items (e.g. player hands). Auto-repopulate-on-exhaustion is implemented in the consuming class (e.g. `MonstersDeck.draw()` calls `repopulate()` when the sub-deck is empty).
@@ -101,3 +103,5 @@ All images pre-loaded at module level using `Object.fromEntries` + `require()` t
 - **Button variants:** `secondary` (primary action), `outline-secondary` (secondary action), `success`/`primary`/`warning`/`danger` for domain-specific color coding.
 - **Page layout:** `<Container id="PageName">` → `<PageTitle>` → `<Row className="justify-content-center">` → `<Col xs={12} md={8} lg={6}>`.
 - **Image zoom:** Shared `enlargedImage` state + `<Modal size="lg">` pattern — set `cursor: zoom-in` on the thumbnail, `onClick={() => setEnlargedImage(src)}`, modal closes on click.
+- **Background music:** `new Audio(require(...))` created inside `useEffect`, stored in `useRef<HTMLAudioElement | null>`. Cleanup via `audio.pause()` in the effect's return. Toggled with a fixed-position floating button (bottom-right, circular, 48×48px). See `DicePoker` for the canonical pattern.
+- **Symmetric two-panel state:** When a page has two independent panels with identical behavior (e.g. DicePoker's white/black dice), define a single state interface + a `makeHandlers(setState)` factory that returns all handlers for one panel, then call it twice.

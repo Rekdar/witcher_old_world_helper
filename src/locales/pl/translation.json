@@ -139,7 +139,7 @@
             {
                 "name": "$t(opponents.title)",
                 "link": "#/opponents",
-                "desc": "Wylosuj akcję potwora lub kto przesuwa żeton Dzikiego Gonu.",
+                "desc": "Akcje z dodatku Dziki Gon.",
                 "btn": "Zmierz się z wrogiem"
             },
             {
@@ -456,6 +456,9 @@
     },
     "opponents": {
         "title": "Dziki Gon",
+        "monsterAttackTitle": "Atak Potwora",
+        "monsterBite": "Potwór gryzie!",
+        "monsterCharge": "Potwór szarżuje!",
         "wildHuntTitle": "Ruch Dzikiego Gonu",
         "wildHuntDesc": "Specjalne zasady z dodatku Dziki Gon.",
         "wildHuntBtn": "Losuj gracza",

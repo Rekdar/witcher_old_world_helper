@@ -386,10 +386,10 @@ export default function MonsterFight({ t }): JSX.Element {
 
                         {/* End fight button */}
                         <div className="text-center mb-4 d-flex justify-content-center gap-2">
-                            <Button variant="danger" onClick={handleEndFight}>
+                            <Button variant="outline-secondary" onClick={handleEndFight}>
                                 {t('monsterFight.endFightBtn')}
                             </Button>
-                            <Button variant="outline-secondary" onClick={() => setResultModalOpen(true)}>
+                            <Button variant="danger" onClick={() => setResultModalOpen(true)}>
                                 Wynik walki
                             </Button>
                         </div>

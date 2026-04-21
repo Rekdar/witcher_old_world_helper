@@ -127,7 +127,7 @@
             {
                 "name": "$t(opponents.title)",
                 "link": "#/opponents",
-                "desc": "Draw a monster action or find out who moves the Wild Hunt token.",
+                "desc": "Actions from the Wild Hunt expansion.",
                 "btn": "Face Your Foes"
             },
             {
@@ -444,6 +444,9 @@
     },
     "opponents": {
         "title": "Wild Hunt",
+        "monsterAttackTitle": "Monster Attack",
+        "monsterBite": "Monster Bites!",
+        "monsterCharge": "Monster Charges!",
         "wildHuntTitle": "Wild Hunt Movement",
         "wildHuntDesc": "Special rules from the Wild Hunt expansion.",
         "wildHuntBtn": "Draw Player",

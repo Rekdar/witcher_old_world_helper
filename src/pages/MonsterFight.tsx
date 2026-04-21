@@ -25,6 +25,7 @@ interface MonsterFightState {
     fightDeck: string[];     // remaining cards ("main:filename" or "trail:filename")
     fightHp: number;
     revealedCards: string[]; // drawn cards, last = most recent
+    leshyDiceCount: number;
 }
 
 const STORAGE_KEY = 'monsterFight_state';
@@ -39,6 +40,7 @@ const DEFAULT_STATE: MonsterFightState = {
     fightDeck: [],
     fightHp: 0,
     revealedCards: [],
+    leshyDiceCount: 0,
 };
 
 function loadState(): MonsterFightState {
@@ -124,6 +126,8 @@ export default function MonsterFight({ t }): JSX.Element {
     const [monsterAttackKey, setMonsterAttackKey] = useState(0);
     const [musicPlaying, setMusicPlaying] = useState(false);
     const [resultModalOpen, setResultModalOpen] = useState(false);
+    const [trollModalOpen, setTrollModalOpen] = useState(false);
+    const [trollSelectedCard, setTrollSelectedCard] = useState<string | null>(null);
     const [peekOpen, setPeekOpen] = useState(false);
     const [peekCount, setPeekCount] = useState(1);
     const [peekPhase, setPeekPhase] = useState<'input' | 'arrange'>('input');
@@ -271,6 +275,26 @@ export default function MonsterFight({ t }): JSX.Element {
         setMonsterAttackKey(k => k + 1);
     }
 
+    function handleLeshyDiceChange(delta: number) {
+        setState(s => ({ ...s, leshyDiceCount: Math.max(0, s.leshyDiceCount + delta) }));
+    }
+
+    function handleLeshyDiceInput(value: number) {
+        setState(s => ({ ...s, leshyDiceCount: Math.max(0, isNaN(value) ? 0 : value) }));
+    }
+
+    function handleTrollAbilityConfirm() {
+        if (!trollSelectedCard) return;
+        setState(s => ({
+            ...s,
+            fightDeck: [trollSelectedCard, ...s.fightDeck],
+            fightHp: s.fightHp + 1,
+            revealedCards: s.revealedCards.filter(c => c !== trollSelectedCard),
+        }));
+        setTrollSelectedCard(null);
+        setTrollModalOpen(false);
+    }
+
     function handleEndFight() {
         audioRef.current?.pause();
         setMusicPlaying(false);
@@ -323,6 +347,24 @@ export default function MonsterFight({ t }): JSX.Element {
                             <Alert key={monsterAttackKey} variant="dark" className="text-center fs-5 fw-bold result-pop mb-3">
                                 {monsterAttackResult}
                             </Alert>
+                        )}
+
+                        {/* Leszy dice count */}
+                        {selectedMonster.name_pl === 'Leszy' && (
+                            <div className="mb-3 d-flex align-items-center justify-content-center gap-3">
+                                <span className="fw-semibold">Liczba kości:</span>
+                                <InputGroup style={{ width: '140px' }}>
+                                    <Button variant="outline-secondary" onClick={() => handleLeshyDiceChange(-1)}>−</Button>
+                                    <Form.Control
+                                        type="number"
+                                        min={0}
+                                        value={state.leshyDiceCount}
+                                        onChange={e => handleLeshyDiceInput(Number(e.target.value))}
+                                        className="text-center"
+                                    />
+                                    <Button variant="outline-secondary" onClick={() => handleLeshyDiceChange(1)}>+</Button>
+                                </InputGroup>
+                            </div>
                         )}
 
                         {/* Weakness tokens */}
@@ -385,7 +427,16 @@ export default function MonsterFight({ t }): JSX.Element {
                         </Row>
 
                         {/* End fight button */}
-                        <div className="text-center mb-4 d-flex justify-content-center gap-2">
+                        <div className="text-center mb-4 d-flex justify-content-center gap-2 flex-wrap">
+                            {selectedMonster.name_pl === 'Troll' && (
+                                <Button
+                                    variant="outline-warning"
+                                    disabled={state.revealedCards.length === 0}
+                                    onClick={() => { setTrollSelectedCard(null); setTrollModalOpen(true); }}
+                                >
+                                    Zdolność specjalna
+                                </Button>
+                            )}
                             <Button variant="outline-secondary" onClick={handleEndFight}>
                                 {t('monsterFight.endFightBtn')}
                             </Button>
@@ -483,6 +534,46 @@ export default function MonsterFight({ t }): JSX.Element {
                             </>
                         )}
                     </Modal.Body>
+                </Modal>
+
+                {/* Troll special ability modal */}
+                <Modal show={trollModalOpen} onHide={() => setTrollModalOpen(false)} centered size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Zdolność specjalna Trolla</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p className="text-muted mb-3">Wybierz 1 kartę z odrzuconych — zostanie umieszczona na wierzchu talii potwora.</p>
+                        {state.revealedCards.length === 0 ? (
+                            <p className="text-muted fst-italic">Brak odrzuconych kart.</p>
+                        ) : (
+                            <ListGroup style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                                {state.revealedCards.map((card, idx) => (
+                                    <ListGroup.Item
+                                        key={card + idx}
+                                        action
+                                        active={trollSelectedCard === card}
+                                        onClick={() => setTrollSelectedCard(card)}
+                                        className="d-flex align-items-center gap-3 py-2"
+                                    >
+                                        <Image
+                                            src={getCardImage(card)}
+                                            height={70}
+                                            style={{ objectFit: 'contain', cursor: 'zoom-in' }}
+                                            rounded
+                                            onClick={e => { e.stopPropagation(); setEnlargedImage(getCardImage(card)); }}
+                                        />
+                                        <span className="text-muted" style={{ fontSize: '0.85em' }}>Karta {idx + 1}</span>
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        )}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="outline-secondary" onClick={() => setTrollModalOpen(false)}>Anuluj</Button>
+                        <Button variant="secondary" disabled={!trollSelectedCard} onClick={handleTrollAbilityConfirm}>
+                            Połóż na wierzchu talii
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
 
                 {/* Enlarge modal */}

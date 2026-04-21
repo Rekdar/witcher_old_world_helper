@@ -32,7 +32,7 @@ No test suite is configured (`npm test` exits with error).
 
 **Pages (`src/pages/`):**
 - `Home` — card grid driven entirely by `t("home.linkedPages")` array in translation JSON
-- `MonsterRoller` — thin wrapper around `MonsterPicker` component
+- `MonsterRoller` — thin wrapper around `MonsterPicker` component. `MonsterPicker` has **two modes** for I/II/III buttons: when no expansion is ticked *or* only Wild Hunt is ticked (`useCardMode = !exp[0] && !exp[2] && !exp[3]`), it draws from `monsters.json` by level and shows full card front images from `src/img/monsters_full_cards/`; otherwise it uses `MonstersDeck` and renders token images. The legendary/Wild Hunt button always uses `MonstersDeck` regardless of mode. Display state is a discriminated union `{ kind: 'card'; card } | { kind: 'token'; token } | null` — do not split into two separate state variables.
 - `SetupHelper` — ordered setup instructions; expansions/player count drive `compileSteps()` in `src/classes/setup.tsx`
 - `LocationTokens` / `LostMount` — both wrap `TerrainTokenPicker` component; `LostMount` is absent from `home.linkedPages` but accessible via navbar
 - `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player. Optional Ciri checkbox adds her to the pool. Results show school icons (from `src/img/witcher_schools_back/`) and a per-player dropdown for manual school override. Victory track (`tor.png`) uses absolute positioning with `CIRCLE_TOPS_PCT` (% from top) to align icons to the 5 circles. Full state in `witcherPicker_state` localStorage.
@@ -71,10 +71,11 @@ Current keys:
 
 ## MonsterFight deck mechanics
 
-Monster data is in `src/monsters.json` (6 monsters, levels 1–3, with `base_heal`, `front_name`, `back_name`).
+Monster data is in `src/monsters.json` (28 monsters, levels 1–3, with `base_heal`, `front_name`, `back_name`). This file is shared between `MonsterFight` (HP/deck building) and `MonsterPicker` base mode (draw by level, display full card).
 
 Card images:
-- Main cards: `src/img/monster_fight/monster_trial_01.jpg` … `_20.jpg` (keys prefixed `main:`)
+- Full card fronts/backs: `src/img/monsters_full_cards/{front_name}.jpg` — filename comes from `front_name`/`back_name` in `monsters.json`. Used by `MonsterPicker` (base mode) and available for `MonsterFight`.
+- Main fight cards: `src/img/monster_fight/monster_trial_01.jpg` … `_20.jpg` (keys prefixed `main:`)
 - Monster Trail cards: `src/img/monster_fight/monster_trial/monster_trial_1.jpg` … `_4.jpg` (keys prefixed `trail:`)
 - Deck back: `src/img/monster_fight/back.jpg`
 

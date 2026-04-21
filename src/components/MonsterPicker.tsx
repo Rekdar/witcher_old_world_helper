@@ -1,9 +1,41 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import MonstersDeck, { levelOneMonster, levelTwoMonster, levelThreeMonster } from "../classes/monsters";
+import { Container, Row, Col, Button, Form, Image, Modal } from "react-bootstrap";
+import MonstersDeck, { legendaryMonster, levelOneMonster, levelTwoMonster, levelThreeMonster } from "../classes/monsters";
 import PageTitle from './PageTitle';
+import monstersData from '../monsters.json';
+import { shuffle } from '../util/generic';
 import "../css/MonsterPicker.css";
 
+interface MonsterCard {
+    name_pl: string;
+    level: number;
+    front_name: string;
+}
+
+type Displayed =
+    | { kind: 'card'; card: MonsterCard }
+    | { kind: 'token'; token: levelOneMonster | levelTwoMonster | levelThreeMonster | legendaryMonster }
+    | null;
+
+const cardFrontImages: Record<string, string> = Object.fromEntries(
+    monstersData.map(m => [m.front_name, require(`../img/monsters_full_cards/${m.front_name}.jpg`) as string])
+);
+
+const cardsByLevel: Record<number, MonsterCard[]> = {
+    1: monstersData.filter(m => m.level === 1),
+    2: monstersData.filter(m => m.level === 2),
+    3: monstersData.filter(m => m.level === 3),
+};
+
+type CardDecks = { 1: MonsterCard[]; 2: MonsterCard[]; 3: MonsterCard[] };
+
+function makeCardDecks(): CardDecks {
+    return {
+        1: shuffle([...cardsByLevel[1]]),
+        2: shuffle([...cardsByLevel[2]]),
+        3: shuffle([...cardsByLevel[3]]),
+    };
+}
 
 export default function MonsterPicker({
     HeaderText = "Randomly draw a token",
@@ -14,18 +46,19 @@ export default function MonsterPicker({
 }) {
     const expansionsNames = ["legendaryHunt", "wildHunt", "monsterPack", "mountedEredin"];
     const [localMonsterDeck, setLocalMonsterDeck] = useState(new MonstersDeck());
-    const [displayedToken, setToken] = useState<levelOneMonster | levelTwoMonster | levelThreeMonster>(
-        new levelOneMonster("")
-    );
     const [expansions, setExpansions] = useState(new Array(expansionsNames.length).fill(false));
+    const [cardDecks, setCardDecks] = useState<CardDecks>(makeCardDecks);
+    const [displayed, setDisplayed] = useState<Displayed>(null);
+    const [enlargedCard, setEnlargedCard] = useState<string | null>(null);
+
+    // Card mode for I/II/III: no expansions OR only Wild Hunt checked
+    const useCardMode = !expansions[0] && !expansions[2] && !expansions[3];
 
     const handleToggleExpansions = (position: number) => {
         let updatedExpansions = expansions.map((item, index) => index === position ? !item : item);
         if (position === 0 && !expansions[0] && expansions[1]) {
-            // if turning on Legendary Hunt and Wild Hunt is already on
             updatedExpansions = updatedExpansions.map((item, index) => index === 1 ? !item : item);
         } else if (position === 1 && !expansions[1] && expansions[0]) {
-            // if turning on Wild Hunt and Legendary Hunt is already on
             updatedExpansions = updatedExpansions.map((item, index) => index === 0 ? !item : item);
         }
         setExpansions(updatedExpansions);
@@ -33,34 +66,63 @@ export default function MonsterPicker({
 
     useEffect(() => {
         setLocalMonsterDeck(new MonstersDeck(...expansions));
+        setDisplayed(null);
+        setCardDecks(makeCardDecks());
     }, [expansions]);
+
+    function drawCard(level: 1 | 2 | 3) {
+        setCardDecks(prev => {
+            let deck = [...prev[level]];
+            if (deck.length === 0) deck = shuffle([...cardsByLevel[level]]);
+            const [card, ...rest] = deck;
+            setDisplayed({ kind: 'card', card });
+            return { ...prev, [level]: rest };
+        });
+    }
+
+    function drawToken(draw: () => levelOneMonster | levelTwoMonster | levelThreeMonster | legendaryMonster) {
+        setDisplayed({ kind: 'token', token: draw() });
+    }
 
     return (
         <Container fluid className="mx-auto min-h-screen">
             <PageTitle HeaderText={HeaderText} />
             <Row id='tokensRow' className='py-2'>
                 <Col className='justify-content-center'>
-                    {displayedToken?.tokenImg(t)}
+                    {displayed?.kind === 'card' && (
+                        <div className="d-flex flex-column align-items-center gap-2">
+                            <h4>{displayed.card.name_pl}</h4>
+                            <Image
+                                src={cardFrontImages[displayed.card.front_name]}
+                                alt={displayed.card.name_pl}
+                                style={{ maxHeight: 420, cursor: 'zoom-in' }}
+                                fluid
+                                rounded
+                                onClick={() => setEnlargedCard(cardFrontImages[displayed.card.front_name])}
+                            />
+                        </div>
+                    )}
+                    {displayed?.kind === 'token' && displayed.token.tokenImg(t)}
                 </Col>
             </Row>
             <Row id='MonsterButtons' className='justify-content-center px-1 py-2 mb-4'>
                 <Col xs="auto" className='p-1'>
                     <Button variant="secondary" size="lg" style={{ width: 75 }}
-                        onClick={() => setToken(localMonsterDeck.drawLevelOneMonster())}
+                        onClick={() => useCardMode ? drawCard(1) : drawToken(() => localMonsterDeck.drawLevelOneMonster())}
                     >
                         I
                     </Button>
                 </Col>
                 <Col xs="auto" className='p-1'>
                     <Button variant="warning" size="lg" style={{ width: 75 }}
-                        onClick={() => setToken(localMonsterDeck.drawLevelTwoMonster())}
+                        onClick={() => useCardMode ? drawCard(2) : drawToken(() => localMonsterDeck.drawLevelTwoMonster())}
                     >
                         II
                     </Button>
                 </Col>
                 <Col xs="auto" className='p-1'>
                     <Button variant="danger" size="lg" style={{ width: 75 }}
-                        onClick={() => setToken(localMonsterDeck.drawLevelThreeMonster())}
+                        onClick={() => useCardMode ? drawCard(3) : drawToken(() => localMonsterDeck.drawLevelThreeMonster())}
                     >
                         III
                     </Button>
@@ -72,9 +134,9 @@ export default function MonsterPicker({
                             variant="custom"
                             style={{
                                 backgroundColor: "#960a0a",
-                                color: "#ffffff", /* tint on cursor hover: "#640a0a" */
+                                color: "#ffffff",
                             }}
-                            onClick={() => setToken(localMonsterDeck.drawLegendaryMonster())}
+                            onClick={() => drawToken(() => localMonsterDeck.drawLegendaryMonster())}
                         >
                             {expansions[0] ? t("monsterPicker.legendary") : t("exps.wildHunt")}
                         </Button>
@@ -104,6 +166,12 @@ export default function MonsterPicker({
                     </ul>
                 </Col>
             </Row>
+
+            <Modal show={enlargedCard !== null} onHide={() => setEnlargedCard(null)} size="lg" centered>
+                <Modal.Body className='text-center p-2' onClick={() => setEnlargedCard(null)} style={{ cursor: 'zoom-out' }}>
+                    {enlargedCard && <Image src={enlargedCard} fluid rounded style={{ maxHeight: '85vh' }} />}
+                </Modal.Body>
+            </Modal>
         </Container>
     );
 }

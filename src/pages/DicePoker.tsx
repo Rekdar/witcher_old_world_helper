@@ -1,11 +1,30 @@
-import { useState } from "react";
-import { Card, Col, Container, Image, Modal, Row } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
+import { Button, Card, Col, Container, Image, Modal, Row } from "react-bootstrap";
 import PageTitle from "../components/PageTitle";
 
 const pokerImg = require('../img/poker.png') as string;
 
 export default function DicePoker({ t }): JSX.Element {
     const [enlarged, setEnlarged] = useState(false);
+    const [musicPlaying, setMusicPlaying] = useState(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        const audio = new Audio(require('../music/poker.mp3'));
+        audio.loop = true;
+        audioRef.current = audio;
+        return () => { audio.pause(); };
+    }, []);
+
+    function handleMusicToggle() {
+        if (!audioRef.current) return;
+        if (musicPlaying) {
+            audioRef.current.pause();
+        } else {
+            void audioRef.current.play();
+        }
+        setMusicPlaying(m => !m);
+    }
 
     return (
         <Container id="DicePoker">
@@ -79,6 +98,27 @@ export default function DicePoker({ t }): JSX.Element {
                     />
                 </Modal.Body>
             </Modal>
+
+            {/* Music toggle button */}
+            <Button
+                variant={musicPlaying ? 'warning' : 'outline-secondary'}
+                onClick={handleMusicToggle}
+                style={{
+                    position: 'fixed',
+                    bottom: '1.2rem',
+                    right: '1.2rem',
+                    zIndex: 1050,
+                    borderRadius: '50%',
+                    width: '48px',
+                    height: '48px',
+                    fontSize: '1.3rem',
+                    lineHeight: 1,
+                    padding: 0,
+                }}
+                title={musicPlaying ? 'Pauza' : 'Odtwórz muzykę'}
+            >
+                🎵
+            </Button>
         </Container>
     );
 }

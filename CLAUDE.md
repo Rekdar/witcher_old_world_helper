@@ -44,10 +44,10 @@ No test suite is configured (`npm test` exits with error).
 **Domain classes (`src/classes/`):**
 - `dataClasses.ts` — `Deck<T>` abstraction on `QueueCollection<T>`. `ReadonlyDeck` enforces immutable `allItems`; `MutableDeck` allows adding items (e.g. player hands). Auto-repopulate-on-exhaustion is implemented in the consuming class (e.g. `MonstersDeck.draw()` calls `repopulate()` when the sub-deck is empty).
 - `monsters.tsx` — `MonstersDeck` wraps four `ReadonlyDeck` instances (levels 1–3 + legendary). Monster classes extend `monsterClass` which renders token/mini images. Expansion booleans passed to constructor control which monsters are included.
-- `terrains.tsx` — `TerrainLocation` type, named location constants, and `TerrainTokenDeck` class with separate Mountain/Forest/Water `ReadonlyDeck` instances. Skellige expansion adds extra tokens to each deck. `getTokenImgSrc(imgStr)` resolves webpack image paths.
+- `terrains.tsx` — `TerrainLocation` type, named location constants, and `TerrainTokenDeck` class with separate Mountain/Forest/Water `ReadonlyDeck` instances. Skellige expansion adds extra tokens to each deck. `getTokenImgSrc(imgStr)` resolves webpack image paths. Both base and Skellige token arrays (`MountainTokens`, `ForestTokens`, `WaterTokens`, `MountainTokensSkellige`, `ForestTokensSkellige`, `WaterTokensSkellige`) are exported — import them directly when you need the full list outside a deck (e.g. to populate a dropdown), since `Deck.allItems` is `protected` and inaccessible from components.
 - `setup.tsx` — `compileSteps()` builds ordered JSX setup instructions per expansion/player count.
 
-**Key component: `TerrainTokenPicker`** (`src/components/TerrainTokenPicker.tsx`) — shared by `LocationTokens` and `LostMount`. Maintains a task list (persisted in localStorage key `locationTokens_tasks`) that tracks which token was assigned to which player with a note. Tasks survive page refresh.
+**Key component: `TerrainTokenPicker`** (`src/components/TerrainTokenPicker.tsx`) — shared by `LocationTokens` and `LostMount`. Maintains a task list (persisted in localStorage key `locationTokens_tasks`) that tracks which token was assigned to which player with a note. Tasks survive page refresh. Two ways to add a task: (1) draw a token then click "Add Action", (2) "Add action manually" button (always visible) — opens a form with a token dropdown grouped by terrain type. If `witcherPicker_state` contains non-empty player names, the player name field becomes a dropdown populated from that state instead of a free-text input. Table token thumbnails support click-to-zoom via the shared `enlargedImage`/Modal pattern.
 
 **i18n:** 2 locales (en, pl) in `src/locales/[lang]/translation.json`. Always edit `en` first, then sync to `pl`. Home page tiles are driven by the `home.linkedPages` array in each locale file. Navbar dropdown links require a `navbar.*` key in both locale files.
 
@@ -65,7 +65,9 @@ Current keys:
 - `locationTokens_tasks` — terrain token task list in `TerrainTokenPicker`
 - `opponents_wildHunt_players` — player names in `Opponents`
 - `monsterFight_state` — full `MonsterFightState` object (setup + fight fields)
-- `witcherPicker_state` — combined state for `WitcherPicker` (player names, results, Ciri toggle, track positions)
+- `witcherPicker_state` — combined state for `WitcherPicker`; shape: `{ numPlayers, playerNames: string[], results: PlayerResult[] | null, ciriEnabled, trackPositions: Record<string, number> }`. `playerNames` is read cross-component by `TerrainTokenPicker` to pre-populate player name dropdowns.
+
+**Cross-component reads:** Components may read another page's localStorage key to enrich their own UI (e.g. `TerrainTokenPicker` reads `witcherPicker_state.playerNames`). Do this with a standalone `load*` function — never couple the two pages at the React level.
 
 ## MonsterFight deck mechanics
 

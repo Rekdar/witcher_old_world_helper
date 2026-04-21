@@ -95,7 +95,10 @@
         "tasksTitle": "Actions",
         "tokenColumn": "Token",
         "errorEmptyName": "Player name cannot be empty.",
-        "errorEmptyNote": "Note cannot be empty."
+        "errorEmptyNote": "Note cannot be empty.",
+        "addManualAction": "Add action manually",
+        "selectTokenLabel": "Select token",
+        "errorNoToken": "You must select a token."
     },
     "home": {
         "linkedPages": [
@@ -114,7 +117,7 @@
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
-                "desc": "Randomly assign a Witcher School to each player and draw the starting player.",
+                "desc": "Randomly assign a Witcher School to each player, draw the starting player, and track positions on the victory track.",
                 "btn": "Draw Schools"
             },
             {

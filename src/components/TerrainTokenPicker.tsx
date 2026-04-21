@@ -3,12 +3,28 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/esm/Button';
 import Image from 'react-bootstrap/Image';
-import { Alert, Form, Table } from 'react-bootstrap';
-import TerrainTokenDeck, { MountainToken, ForestToken, WaterToken, getTokenImgSrc } from '../classes/terrains';
+import { Alert, Form, Modal, Table } from 'react-bootstrap';
+import TerrainTokenDeck, {
+    MountainToken, ForestToken, WaterToken, getTokenImgSrc,
+    MountainTokens, ForestTokens, WaterTokens,
+    MountainTokensSkellige, ForestTokensSkellige, WaterTokensSkellige
+} from '../classes/terrains';
 import { useState } from 'react';
 import PageTitle from './PageTitle';
 
 const TASKS_STORAGE_KEY = 'locationTokens_tasks';
+const WITCHER_PICKER_KEY = 'witcherPicker_state';
+
+function loadWitcherPlayerNames(): string[] {
+    try {
+        const raw = localStorage.getItem(WITCHER_PICKER_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw) as { playerNames?: string[] };
+        return (parsed.playerNames ?? []).filter(n => n.trim() !== '');
+    } catch {
+        return [];
+    }
+}
 
 interface TaskEntry {
     id: string;
@@ -49,6 +65,16 @@ export default function TerrainTokenPicker({
     const [formErrors, setFormErrors] = useState<string[]>([]);
     const [tasks, setTasks] = useState<TaskEntry[]>(loadTasks);
 
+    const [showManualForm, setShowManualForm] = useState(false);
+    const [manualTokenKey, setManualTokenKey] = useState('');
+    const [manualFormName, setManualFormName] = useState('');
+    const [manualFormNote, setManualFormNote] = useState('');
+    const [manualFormErrors, setManualFormErrors] = useState<string[]>([]);
+
+    const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+
+    const witcherPlayers = loadWitcherPlayerNames();
+
     if (NumTokens > 1) {
         print();
     }
@@ -57,6 +83,10 @@ export default function TerrainTokenPicker({
         setSkellige(!skellige);
         setLocalTerrainDeck(new TerrainTokenDeck(!skellige));
     };
+
+    const allTokens = skellige
+        ? [...MountainTokensSkellige, ...ForestTokensSkellige, ...WaterTokensSkellige]
+        : [...MountainTokens, ...ForestTokens, ...WaterTokens];
 
     const tokenDrawn = displayedToken.number !== -1;
 
@@ -84,6 +114,33 @@ export default function TerrainTokenPicker({
         setShowForm(false);
     };
 
+    const handleSaveManualTask = () => {
+        const errors: string[] = [];
+        if (!manualTokenKey) errors.push(t('locationTokens.errorNoToken'));
+        if (!manualFormName.trim()) errors.push(t('locationTokens.errorEmptyName'));
+        if (!manualFormNote.trim()) errors.push(t('locationTokens.errorEmptyNote'));
+        if (errors.length > 0) {
+            setManualFormErrors(errors);
+            return;
+        }
+        const selectedToken = allTokens.find(tok => tok.imgStr === manualTokenKey)!;
+        const newTask: TaskEntry = {
+            id: Date.now().toString(),
+            imgStr: selectedToken.imgStr,
+            tokenName: selectedToken.name,
+            playerName: manualFormName.trim(),
+            note: manualFormNote.trim(),
+        };
+        const updated = [...tasks, newTask];
+        setTasks(updated);
+        saveTasks(updated);
+        setManualTokenKey('');
+        setManualFormName('');
+        setManualFormNote('');
+        setManualFormErrors([]);
+        setShowManualForm(false);
+    };
+
     const handleDone = (id: string) => {
         const updated = tasks.filter(task => task.id !== id);
         setTasks(updated);
@@ -95,6 +152,14 @@ export default function TerrainTokenPicker({
         setFormName('');
         setFormNote('');
         setFormErrors([]);
+    };
+
+    const handleCancelManualForm = () => {
+        setShowManualForm(false);
+        setManualTokenKey('');
+        setManualFormName('');
+        setManualFormNote('');
+        setManualFormErrors([]);
     };
 
     return (
@@ -137,15 +202,20 @@ export default function TerrainTokenPicker({
                 />
             </Row>
 
-            {tokenDrawn && !showForm && (
-                <Row className='justify-content-center p-2'>
+            <Row className='justify-content-center p-2'>
+                {tokenDrawn && !showForm && (
                     <Col xs="auto">
                         <Button variant="outline-secondary" onClick={() => setShowForm(true)}>
                             {t('locationTokens.addAction')}
                         </Button>
                     </Col>
-                </Row>
-            )}
+                )}
+                <Col xs="auto">
+                    <Button variant="outline-secondary" onClick={() => setShowManualForm(prev => !prev)}>
+                        {t('locationTokens.addManualAction')}
+                    </Button>
+                </Col>
+            </Row>
 
             {showForm && (
                 <Row className='justify-content-center p-2'>
@@ -153,12 +223,25 @@ export default function TerrainTokenPicker({
                         <Form>
                             <Form.Group className='mb-3'>
                                 <Form.Label><strong>{t('locationTokens.playerNameLabel')}</strong></Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formName}
-                                    onChange={e => { setFormName(e.target.value); setFormErrors([]); }}
-                                    isInvalid={formErrors.includes(t('locationTokens.errorEmptyName'))}
-                                />
+                                {witcherPlayers.length > 0 ? (
+                                    <Form.Select
+                                        value={formName}
+                                        onChange={e => { setFormName(e.target.value); setFormErrors([]); }}
+                                        isInvalid={formErrors.includes(t('locationTokens.errorEmptyName'))}
+                                    >
+                                        <option value="">—</option>
+                                        {witcherPlayers.map(name => (
+                                            <option key={name} value={name}>{name}</option>
+                                        ))}
+                                    </Form.Select>
+                                ) : (
+                                    <Form.Control
+                                        type="text"
+                                        value={formName}
+                                        onChange={e => { setFormName(e.target.value); setFormErrors([]); }}
+                                        isInvalid={formErrors.includes(t('locationTokens.errorEmptyName'))}
+                                    />
+                                )}
                             </Form.Group>
                             <Form.Group className='mb-3'>
                                 <Form.Label><strong>{t('locationTokens.noteLabel')}</strong></Form.Label>
@@ -190,6 +273,87 @@ export default function TerrainTokenPicker({
                 </Row>
             )}
 
+            {showManualForm && (
+                <Row className='justify-content-center p-2'>
+                    <Col xs={12} md={8} lg={6}>
+                        <Form>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>{t('locationTokens.selectTokenLabel')}</strong></Form.Label>
+                                <Form.Select
+                                    value={manualTokenKey}
+                                    onChange={e => { setManualTokenKey(e.target.value); setManualFormErrors([]); }}
+                                    isInvalid={manualFormErrors.includes(t('locationTokens.errorNoToken'))}
+                                >
+                                    <option value="">—</option>
+                                    <optgroup label={t('locationTokens.mountain')}>
+                                        {(skellige ? MountainTokensSkellige : MountainTokens).map(tok => (
+                                            <option key={tok.imgStr} value={tok.imgStr}>{tok.name}</option>
+                                        ))}
+                                    </optgroup>
+                                    <optgroup label={t('locationTokens.forest')}>
+                                        {(skellige ? ForestTokensSkellige : ForestTokens).map(tok => (
+                                            <option key={tok.imgStr} value={tok.imgStr}>{tok.name}</option>
+                                        ))}
+                                    </optgroup>
+                                    <optgroup label={t('locationTokens.water')}>
+                                        {(skellige ? WaterTokensSkellige : WaterTokens).map(tok => (
+                                            <option key={tok.imgStr} value={tok.imgStr}>{tok.name}</option>
+                                        ))}
+                                    </optgroup>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>{t('locationTokens.playerNameLabel')}</strong></Form.Label>
+                                {witcherPlayers.length > 0 ? (
+                                    <Form.Select
+                                        value={manualFormName}
+                                        onChange={e => { setManualFormName(e.target.value); setManualFormErrors([]); }}
+                                        isInvalid={manualFormErrors.includes(t('locationTokens.errorEmptyName'))}
+                                    >
+                                        <option value="">—</option>
+                                        {witcherPlayers.map(name => (
+                                            <option key={name} value={name}>{name}</option>
+                                        ))}
+                                    </Form.Select>
+                                ) : (
+                                    <Form.Control
+                                        type="text"
+                                        value={manualFormName}
+                                        onChange={e => { setManualFormName(e.target.value); setManualFormErrors([]); }}
+                                        isInvalid={manualFormErrors.includes(t('locationTokens.errorEmptyName'))}
+                                    />
+                                )}
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>{t('locationTokens.noteLabel')}</strong></Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={2}
+                                    value={manualFormNote}
+                                    onChange={e => { setManualFormNote(e.target.value); setManualFormErrors([]); }}
+                                    isInvalid={manualFormErrors.includes(t('locationTokens.errorEmptyNote'))}
+                                />
+                            </Form.Group>
+                            {manualFormErrors.length > 0 && (
+                                <Alert variant="danger" className='mb-3'>
+                                    <ul className='mb-0'>
+                                        {manualFormErrors.map((err, i) => <li key={i}>{err}</li>)}
+                                    </ul>
+                                </Alert>
+                            )}
+                            <div className='d-flex gap-2'>
+                                <Button variant="secondary" onClick={handleSaveManualTask}>
+                                    {t('locationTokens.save')}
+                                </Button>
+                                <Button variant="outline-secondary" onClick={handleCancelManualForm}>
+                                    {t('locationTokens.cancel')}
+                                </Button>
+                            </div>
+                        </Form>
+                    </Col>
+                </Row>
+            )}
+
             {tasks.length > 0 && (
                 <Row className='p-2 mt-3'>
                     <Col>
@@ -212,6 +376,8 @@ export default function TerrainTokenPicker({
                                                 width={50}
                                                 alt={task.tokenName}
                                                 roundedCircle
+                                                style={{ cursor: 'zoom-in' }}
+                                                onClick={() => setEnlargedImage(getTokenImgSrc(task.imgStr))}
                                             />
                                         </td>
                                         <td className='align-middle'>{task.playerName}</td>
@@ -232,6 +398,14 @@ export default function TerrainTokenPicker({
                     </Col>
                 </Row>
             )}
+
+            <Modal show={enlargedImage !== null} onHide={() => setEnlargedImage(null)} size="lg" centered>
+                <Modal.Body className='text-center p-2' onClick={() => setEnlargedImage(null)} style={{ cursor: 'zoom-out' }}>
+                    {enlargedImage && (
+                        <Image src={enlargedImage} fluid roundedCircle style={{ maxHeight: '80vh' }} />
+                    )}
+                </Modal.Body>
+            </Modal>
         </Container>
     );
 }

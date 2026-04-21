@@ -107,7 +107,10 @@
         "tasksTitle": "Akcje",
         "tokenColumn": "Żeton",
         "errorEmptyName": "Imię gracza nie może być puste.",
-        "errorEmptyNote": "Notatka nie może być pusta."
+        "errorEmptyNote": "Notatka nie może być pusta.",
+        "addManualAction": "Dodaj akcję ręcznie",
+        "selectTokenLabel": "Wybierz żeton",
+        "errorNoToken": "Musisz wybrać żeton."
     },
     "home": {
         "linkedPages": [
@@ -126,7 +129,7 @@
             {
                 "name": "$t(witcherPicker.title)",
                 "link": "#/witcherPicker",
-                "desc": "Losowo przypisz szkołę wiedźmina każdemu graczowi i wylosuj gracza zaczynającego.",
+                "desc": "Losowo przypisz szkołę wiedźmina każdemu graczowi, wylosuj gracza zaczynającego i śledź pozycje na torze zwycięstwa.",
                 "btn": "Losuj szkoły"
             },
             {

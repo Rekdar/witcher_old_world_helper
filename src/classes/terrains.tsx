@@ -402,5 +402,8 @@ export {
     MountainTokens,
     ForestTokens,
     WaterTokens,
+    MountainTokensSkellige,
+    ForestTokensSkellige,
+    WaterTokensSkellige,
     TerrainTokenDeck
 };

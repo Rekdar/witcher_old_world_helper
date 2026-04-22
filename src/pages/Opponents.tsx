@@ -423,7 +423,11 @@ export default function Opponents({ t }): JSX.Element {
     }
 
     function handlePeekSave() {
-        set({ knightFightDeck: [...peekCards, ...state.knightFightDeck.slice(peekOriginalCount)] });
+        const removed = peekOriginalCount - peekCards.length;
+        set({
+            knightFightDeck: [...peekCards, ...state.knightFightDeck.slice(peekOriginalCount)],
+            knightFightHp: Math.max(0, state.knightFightHp - removed),
+        });
         setPeekOpen(false);
     }
 

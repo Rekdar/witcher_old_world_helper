@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { Button, Card, Col, Container, Image, Modal, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Image, Modal, Row } from "react-bootstrap";
 import PageTitle from "../components/PageTitle";
 
 const pokerImg = require('../img/poker.png') as string;
+const pokerWildHuntImg = require('../img/wild_hunt/poker_wild_hunt.png') as string;
+const wildHuntHeaderImg = require('../img/expansionHeaders/wildHunt.png') as string;
 
 const DICE_FACES = ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
@@ -120,6 +122,7 @@ function DiceSection({ label, state, onRoll, onToggle, onReroll, onMove }: DiceS
 
 export default function DicePoker({ t }): JSX.Element {
     const [enlarged, setEnlarged] = useState(false);
+    const [wildHuntMode, setWildHuntMode] = useState(false);
     const [musicPlaying, setMusicPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [whiteDice, setWhiteDice] = useState<DiceState>(initialDiceState);
@@ -196,13 +199,28 @@ export default function DicePoker({ t }): JSX.Element {
                     </Card>
 
                     <div className="text-center mb-4">
-                        <p className="text-muted mb-2"><em>Kliknij obrazek, aby powiększyć</em></p>
-                        <Image
-                            src={pokerImg}
-                            fluid
-                            style={{ maxHeight: 340, cursor: 'zoom-in' }}
-                            onClick={() => setEnlarged(true)}
+                        <Form.Check
+                            type="switch"
+                            id="wildHuntPokerSwitch"
+                            className="d-inline-flex align-items-center gap-2 mb-3"
+                            checked={wildHuntMode}
+                            onChange={e => setWildHuntMode(e.target.checked)}
+                            label={
+                                <span className="d-inline-flex align-items-center gap-2">
+                                    Dodatek
+                                    <Image src={wildHuntHeaderImg} height={28} alt="Dziki Gon" />
+                                </span>
+                            }
                         />
+                        <div>
+                            <p className="text-muted mb-2"><em>Kliknij obrazek, aby powiększyć</em></p>
+                            <Image
+                                src={wildHuntMode ? pokerWildHuntImg : pokerImg}
+                                fluid
+                                style={{ maxHeight: 340, cursor: 'zoom-in' }}
+                                onClick={() => setEnlarged(true)}
+                            />
+                        </div>
                     </div>
 
                     <Card>
@@ -256,7 +274,7 @@ export default function DicePoker({ t }): JSX.Element {
             <Modal show={enlarged} onHide={() => setEnlarged(false)} centered size="xl">
                 <Modal.Body className="p-1 text-center" style={{ background: '#111' }}>
                     <Image
-                        src={pokerImg}
+                        src={wildHuntMode ? pokerWildHuntImg : pokerImg}
                         style={{ maxWidth: '100%', maxHeight: '90vh', cursor: 'zoom-out' }}
                         onClick={() => setEnlarged(false)}
                     />

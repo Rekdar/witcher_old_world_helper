@@ -17,6 +17,7 @@ interface MonsterFightState {
     // Setup fields
     selectedMonsterName: string | null;
     monsterTrail: boolean;
+    wildHunt: boolean;
     currentHp: number | null;
     hasWeaknessTokens: boolean;
     selectedTokens: string[];
@@ -33,6 +34,7 @@ const STORAGE_KEY = 'monsterFight_state';
 const DEFAULT_STATE: MonsterFightState = {
     selectedMonsterName: null,
     monsterTrail: false,
+    wildHunt: false,
     currentHp: null,
     hasWeaknessTokens: false,
     selectedTokens: [],
@@ -100,6 +102,7 @@ const tokenImages: Record<string, string> = Object.fromEntries(
 );
 
 const monsterTrailImg: string = require('../img/expansionHeaders/monsterTrail.png');
+const wildHuntExpImg: string = require('../img/expansionHeaders/wildHunt.png');
 const deckBackImg: string = require('../img/monster_fight/back.jpg');
 
 function getCardImage(key: string): string {
@@ -262,9 +265,11 @@ export default function MonsterFight({ t }): JSX.Element {
     }
 
     function handlePeekSave() {
+        const removed = peekOriginalCount - peekCards.length;
         setState(s => ({
             ...s,
             fightDeck: [...peekCards, ...s.fightDeck.slice(peekOriginalCount)],
+            fightHp: Math.max(0, s.fightHp - removed),
         }));
         setPeekOpen(false);
     }
@@ -426,6 +431,15 @@ export default function MonsterFight({ t }): JSX.Element {
                             </Col>
                         </Row>
 
+                        {/* Wild Hunt reminder */}
+                        {state.wildHunt && (
+                            <div className="text-center mb-3 px-2 py-2 border border-secondary rounded" style={{ background: 'rgba(108,117,125,0.1)' }}>
+                                <span className="fw-semibold">
+                                    Jeśli potwór zostaje pokonany albo odpędzony, jeździec Dzikiego Gonu traci tyle tarcz, ile wynosi poziom tego potwora.
+                                </span>
+                            </div>
+                        )}
+
                         {/* End fight button */}
                         <div className="text-center mb-4 d-flex justify-content-center gap-2 flex-wrap">
                             {selectedMonster.name_pl === 'Troll' && (
@@ -437,6 +451,21 @@ export default function MonsterFight({ t }): JSX.Element {
                                     Zdolność specjalna
                                 </Button>
                             )}
+                            <Button
+                                variant="outline-secondary"
+                                disabled={state.revealedCards.length === 0}
+                                onClick={() => {
+                                    const last = state.revealedCards[state.revealedCards.length - 1];
+                                    setState(s => ({
+                                        ...s,
+                                        fightDeck: [last, ...s.fightDeck],
+                                        fightHp: s.fightHp + 1,
+                                        revealedCards: s.revealedCards.slice(0, -1),
+                                    }));
+                                }}
+                            >
+                                ↩ Cofnij
+                            </Button>
                             <Button variant="outline-secondary" onClick={handleEndFight}>
                                 {t('monsterFight.endFightBtn')}
                             </Button>
@@ -647,6 +676,21 @@ export default function MonsterFight({ t }): JSX.Element {
                                 <span className="d-inline-flex align-items-center gap-2">
                                     {t('monsterFight.monsterTrailLabel')}
                                     <Image src={monsterTrailImg} width={120} />
+                                </span>
+                            }
+                        />
+                    </Form.Group>
+
+                    {/* Wild Hunt expansion checkbox */}
+                    <Form.Group className="mb-3">
+                        <Form.Check
+                            id="wildHuntCheck"
+                            checked={state.wildHunt}
+                            onChange={e => setState(s => ({ ...s, wildHunt: e.target.checked }))}
+                            label={
+                                <span className="d-inline-flex align-items-center gap-2">
+                                    Dodatek
+                                    <Image src={wildHuntExpImg} width={120} />
                                 </span>
                             }
                         />

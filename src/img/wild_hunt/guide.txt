@@ -1,0 +1,52 @@
+-- 1 PLAYER
+Runda	Ruch i akcje	Walka / medytacja / eksploracja	Dobieranie i kupowanie kart		Pojawienie się ogara lub potwora	Ruch jeźdźca Dzikiego Gonu
+1		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar  I    							Porusz jeźdzcem Dzikiego Gonu
+2		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór poziomu I					Porusz jeźdzcem Dzikiego Gonu
+3		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar II 							Porusz jeźdzcem Dzikiego Gonu
+4		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór II							Porusz jeźdzcem Dzikiego Gonu
+5		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III							Porusz jeźdzcem Dzikiego Gonu
+6		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Potwór III							Porusz jeźdzcem Dzikiego Gonu
+7		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				X									Porusz jeźdzcem Dzikiego Gonu
+8		Ruch + akcja	Brak eksploracji				Dobierz + kup kartę				Przygotowanie walki z jeźdźcem	
+
+-- 2 PLAYER
+Runda	Ruch i akcje	Walka / medytacja / eksploracja	Dobieranie i kupowanie kart		Pojawienie się ogara lub potwora	Ruch jeźdźca Dzikiego Gonu
+1		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I    							Porusz jeźdzcem Dzikiego Gonu
+2		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór I							Porusz jeźdzcem Dzikiego Gonu
+3		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I + potwór II					Porusz jeźdzcem Dzikiego Gonu
+4		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar  II							Porusz jeźdzcem Dzikiego Gonu
+5		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Potwór  III							Porusz jeźdzcem Dzikiego Gonu
+6		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III + potwór III				Porusz jeźdzcem Dzikiego Gonu
+7		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				X									Porusz jeźdzcem Dzikiego Gonu
+8		Ruch + akcja	Brak eksploracji				Dobierz + kup kartę				Przygotowanie walki z jeźdźcem	
+
+-- 3 PLAYER
+Runda	Ruch i akcje	Walka / medytacja / eksploracja	Dobieranie i kupowanie kart		Pojawienie się ogara lub potwora	Ruch jeźdźca Dzikiego Gonu
+1		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I    							Porusz jeźdzcem Dzikiego Gonu
+2		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór I							Porusz jeźdzcem Dzikiego Gonu
+3		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I + potwór II					Porusz jeźdzcem Dzikiego Gonu
+4		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór  II							Porusz jeźdzcem Dzikiego Gonu
+5		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar II + potwór III				Porusz jeźdzcem Dzikiego Gonu
+6		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III + potwór III				Porusz jeźdzcem Dzikiego Gonu
+7		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				X									Porusz jeźdzcem Dzikiego Gonu
+8		Ruch + akcja	Brak eksploracji				Dobierz + kup kartę				Przygotowanie walki z jeźdźcem	
+
+-- 4 PLAYER
+Runda	Ruch i akcje	Walka / medytacja / eksploracja	Dobieranie i kupowanie kart		Pojawienie się ogara lub potwora	Ruch jeźdźca Dzikiego Gonu
+1		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I    							Porusz jeźdzcem Dzikiego Gonu
+2		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar II + potwór II					Porusz jeźdzcem Dzikiego Gonu
+3		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór II + potwór I				Porusz jeźdzcem Dzikiego Gonu
+4		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar II + potwór III				Porusz jeźdzcem Dzikiego Gonu
+5		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III + potwór III				Porusz jeźdzcem Dzikiego Gonu
+6		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III							Porusz jeźdzcem Dzikiego Gonu
+7		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Przygotowanie walki z jeźdźcem	
+
+-- 5 PLAYER
+Runda	Ruch i akcje	Walka / medytacja / eksploracja	Dobieranie i kupowanie kart		Pojawienie się ogara lub potwora	Ruch jeźdźca Dzikiego Gonu
+1		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar I + potwór I    			    Porusz jeźdzcem Dzikiego Gonu
+2		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar II + potwór II					Porusz jeźdzcem Dzikiego Gonu
+3		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Potwór II + potwór II				Porusz jeźdzcem Dzikiego Gonu
+4		Ruch + akcja	Eksploracja I					Dobierz + kup kartę				Ogar II + potwór III				Porusz jeźdzcem Dzikiego Gonu
+5		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III + potwór III				Porusz jeźdzcem Dzikiego Gonu
+6		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Ogar III							Porusz jeźdzcem Dzikiego Gonu
+7		Ruch + akcja	Eksploracja II					Dobierz + kup kartę				Przygotowanie walki z jeźdźcem	

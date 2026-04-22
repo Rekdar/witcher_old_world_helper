@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     Alert, Button, Card, Col, Container, Form, Image,
     InputGroup, ListGroup, Modal, Row, Table
@@ -120,6 +120,14 @@ const MAIN_CARDS = Array.from({ length: 20 }, (_, i) =>
     `monster_trial_${String(i + 1).padStart(2, '0')}.jpg`
 );
 
+const WILD_HUNT_TRACKS = [
+    { title: 'Eredin, King Of The Hunt', src: require('../music/wild_hunt/Eredin, King Of The Hunt.mp3') as string },
+    { title: 'Hail To Caranthir',        src: require('../music/wild_hunt/Hail To Caranthir.mp3') as string },
+    { title: 'On Thin Ice',              src: require('../music/wild_hunt/On Thin Ice.mp3') as string },
+    { title: 'The Hunt Is Coming',       src: require('../music/wild_hunt/The Hunt Is Coming.mp3') as string },
+    { title: 'Welcome, Imlerith',        src: require('../music/wild_hunt/Welcome, Imlerith.mp3') as string },
+];
+
 // ── Default state ──────────────────────────────────────────────────────────
 
 const DEFAULT_STATE: AppState = {
@@ -130,7 +138,7 @@ const DEFAULT_STATE: AppState = {
     houndShieldCount: 0,
     houndNote: '',
     drawnHoundRewards: [],
-    knightHp: 16,
+    knightHp: 20,
     knightShieldCount: 0,
     knightFightStarted: false,
     knightFightDeck: [],
@@ -187,6 +195,7 @@ const houndRewardIcons: Record<number, string> = {
     3: require('../img/wild_hunt/hound3.png'),
 };
 const preparationImg: string = require('../img/wild_hunt/preparation.jpg');
+const frozenShieldImg: string = require('../img/wild_hunt/frozen_shield.png');
 const deckBackImg: string = require('../img/monster_fight/back.jpg');
 const mainCardImages: Record<string, string> = Object.fromEntries(
     MAIN_CARDS.map(f => [f, require(`../img/monster_fight/${f}`)])
@@ -225,6 +234,11 @@ export default function Opponents({ t }): JSX.Element {
     const [knightAttackResult, setKnightAttackResult] = useState<string | null>(null);
     const [knightAttackKey, setKnightAttackKey] = useState(0);
 
+    // Music
+    const [musicPlaying, setMusicPlaying] = useState(false);
+    const [currentTrackTitle, setCurrentTrackTitle] = useState<string | null>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
     // Modals
     const [preparationOpen, setPreparationOpen] = useState(false);
     const [houndRulesOpen, setHoundRulesOpen] = useState(false);
@@ -236,6 +250,40 @@ export default function Opponents({ t }): JSX.Element {
     const [peekOriginalCount, setPeekOriginalCount] = useState(0);
 
     useEffect(() => { saveState(state); }, [state]);
+
+    useEffect(() => {
+        if (!state.knightFightStarted) {
+            if (audioRef.current) { audioRef.current.pause(); }
+            setMusicPlaying(false);
+            setCurrentTrackTitle(null);
+            return;
+        }
+        let cancelled = false;
+
+        function playNext(exclude?: string, autoplay = false) {
+            if (cancelled) return;
+            const pool = WILD_HUNT_TRACKS.filter(t => t.title !== exclude || WILD_HUNT_TRACKS.length === 1);
+            const track = shuffle([...pool])[0];
+            const audio = new Audio(track.src);
+            audioRef.current = audio;
+            setCurrentTrackTitle(track.title);
+            audio.onended = () => playNext(track.title, true);
+            if (autoplay) void audio.play().catch(() => {});
+        }
+
+        playNext();
+        return () => { cancelled = true; if (audioRef.current) { audioRef.current.onended = null; audioRef.current.pause(); } };
+    }, [state.knightFightStarted]);
+
+    function handleMusicToggle() {
+        if (!audioRef.current) return;
+        if (musicPlaying) {
+            audioRef.current.pause();
+        } else {
+            void audioRef.current.play();
+        }
+        setMusicPlaying(m => !m);
+    }
 
     const selectedKnight = knights.find(k => k.name_pl === state.selectedKnightName) ?? null;
 
@@ -370,6 +418,10 @@ export default function Opponents({ t }): JSX.Element {
         });
     }
 
+    function handlePeekDelete(idx: number) {
+        setPeekCards(cards => cards.filter((_, i) => i !== idx));
+    }
+
     function handlePeekSave() {
         set({ knightFightDeck: [...peekCards, ...state.knightFightDeck.slice(peekOriginalCount)] });
         setPeekOpen(false);
@@ -413,7 +465,7 @@ export default function Opponents({ t }): JSX.Element {
                 <Row className="justify-content-center">
                     <Col xs={12} md={10} lg={8}>
 
-                        <div className="text-center mb-3">
+                        <div className="text-center mb-3 d-flex justify-content-center align-items-center gap-3">
                             <Image
                                 src={knightBackImages[selectedKnight.name_pl]}
                                 style={{ maxWidth: '300px', width: '100%', cursor: 'zoom-in' }}
@@ -421,13 +473,29 @@ export default function Opponents({ t }): JSX.Element {
                                 rounded
                                 onClick={() => setEnlargedImage(knightBackImages[selectedKnight.name_pl])}
                             />
+                            {state.knightShieldCount > 0 && (
+                                <div className="text-center" style={{ flexShrink: 0 }}>
+                                    <div className="fw-semibold mb-1">Liczba tarcz: {state.knightShieldCount}</div>
+                                    <Image src={frozenShieldImg} style={{ width: '256px' }} alt="Tarcze" />
+                                </div>
+                            )}
                         </div>
 
                         <div className="mb-3 d-flex flex-wrap align-items-center justify-content-center gap-3">
                             <span className="fs-4 fw-bold">HP: {state.knightFightHp}</span>
                             <div className="d-flex align-items-center gap-1">
-                                <span title="Tarcze oblodzone">🛡️❄️</span>
-                                <span className="fs-5 fw-bold">{state.knightShieldCount}</span>
+                                <Image src={frozenShieldImg} height={28} alt="Tarcze oblodzone" style={{ display: 'inline' }} />
+                                <InputGroup style={{ width: '120px' }}>
+                                    <Button variant="outline-secondary" size="sm"
+                                        onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>
+                                    <Form.Control
+                                        type="number" min={0} value={state.knightShieldCount} size="sm"
+                                        onChange={e => set({ knightShieldCount: Math.max(0, isNaN(Number(e.target.value)) ? 0 : Number(e.target.value)) })}
+                                        className="text-center"
+                                    />
+                                    <Button variant="outline-secondary" size="sm"
+                                        onClick={() => set({ knightShieldCount: state.knightShieldCount + 1 })}>+</Button>
+                                </InputGroup>
                             </div>
                             <Button variant="outline-info" size="sm" onClick={() => setKnightHelpOpen(true)}>
                                 Pomoc
@@ -476,8 +544,22 @@ export default function Opponents({ t }): JSX.Element {
                             </Col>
                         </Row>
 
-                        <div className="text-center mb-4">
-                            <Button variant="outline-secondary" onClick={handleEndKnightFight}>
+                        <div className="d-flex justify-content-center gap-2 mb-4">
+                            <Button
+                                variant="outline-secondary"
+                                disabled={state.knightRevealedCards.length === 0}
+                                onClick={() => {
+                                    const last = state.knightRevealedCards[state.knightRevealedCards.length - 1];
+                                    set({
+                                        knightFightDeck: [last, ...state.knightFightDeck],
+                                        knightFightHp: state.knightFightHp + 1,
+                                        knightRevealedCards: state.knightRevealedCards.slice(0, -1),
+                                    });
+                                }}
+                            >
+                                ↩ Cofnij
+                            </Button>
+                            <Button variant="danger" onClick={handleEndKnightFight}>
                                 Koniec walki
                             </Button>
                         </div>
@@ -565,6 +647,7 @@ export default function Opponents({ t }): JSX.Element {
                                             <div className="ms-auto d-flex gap-1">
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === 0} onClick={() => handlePeekMove(idx, -1)}>↑</Button>
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === peekCards.length - 1} onClick={() => handlePeekMove(idx, 1)}>↓</Button>
+                                                <Button size="sm" variant="outline-danger" onClick={() => handlePeekDelete(idx)}>✕</Button>
                                             </div>
                                         </ListGroup.Item>
                                     ))}
@@ -581,6 +664,23 @@ export default function Opponents({ t }): JSX.Element {
                         {enlargedImage && <Image src={enlargedImage} style={{ maxWidth: '100%', maxHeight: '90vh' }} onClick={() => setEnlargedImage(null)} />}
                     </Modal.Body>
                 </Modal>
+
+                {/* Music toggle */}
+                <div style={{ position: 'fixed', bottom: '1.2rem', right: '1.2rem', zIndex: 1050, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {currentTrackTitle && (
+                        <span style={{ fontSize: '0.72rem', color: '#aaa', fontStyle: 'italic', maxWidth: '160px', textAlign: 'right', lineHeight: 1.2 }}>
+                            {currentTrackTitle}
+                        </span>
+                    )}
+                    <Button
+                        variant={musicPlaying ? 'warning' : 'outline-secondary'}
+                        onClick={handleMusicToggle}
+                        style={{ borderRadius: '50%', width: '48px', height: '48px', fontSize: '1.3rem', lineHeight: 1, padding: 0, flexShrink: 0 }}
+                        title={musicPlaying ? `Pauza – ${currentTrackTitle ?? ''}` : 'Odtwórz muzykę'}
+                    >
+                        🎵
+                    </Button>
+                </div>
             </Container>
         );
     }
@@ -595,73 +695,60 @@ export default function Opponents({ t }): JSX.Element {
             <Row className="justify-content-center">
                 <Col xs={12} md={11} lg={10}>
 
-                    {/* ── Section 1: Player count ──────────────────────── */}
+                    {/* ── Section 1+2: Player count + Knight selector ── */}
                     <Card className="mb-3">
                         <Card.Body>
-                            <Card.Title as="h5">Liczba graczy</Card.Title>
-                            <div className="d-flex gap-2 flex-wrap">
-                                {[1, 2, 3, 4, 5].map(n => (
-                                    <Button
-                                        key={n}
-                                        variant={state.numPlayers === n ? 'secondary' : 'outline-secondary'}
-                                        style={{ width: 48 }}
-                                        onClick={() => handleNumPlayersChange(n)}
+                            <Row className="align-items-start g-3">
+                                <Col xs={12} sm="auto">
+                                    <div className="fw-semibold mb-1" style={{ fontSize: '0.9rem' }}>Liczba graczy</div>
+                                    <Form.Select
+                                        size="sm"
+                                        style={{ width: 'auto' }}
+                                        value={state.numPlayers}
+                                        onChange={e => handleNumPlayersChange(Number(e.target.value))}
                                     >
-                                        {n}
-                                    </Button>
-                                ))}
-                            </div>
-                        </Card.Body>
-                    </Card>
-
-                    {/* ── Section 2: Knight selector ───────────────────── */}
-                    <Card className="mb-3">
-                        <Card.Body>
-                            <Card.Title as="h5">Wybór jeźdźca Dzikiego Gonu</Card.Title>
-                            <div className="d-flex flex-wrap gap-3">
-                                {knights.map(k => {
-                                    const selected = state.selectedKnightName === k.name_pl;
-                                    return (
-                                        <div
-                                            key={k.name_pl}
-                                            onClick={() => set({ selectedKnightName: selected ? null : k.name_pl })}
-                                            style={{
-                                                cursor: 'pointer',
-                                                border: selected ? '3px solid #6c757d' : '3px solid transparent',
-                                                borderRadius: '8px',
-                                                padding: '6px',
-                                                textAlign: 'center',
-                                            }}
-                                        >
-                                            <Image
-                                                src={knightMiniImages[k.name_pl]}
-                                                height={80}
-                                                alt={k.name_pl}
-                                                style={{ display: 'block', margin: '0 auto 4px' }}
-                                            />
-                                            <small className="fw-semibold">{k.name_pl}</small>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            {selectedKnight && (
-                                <div className="mt-3 text-center">
-                                    <Image
-                                        src={knightFrontImages[selectedKnight.name_pl]}
-                                        style={{ maxWidth: '220px', width: '100%', cursor: 'zoom-in' }}
-                                        alt={selectedKnight.name_pl}
-                                        rounded
-                                        onClick={() => setEnlargedImage(knightFrontImages[selectedKnight.name_pl])}
-                                    />
-                                </div>
-                            )}
+                                        {[1, 2, 3, 4, 5].map(n => (
+                                            <option key={n} value={n}>{n}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Col>
+                                <Col xs={12} sm>
+                                    <div className="fw-semibold mb-1" style={{ fontSize: '0.9rem' }}>Wybór jeźdźca Dzikiego Gonu</div>
+                                    <div className="d-flex flex-wrap gap-3">
+                                        {knights.map(k => {
+                                            const selected = state.selectedKnightName === k.name_pl;
+                                            return (
+                                                <div
+                                                    key={k.name_pl}
+                                                    onClick={() => set({ selectedKnightName: selected ? null : k.name_pl })}
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        border: selected ? '3px solid #6c757d' : '3px solid transparent',
+                                                        borderRadius: '8px',
+                                                        padding: '6px',
+                                                        textAlign: 'center',
+                                                    }}
+                                                >
+                                                    <Image
+                                                        src={knightMiniImages[k.name_pl]}
+                                                        height={80}
+                                                        alt={k.name_pl}
+                                                        style={{ display: 'block', margin: '0 auto 4px' }}
+                                                    />
+                                                    <small className="fw-semibold">{k.name_pl}</small>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </Col>
+                            </Row>
                         </Card.Body>
                     </Card>
 
                     {/* ── Section 3: Preparation ───────────────────────── */}
                     <div className="mb-3">
-                        <Button variant="outline-secondary" size="sm" onClick={() => setPreparationOpen(true)}>
-                            Instrukcja przygotowania
+                        <Button variant="secondary" onClick={() => setPreparationOpen(true)}>
+                            📋 Instrukcja przygotowania
                         </Button>
                     </div>
 
@@ -750,15 +837,27 @@ export default function Opponents({ t }): JSX.Element {
                                             {formErrors.map((e, i) => <div key={i}>{e}</div>)}
                                         </Alert>
                                     )}
-                                    <Button variant="secondary" size="sm" className="mt-2" onClick={handleSavePlayers}>
-                                        Zapisz graczy
-                                    </Button>
-                                    {isEditingPlayers && (
-                                        <Button variant="outline-secondary" size="sm" className="mt-2 ms-2"
-                                            onClick={() => { setIsEditingPlayers(false); setFormErrors([]); }}>
-                                            Anuluj
+                                    <div className="mt-2 d-flex flex-wrap gap-2">
+                                        <Button variant="secondary" size="sm" onClick={handleSavePlayers}>
+                                            Zapisz graczy
                                         </Button>
-                                    )}
+                                        <Button variant="outline-secondary" size="sm"
+                                            onClick={() => setEditPlayerNames(prev => [...prev, ''])}>
+                                            + Dodaj gracza
+                                        </Button>
+                                        {editPlayerNames.length > 1 && (
+                                            <Button variant="outline-secondary" size="sm"
+                                                onClick={() => setEditPlayerNames(prev => prev.slice(0, -1))}>
+                                                − Usuń ostatniego
+                                            </Button>
+                                        )}
+                                        {isEditingPlayers && (
+                                            <Button variant="outline-secondary" size="sm"
+                                                onClick={() => { setIsEditingPlayers(false); setFormErrors([]); }}>
+                                                Anuluj
+                                            </Button>
+                                        )}
+                                    </div>
                                 </Form>
                             ) : (
                                 <div className="d-flex flex-wrap align-items-center gap-2">
@@ -813,8 +912,8 @@ export default function Opponents({ t }): JSX.Element {
 
                             {/* Shield count */}
                             <div className="mt-3 d-flex align-items-center gap-2">
-                                <span title="Tarcze oblodzone">🛡️❄️</span>
-                                <InputGroup style={{ maxWidth: '140px' }}>
+                                <Image src={frozenShieldImg} height={28} alt="Tarcze oblodzone" style={{ display: 'inline' }} />
+                                <InputGroup style={{ maxWidth: '210px' }}>
                                     <Button variant="outline-secondary" size="sm"
                                         onClick={() => set({ houndShieldCount: Math.max(0, state.houndShieldCount - 1) })}>−</Button>
                                     <Form.Control
@@ -864,7 +963,7 @@ export default function Opponents({ t }): JSX.Element {
                                                 style={{ padding: '4px 8px' }}
                                                 title={exhausted ? 'Wszystkie nagrody wyczerpane' : `Nagroda ogar poziom ${level}`}
                                             >
-                                                <Image src={houndRewardIcons[level]} height={48} alt={`Poziom ${level}`} />
+                                                <Image src={houndRewardIcons[level]} height={144} alt={`Poziom ${level}`} />
                                                 {exhausted && <div style={{ fontSize: '0.7rem' }}>Wyczerpane</div>}
                                             </Button>
                                         );
@@ -919,7 +1018,7 @@ export default function Opponents({ t }): JSX.Element {
 
                                     {/* Shield */}
                                     <Form.Group className="mb-3">
-                                        <Form.Label><span title="Tarcze oblodzone">🛡️❄️</span> Tarcze oblodzone</Form.Label>
+                                        <Form.Label><Image src={frozenShieldImg} height={22} alt="Tarcze" style={{ display: 'inline', marginRight: 4 }} />Tarcze</Form.Label>
                                         <InputGroup style={{ maxWidth: '160px' }}>
                                             <Button variant="outline-secondary"
                                                 onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>

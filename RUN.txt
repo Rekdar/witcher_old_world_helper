@@ -1,2 +1,1 @@
-cd C:\rk_tmp\claude\The-Witcher-Old-World-Tool-main
-npm run dev
+

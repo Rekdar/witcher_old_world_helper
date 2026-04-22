@@ -4,7 +4,9 @@
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/locales/en/translation.json','utf8'\\)\\); console.log\\('EN OK'\\)\")",
       "Bash(node -e ':*)",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/locales/pl/translation.json','utf8'\\)\\); console.log\\('PL OK'\\)\")",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(npx webpack:*)"
     ]
   }
 }

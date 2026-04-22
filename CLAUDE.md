@@ -21,6 +21,8 @@ npx tsc --noEmit    # Type-check without building (fast validation)
 
 No test suite is configured (`npm test` exits with error).
 
+On Windows, `npm run build` fails because it sets `NODE_ENV=production` using Unix syntax. Use `npx webpack --mode production` instead.
+
 > **Note:** The `npm run i18n` script in `package.json` still references removed locales (cs, de, es, fr, it). To sync EN → PL manually, run:
 > `npx i18next-locales-sync -p en -s pl -l src/locales --spaces 4`
 
@@ -36,7 +38,7 @@ No test suite is configured (`npm test` exits with error).
 - `SetupHelper` — ordered setup instructions; expansions/player count drive `compileSteps()` in `src/classes/setup.tsx`
 - `LocationTokens` / `LostMount` — both wrap `TerrainTokenPicker` component; `LostMount` is absent from `home.linkedPages` but accessible via navbar
 - `WitcherPicker` — assigns Witcher Schools to players (2–5), draws starting player. Optional Ciri checkbox adds her to the pool. Results show school icons (from `src/img/witcher_schools_back/`) and a per-player dropdown for manual school override. Victory track (`tor.png`) uses absolute positioning with `CIRCLE_TOPS_PCT` (% from top) to align icons to the 5 circles. Full state in `witcherPicker_state` localStorage.
-- `Opponents` — Full Wild Hunt expansion page with multiple sections: (1) player count selector (1–5, seeds from `witcherPicker_state`); (2) knight selector — 4 knights from `src/wild_hunt_monster.json`, shows mini figure + front card; (3) preparation modal (`preparation.jpg`); (4) clickable round-guide HTML table beside a rounds image, both player-count-dependent — clicking any cell highlights it as the current position; (5) Wild Hunt movement draw (player pool + "Gracz decyduje", auto-populated from `witcherPicker_state`); (6) hound section — hound card (player-count-dependent), knight front card, shield counter, resizable note textarea, hound-rules modal, three-level reward draw (2 options each, no-repeat until reset); (7) knight fight — two-phase like `MonsterFight`: setup (back card, HP default 16, shield count) → fight view (deck of 4 knight ability cards + 16 random main fight cards, HP tracking, attack draw, peek/add/end). Full state in `wildHunt_opponents_state` localStorage.
+- `Opponents` — Full Wild Hunt expansion page with multiple sections: (1) player count `Form.Select` dropdown + knight selector in the same row (mini figures only, no front card shown after selection); (2) preparation modal button; (3) clickable round-guide HTML table beside a rounds image, both player-count-dependent; (4) Wild Hunt movement draw — edit form supports adding/removing players beyond the `numPlayers` count; (5) hound section — hound card, knight front card, shield counter (`frozen_shield.png` icon), note textarea, hound-rules modal, three-level reward draw (2 options each, no-repeat until reset); (6) knight fight setup (back card, HP default **20**, shield count) → fight view (deck of 4 ability + 16 random main cards, HP tracking, editable shield counter with `frozen_shield.png`, attack draw, peek/add/undo/end, background music). Full state in `wildHunt_opponents_state` localStorage.
 - `MonsterFight` — two-phase page: **setup view** (pick monster by level, set HP, select weakness tokens, Monster Trail expansion toggle) → **fight view** (draw cards from deck, HP tracking, monster attack draw, deck scouting). Full state persisted to `monsterFight_state` in localStorage. Combat music (`src/music/combat_music.mp3`) played via `useRef<HTMLAudioElement>`. Monster-specific UI appears in the fight view based on `selectedMonster.name_pl`. Current examples: **Troll** — "Zdolność specjalna" button (disabled when no discarded cards) opens a modal to pick one card from `revealedCards` and place it on top of `fightDeck` (also increments `fightHp`); **Leszy** — "Liczba kości" `InputGroup` (±1 buttons + free input, min 0, default 0) stored as `leshyDiceCount` in `MonsterFightState`. To add a new monster ability: add any needed fields to `MonsterFightState` + `DEFAULT_STATE`, add a handler, and conditionally render the UI gated on `selectedMonster.name_pl`.
 - `DicePoker` — static rules + image (zoomable modal) + background music (`src/music/poker.mp3`). Bottom section has two independent dice-roller panels (white/black) each with: roll 5d6, select dice to reroll, reroll once, reorder dice left/right, hand evaluation (`evaluateHand`). No localStorage. Music toggled via a fixed floating button.
 - `CommunityLinks` — card grid of external links, data-driven from `t("communityLinks.links")`. **Not in the router** — accessible only if linked directly.
@@ -80,7 +82,9 @@ Asset locations:
 - Rounds guide images: `src/img/wild_hunt/rounds_player_{1-5}.jpg`
 - Reward icons: `src/img/wild_hunt/hound1.png`, `hound2.png`, `hound3.png`
 - Preparation image: `src/img/wild_hunt/preparation.jpg`
+- Frozen shield icon: `src/img/wild_hunt/frozen_shield.png` — used in place of 🛡️❄️ emoji throughout `Opponents`
 - Knight minis: `src/img/monsters/wildHunt/{name_lowercase}Mini.png`
+- Fight music: `src/music/wild_hunt/` — 5 tracks (`Eredin, King Of The Hunt.mp3`, `Hail To Caranthir.mp3`, `On Thin Ice.mp3`, `The Hunt Is Coming.mp3`, `Welcome, Imlerith.mp3`)
 
 Knight fight deck: 4 ability cards (`ability:{filename}`) + 16 random cards from the same `monster_trial_01…_20.jpg` pool as `MonsterFight` (`main:{filename}`). `getCardImage(key)` dispatches on the prefix.
 
@@ -91,7 +95,7 @@ Monster data is in `src/monsters.json` (28 monsters, levels 1–3, with `base_he
 Card images:
 - Full card fronts/backs: `src/img/monsters_full_cards/{front_name}.jpg` — filename comes from `front_name`/`back_name` in `monsters.json`. Used by `MonsterPicker` (base mode) and available for `MonsterFight`.
 - Main fight cards: `src/img/monster_fight/monster_trial_01.jpg` … `_20.jpg` (keys prefixed `main:`)
-- Monster Trail cards: `src/img/monster_fight/monster_trial/monster_trial_1.jpg` … `_4.jpg` (keys prefixed `trail:`)
+- Monster Trail cards: `src/img/monster_fight/monster_trail/monster_trail_1.jpg` … `_4.jpg` (keys prefixed `trail:`)
 - Deck back: `src/img/monster_fight/back.jpg`
 
 `buildDeck(level, monsterTrail, hp)` — without MonsterTrail: shuffle 20 main cards, take `hp` many; with MonsterTrail: pool = 4 trail cards + 12 (lvl 1/2) or 16 (lvl 3) random main cards, shuffle, take `hp` many. Deck stored as `string[]` of prefixed keys.
@@ -121,5 +125,7 @@ All images pre-loaded at module level using `Object.fromEntries` + `require()` t
 - **Button variants:** `secondary` (primary action), `outline-secondary` (secondary action), `success`/`primary`/`warning`/`danger` for domain-specific color coding.
 - **Page layout:** `<Container id="PageName">` → `<PageTitle>` → `<Row className="justify-content-center">` → `<Col xs={12} md={8} lg={6}>`.
 - **Image zoom:** Shared `enlargedImage` state + `<Modal size="lg">` pattern — set `cursor: zoom-in` on the thumbnail, `onClick={() => setEnlargedImage(src)}`, modal closes on click.
-- **Background music:** `new Audio(require(...))` created inside `useEffect`, stored in `useRef<HTMLAudioElement | null>`. Cleanup via `audio.pause()` in the effect's return. Toggled with a fixed-position floating button (bottom-right, circular, 48×48px). See `DicePoker` for the canonical pattern.
+- **Background music (single track, looping):** `new Audio(require(...))` created inside `useEffect([], [])`, stored in `useRef<HTMLAudioElement | null>`. `audio.loop = true`. Cleanup via `audio.pause()` in the effect's return. Toggled with a fixed-position floating button (bottom-right, circular, 48×48px). See `DicePoker` for the canonical pattern.
+- **Background music (multi-track, sequential):** Used in `Opponents` knight fight. `useEffect([knightFightStarted])` — when fight starts, a `playNext(exclude?, autoplay?)` closure picks a random track (excluding the just-finished one), creates a new `Audio`, sets `audio.onended = () => playNext(track.title, true)`, and plays only if `autoplay` is true. The initial call passes no `autoplay` so music doesn't start automatically; subsequent `onended` calls pass `autoplay = true`. A `cancelled` flag prevents stale-closure playback after fight ends. Track title displayed in small italic text next to the floating 🎵 button.
 - **Symmetric two-panel state:** When a page has two independent panels with identical behavior (e.g. DicePoker's white/black dice), define a single state interface + a `makeHandlers(setState)` factory that returns all handlers for one panel, then call it twice.
+- **Undo last draw:** Store drawn cards in a `revealedCards: string[]` array. Undo = pop last from `revealedCards`, prepend to deck, restore HP by +1. See `Opponents` knight fight for the pattern.

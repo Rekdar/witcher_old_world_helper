@@ -438,6 +438,7 @@
         "level3Label": "Poziom III",
         "selectPlaceholder": "-- Wybierz potwora --",
         "monsterTrailLabel": "Dodatek \"Na tropie potworów\"",
+        "noteLabel": "Notatka",
         "hpLabel": "Punkty życia",
         "weaknessTokensCheckbox": "Wiedźmin posiada żetony słabości",
         "weaknessTokensTitle": "Wybierz żetony słabości (maks. 6)",

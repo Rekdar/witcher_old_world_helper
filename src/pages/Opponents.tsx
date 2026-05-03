@@ -894,7 +894,7 @@ export default function Opponents({ t }): JSX.Element {
                                     <div className="mb-1 fw-semibold" style={{ fontSize: '0.85rem' }}>Karta ogara</div>
                                     <Image
                                         src={houndCardImages[state.numPlayers]}
-                                        style={{ maxWidth: '100%', cursor: 'zoom-in' }}
+                                        style={{ maxWidth: '50%', cursor: 'zoom-in' }}
                                         alt={`Ogar ${state.numPlayers} graczy`}
                                         rounded
                                         onClick={() => setEnlargedImage(houndCardImages[state.numPlayers])}
@@ -905,7 +905,7 @@ export default function Opponents({ t }): JSX.Element {
                                         <div className="mb-1 fw-semibold" style={{ fontSize: '0.85rem' }}>Karta rycerza</div>
                                         <Image
                                             src={knightFrontImages[selectedKnight.name_pl]}
-                                            style={{ maxWidth: '100%', cursor: 'zoom-in' }}
+                                            style={{ maxWidth: '50%', cursor: 'zoom-in' }}
                                             alt={selectedKnight.name_pl}
                                             rounded
                                             onClick={() => setEnlargedImage(knightFrontImages[selectedKnight.name_pl])}

@@ -27,6 +27,7 @@ interface MonsterFightState {
     fightHp: number;
     revealedCards: string[]; // drawn cards, last = most recent
     leshyDiceCount: number;
+    note: string;
 }
 
 const STORAGE_KEY = 'monsterFight_state';
@@ -43,6 +44,7 @@ const DEFAULT_STATE: MonsterFightState = {
     fightHp: 0,
     revealedCards: [],
     leshyDiceCount: 0,
+    note: '',
 };
 
 function loadState(): MonsterFightState {
@@ -211,8 +213,7 @@ export default function MonsterFight({ t }): JSX.Element {
     }
 
     function handleReset() {
-        setState(DEFAULT_STATE);
-        localStorage.removeItem(STORAGE_KEY);
+        setState(prev => ({ ...DEFAULT_STATE, note: prev.note }));
     }
 
     // ── Fight handlers ───────────────────────────────────────────────────────
@@ -693,6 +694,17 @@ export default function MonsterFight({ t }): JSX.Element {
                                     <Image src={wildHuntExpImg} width={120} />
                                 </span>
                             }
+                        />
+                    </Form.Group>
+
+                    {/* Note */}
+                    <Form.Group className="mb-3">
+                        <Form.Label>{t('monsterFight.noteLabel')}</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={2}
+                            value={state.note}
+                            onChange={e => setState(s => ({ ...s, note: e.target.value }))}
                         />
                     </Form.Group>
 

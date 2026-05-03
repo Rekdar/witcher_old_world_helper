@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { conditionalRender } from "./HorizontalSpacer";
 import Title from "./TitleWithUnderline";
+
+const BASE_TITLE = "The Witcher: Old World Helper";
 
 export default function PageTitle(
     {
@@ -12,6 +15,11 @@ export default function PageTitle(
         ConditionalRender?: conditionalRender;
     }
 ) {
+    useEffect(() => {
+        document.title = `${HeaderText} | ${BASE_TITLE}`;
+        return () => { document.title = BASE_TITLE; };
+    }, [HeaderText]);
+
     return (
         <Title
             HeaderText={HeaderText}

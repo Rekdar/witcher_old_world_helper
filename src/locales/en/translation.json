@@ -429,6 +429,7 @@
         "level3Label": "Level III",
         "selectPlaceholder": "-- Select monster --",
         "monsterTrailLabel": "Monster Trail expansion",
+        "noteLabel": "Note",
         "hpLabel": "Hit Points",
         "weaknessTokensCheckbox": "Witcher has weakness tokens",
         "weaknessTokensTitle": "Select weakness tokens (max 6)",

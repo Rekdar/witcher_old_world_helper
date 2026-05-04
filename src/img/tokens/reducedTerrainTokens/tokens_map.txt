@@ -1,0 +1,21 @@
+"Nazwa tokena";"odległość od lewej krawędzi mapy","odległość od górnej krawędzi mapy"
+Forest10HaernCaduch.png;669;824
+Forest16Dhuwod.png;534;1385
+Forest17Stygga.png;960;1350
+Forest6Novigrad.png;291;399
+Forest7Vizima.png;647;426
+Forest8Vengerberg.png;1166;485
+
+Mountain11Beauclair.png;1107;851
+Mountain13Doldeth.png;285;1229
+Mountain18ArdModron.png;1300;1385
+Mountain2Hengfors.png;711;192
+Mountain3KaerMorhen.png;1217;119
+Mountain9Cintra.png;171;740
+
+Water12Glenmore.png;240;995
+Water14LocIchaer.png;794;1154
+Water15GorthurGvaed.png;1319;1089
+Water1KaerSeren.png;174;209
+Water4BanArd.png;1266;278
+Water5Cidaris.png;101;512

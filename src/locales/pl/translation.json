@@ -156,7 +156,14 @@
                 "desc": "Zasady kościanego pokera — instrukcja, układy i objaśnienia.",
                 "btn": "Graj w pokera"
             }
-        ]
+        ],
+        "saveState": "Zapisz stan",
+        "loadState": "Wczytaj stan",
+        "resetState": "Resetuj stan",
+        "resetConfirmTitle": "Resetuj stan",
+        "resetConfirmBody": "Czy na pewno? Cały zapisany postęp zostanie utracony.",
+        "resetConfirmCancel": "Anuluj",
+        "resetConfirmOk": "Resetuj"
     },
     "monsters": {
         "Nekker's Nest": "Gniazdo nekkerów",

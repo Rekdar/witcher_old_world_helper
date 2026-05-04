@@ -144,7 +144,14 @@
                 "desc": "Dice poker rules — instructions, hand rankings and clarifications.",
                 "btn": "Play Poker"
             }
-        ]
+        ],
+        "saveState": "Save state",
+        "loadState": "Load state",
+        "resetState": "Reset state",
+        "resetConfirmTitle": "Reset state",
+        "resetConfirmBody": "Are you sure? All saved progress will be lost.",
+        "resetConfirmCancel": "Cancel",
+        "resetConfirmOk": "Reset"
     },
     "dicePoker": {
         "title": "Dice Poker"

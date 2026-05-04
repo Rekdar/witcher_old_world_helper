@@ -71,6 +71,16 @@ Current keys:
 
 **Cross-component reads:** Components may read another page's localStorage key to enrich their own UI (e.g. `TerrainTokenPicker` reads `witcherPicker_state.playerNames`). Do this with a standalone `load*` function — never couple the two pages at the React level.
 
+## Save / Load State (global)
+
+`src/util/saveLoad.ts` exports `exportState()` and `importState(file, onDone)`.
+
+- `exportState()` — reads every key listed in `STATE_KEYS`, bundles them into a single JSON object, and downloads it as `witcher-old-world-state.json`.
+- `importState(file, onDone)` — parses the JSON file, writes each recognized key back to localStorage, then calls `onDone` (typically `window.location.reload()`).
+- `STATE_KEYS` — the canonical list of all localStorage keys included in export/import. **When adding a new page with persistent state, add its key to `STATE_KEYS` in `saveLoad.ts`.**
+
+The save/load buttons live on the `Home` page (`src/pages/Home.tsx`) above the card grid. Translation keys: `home.saveState` / `home.loadState`.
+
 ## Wild Hunt data and assets
 
 Knight data: `src/wild_hunt_monster.json` — 4 knights (Caranthir, Eredin, Nithral, Imlerith), each with `name_pl`, `level`, `base_heal`, `front_name`, `back_name`, `abilities[]` (4 card filenames per knight). Shared by `Opponents`.

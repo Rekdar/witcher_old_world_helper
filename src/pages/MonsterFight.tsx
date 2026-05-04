@@ -34,10 +34,10 @@ const STORAGE_KEY = 'monsterFight_state';
 
 const DEFAULT_STATE: MonsterFightState = {
     selectedMonsterName: null,
-    monsterTrail: false,
+    monsterTrail: true,
     wildHunt: false,
     currentHp: null,
-    hasWeaknessTokens: false,
+    hasWeaknessTokens: true,
     selectedTokens: [],
     fightStarted: false,
     fightDeck: [],
@@ -118,7 +118,7 @@ function buildDeck(level: number, monsterTrail: boolean, hp: number): string[] {
         return shuffle([...mainKeys]).slice(0, hp);
     }
     const trailKeys = TRAIL_CARDS.map(f => `trail:${f}`);
-    const n = level <= 2 ? 12 : 16;
+    const n = Math.max(level <= 2 ? 12 : 16, hp - TRAIL_CARDS.length);
     const selectedMain = shuffle([...mainKeys]).slice(0, n);
     const pool = shuffle([...trailKeys, ...selectedMain]);
     return pool.slice(0, hp);
@@ -304,7 +304,7 @@ export default function MonsterFight({ t }): JSX.Element {
     function handleEndFight() {
         audioRef.current?.pause();
         setMusicPlaying(false);
-        setState(DEFAULT_STATE);
+        setState(prev => ({ ...DEFAULT_STATE, note: prev.note }));
         localStorage.removeItem(STORAGE_KEY);
     }
 
@@ -521,7 +521,7 @@ export default function MonsterFight({ t }): JSX.Element {
                 </Modal>
 
                 {/* Peek deck modal */}
-                <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered size="lg">
+                <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>{t('monsterFight.peekDeckTitle')}</Modal.Title>
                     </Modal.Header>
@@ -549,8 +549,8 @@ export default function MonsterFight({ t }): JSX.Element {
                                     {peekCards.map((card, idx) => (
                                         <ListGroup.Item key={card} className="d-flex align-items-center gap-2 py-2">
                                             <span className="text-muted fw-bold" style={{ minWidth: '1.5rem' }}>{idx + 1}.</span>
-                                            <Image src={getCardImage(card)} height={70} style={{ objectFit: 'contain', cursor: 'zoom-in' }} rounded onClick={() => setEnlargedImage(getCardImage(card))} />
-                                            <div className="ms-auto d-flex gap-1">
+                                            <Image src={getCardImage(card)} height={210} style={{ objectFit: 'contain', cursor: 'zoom-in' }} rounded onClick={() => setEnlargedImage(getCardImage(card))} />
+                                            <div className="d-flex gap-1">
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === 0} onClick={() => handlePeekMove(idx, -1)}>↑</Button>
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === peekCards.length - 1} onClick={() => handlePeekMove(idx, 1)}>↓</Button>
                                                 <Button size="sm" variant="outline-danger" onClick={() => handlePeekRemove(idx)}>✕</Button>
@@ -774,28 +774,32 @@ export default function MonsterFight({ t }): JSX.Element {
                     {state.hasWeaknessTokens && (
                         <Form.Group className="mb-3">
                             <Form.Label>{t('monsterFight.weaknessTokensTitle')}</Form.Label>
-                            <div className="d-flex flex-wrap gap-2">
-                                {SELECTABLE_TOKENS.map(token => {
-                                    const selected = state.selectedTokens.includes(token);
-                                    const disabled = !selected && state.selectedTokens.length >= 6;
-                                    return (
-                                        <Image
-                                            key={token}
-                                            src={tokenImages[token]}
-                                            width={80}
-                                            height={80}
-                                            alt={token}
-                                            style={{
-                                                cursor: disabled ? 'not-allowed' : 'pointer',
-                                                border: selected ? '3px solid #198754' : '3px solid transparent',
-                                                borderRadius: '8px',
-                                                opacity: disabled ? 0.4 : 1,
-                                                objectFit: 'cover',
-                                            }}
-                                            onClick={() => !disabled && handleTokenToggle(token)}
-                                        />
-                                    );
-                                })}
+                            <div className="d-flex flex-column gap-2">
+                                {['Forest', 'Mountain', 'Water'].map(terrain => (
+                                    <div key={terrain} className="d-flex gap-2">
+                                        {Array.from({ length: 6 }, (_, i) => `Weakness_${terrain}_${i + 1}`).map(token => {
+                                            const selected = state.selectedTokens.includes(token);
+                                            const disabled = !selected && state.selectedTokens.length >= 6;
+                                            return (
+                                                <Image
+                                                    key={token}
+                                                    src={tokenImages[token]}
+                                                    width={80}
+                                                    height={80}
+                                                    alt={token}
+                                                    style={{
+                                                        cursor: disabled ? 'not-allowed' : 'pointer',
+                                                        border: selected ? '3px solid #198754' : '3px solid transparent',
+                                                        borderRadius: '8px',
+                                                        opacity: disabled ? 0.4 : 1,
+                                                        objectFit: 'cover',
+                                                    }}
+                                                    onClick={() => !disabled && handleTokenToggle(token)}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                ))}
                             </div>
                         </Form.Group>
                     )}

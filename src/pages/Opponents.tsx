@@ -25,8 +25,11 @@ interface DrawnReward {
     text: string;
 }
 
+type Difficulty = 'easy' | 'normal' | 'hard' | 'veryHard';
+
 interface AppState {
     numPlayers: number;
+    difficulty: Difficulty;
     selectedKnightName: string | null;
     selectedCell: [number, number] | null;
     savedPlayerNames: string[] | null;
@@ -40,6 +43,16 @@ interface AppState {
     knightFightHp: number;
     knightRevealedCards: string[];
 }
+
+// ── Shield defaults by [numPlayers][difficulty] ────────────────────────────
+
+const DEFAULT_SHIELDS: Record<number, Record<Difficulty, number>> = {
+    1: { easy: 5,  normal: 7,   hard: 9,   veryHard: 11  },
+    2: { easy: 28, normal: 31,  hard: 34,  veryHard: 37  },
+    3: { easy: 54, normal: 58,  hard: 62,  veryHard: 66  },
+    4: { easy: 77, normal: 82,  hard: 87,  veryHard: 92  },
+    5: { easy: 97, normal: 106, hard: 113, veryHard: 120 },
+};
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
@@ -132,6 +145,7 @@ const WILD_HUNT_TRACKS = [
 
 const DEFAULT_STATE: AppState = {
     numPlayers: 2,
+    difficulty: 'normal',
     selectedKnightName: null,
     selectedCell: null,
     savedPlayerNames: null,
@@ -139,7 +153,7 @@ const DEFAULT_STATE: AppState = {
     houndNote: '',
     drawnHoundRewards: [],
     knightHp: 20,
-    knightShieldCount: 0,
+    knightShieldCount: DEFAULT_SHIELDS[2]['normal'],
     knightFightStarted: false,
     knightFightDeck: [],
     knightFightHp: 0,
@@ -294,7 +308,7 @@ export default function Opponents({ t }): JSX.Element {
     // ── Player handlers ────────────────────────────────────────────────────
 
     function handleNumPlayersChange(n: number) {
-        set({ numPlayers: n, selectedCell: null });
+        set({ numPlayers: n, selectedCell: null, knightShieldCount: DEFAULT_SHIELDS[n][state.difficulty] });
         if (isEditingPlayers) {
             setEditPlayerNames(prev => {
                 const updated = [...prev];
@@ -477,30 +491,29 @@ export default function Opponents({ t }): JSX.Element {
                                 rounded
                                 onClick={() => setEnlargedImage(knightBackImages[selectedKnight.name_pl])}
                             />
-                            {state.knightShieldCount > 0 && (
-                                <div className="text-center" style={{ flexShrink: 0 }}>
-                                    <div className="fw-semibold mb-1">Liczba tarcz: {state.knightShieldCount}</div>
-                                    <Image src={frozenShieldImg} style={{ width: '256px' }} alt="Tarcze" />
+                            <div className="text-center" style={{ flexShrink: 0 }}>
+                                <div className="fw-semibold mb-1">Liczba tarcz: {state.knightShieldCount}</div>
+                                <div className="d-flex align-items-center gap-2">
+                                    {state.knightShieldCount > 0 && (
+                                        <Image src={frozenShieldImg} style={{ width: '256px' }} alt="Tarcze" />
+                                    )}
+                                    <div className="d-flex flex-column align-items-center" style={{ gap: '4px' }}>
+                                        <Button variant="outline-secondary" style={{ width: '72px', fontSize: '1.2rem' }}
+                                            onClick={() => set({ knightShieldCount: state.knightShieldCount + 1 })}>+</Button>
+                                        <Form.Control
+                                            type="number" value={state.knightShieldCount} className="text-center"
+                                            style={{ width: '72px', fontSize: '1.1rem' }}
+                                            onChange={e => set({ knightShieldCount: Math.max(0, isNaN(Number(e.target.value)) ? 0 : Number(e.target.value)) })}
+                                        />
+                                        <Button variant="outline-secondary" style={{ width: '72px', fontSize: '1.2rem' }}
+                                            onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                         </div>
 
                         <div className="mb-3 d-flex flex-wrap align-items-center justify-content-center gap-3">
                             <span className="fs-4 fw-bold">HP: {state.knightFightHp}</span>
-                            <div className="d-flex align-items-center gap-1">
-                                <Image src={frozenShieldImg} height={28} alt="Tarcze oblodzone" style={{ display: 'inline' }} />
-                                <InputGroup style={{ width: '120px' }}>
-                                    <Button variant="outline-secondary" size="sm"
-                                        onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>
-                                    <Form.Control
-                                        type="number" min={0} value={state.knightShieldCount} size="sm"
-                                        onChange={e => set({ knightShieldCount: Math.max(0, isNaN(Number(e.target.value)) ? 0 : Number(e.target.value)) })}
-                                        className="text-center"
-                                    />
-                                    <Button variant="outline-secondary" size="sm"
-                                        onClick={() => set({ knightShieldCount: state.knightShieldCount + 1 })}>+</Button>
-                                </InputGroup>
-                            </div>
                             <Button variant="outline-info" size="sm" onClick={() => setKnightHelpOpen(true)}>
                                 Pomoc
                             </Button>
@@ -625,7 +638,7 @@ export default function Opponents({ t }): JSX.Element {
                 </Modal>
 
                 {/* Peek modal */}
-                <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered size="lg">
+                <Modal show={peekOpen} onHide={() => setPeekOpen(false)} centered>
                     <Modal.Header closeButton><Modal.Title>Podejrzyj talię</Modal.Title></Modal.Header>
                     <Modal.Body>
                         {peekPhase === 'input' ? (
@@ -645,10 +658,10 @@ export default function Opponents({ t }): JSX.Element {
                             <>
                                 <ListGroup style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                                     {peekCards.map((card, idx) => (
-                                        <ListGroup.Item key={card + idx} className="d-flex align-items-center gap-2 py-2">
+                                        <ListGroup.Item key={card} className="d-flex align-items-center gap-2 py-2">
                                             <span className="text-muted fw-bold" style={{ minWidth: '1.5rem' }}>{idx + 1}.</span>
-                                            <Image src={getCardImage(card)} height={70} style={{ objectFit: 'contain', cursor: 'zoom-in' }} rounded onClick={() => setEnlargedImage(getCardImage(card))} />
-                                            <div className="ms-auto d-flex gap-1">
+                                            <Image src={getCardImage(card)} height={210} style={{ objectFit: 'contain', cursor: 'zoom-in' }} rounded onClick={() => setEnlargedImage(getCardImage(card))} />
+                                            <div className="d-flex gap-1">
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === 0} onClick={() => handlePeekMove(idx, -1)}>↑</Button>
                                                 <Button size="sm" variant="outline-secondary" disabled={idx === peekCards.length - 1} onClick={() => handlePeekMove(idx, 1)}>↓</Button>
                                                 <Button size="sm" variant="outline-danger" onClick={() => handlePeekDelete(idx)}>✕</Button>
@@ -714,6 +727,21 @@ export default function Opponents({ t }): JSX.Element {
                                         {[1, 2, 3, 4, 5].map(n => (
                                             <option key={n} value={n}>{n}</option>
                                         ))}
+                                    </Form.Select>
+                                    <div className="fw-semibold mb-1 mt-2" style={{ fontSize: '0.9rem' }}>Poziom trudności</div>
+                                    <Form.Select
+                                        size="sm"
+                                        style={{ width: 'auto' }}
+                                        value={state.difficulty}
+                                        onChange={e => {
+                                            const d = e.target.value as Difficulty;
+                                            set({ difficulty: d, knightShieldCount: DEFAULT_SHIELDS[state.numPlayers][d] });
+                                        }}
+                                    >
+                                        <option value="easy">Łatwy</option>
+                                        <option value="normal">Normalny</option>
+                                        <option value="hard">Trudny</option>
+                                        <option value="veryHard">Bardzo trudny</option>
                                     </Form.Select>
                                 </Col>
                                 <Col xs={12} sm>
@@ -995,7 +1023,7 @@ export default function Opponents({ t }): JSX.Element {
                                 <p className="text-muted">Wybierz jeźdźca w sekcji powyżej.</p>
                             ) : (
                                 <>
-                                    <div className="text-center mb-3">
+                                    <div className="mb-3 d-flex justify-content-center align-items-center gap-3">
                                         <Image
                                             src={knightBackImages[selectedKnight.name_pl]}
                                             style={{ maxWidth: '220px', width: '100%', cursor: 'zoom-in' }}
@@ -1003,6 +1031,25 @@ export default function Opponents({ t }): JSX.Element {
                                             rounded
                                             onClick={() => setEnlargedImage(knightBackImages[selectedKnight.name_pl])}
                                         />
+                                        <div className="text-center" style={{ flexShrink: 0 }}>
+                                            <div className="fw-semibold mb-1">Liczba tarcz: {state.knightShieldCount}</div>
+                                            <div className="d-flex align-items-center gap-2">
+                                                {state.knightShieldCount > 0 && (
+                                                    <Image src={frozenShieldImg} style={{ width: '256px' }} alt="Tarcze" />
+                                                )}
+                                                <div className="d-flex flex-column align-items-center" style={{ gap: '4px' }}>
+                                                    <Button variant="outline-secondary" style={{ width: '72px', fontSize: '1.2rem' }}
+                                                        onClick={() => set({ knightShieldCount: state.knightShieldCount + 1 })}>+</Button>
+                                                    <Form.Control
+                                                        type="number" value={state.knightShieldCount} className="text-center"
+                                                        style={{ width: '72px', fontSize: '1.1rem' }}
+                                                        onChange={e => set({ knightShieldCount: Math.max(0, isNaN(Number(e.target.value)) ? 0 : Number(e.target.value)) })}
+                                                    />
+                                                    <Button variant="outline-secondary" style={{ width: '72px', fontSize: '1.2rem' }}
+                                                        onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* HP */}
@@ -1017,21 +1064,6 @@ export default function Opponents({ t }): JSX.Element {
                                             />
                                             <Button variant="outline-secondary"
                                                 onClick={() => set({ knightHp: state.knightHp + 1 })}>+</Button>
-                                        </InputGroup>
-                                    </Form.Group>
-
-                                    {/* Shield */}
-                                    <Form.Group className="mb-3">
-                                        <Form.Label><Image src={frozenShieldImg} height={22} alt="Tarcze" style={{ display: 'inline', marginRight: 4 }} />Tarcze</Form.Label>
-                                        <InputGroup style={{ maxWidth: '160px' }}>
-                                            <Button variant="outline-secondary"
-                                                onClick={() => set({ knightShieldCount: Math.max(0, state.knightShieldCount - 1) })}>−</Button>
-                                            <Form.Control
-                                                type="number" value={state.knightShieldCount} className="text-center"
-                                                onChange={e => set({ knightShieldCount: Math.max(0, isNaN(Number(e.target.value)) ? 0 : Number(e.target.value)) })}
-                                            />
-                                            <Button variant="outline-secondary"
-                                                onClick={() => set({ knightShieldCount: state.knightShieldCount + 1 })}>+</Button>
                                         </InputGroup>
                                     </Form.Group>
 

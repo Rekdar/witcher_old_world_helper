@@ -196,15 +196,15 @@ export default function TerrainTokenPicker({
                         label={t("exps.skellige")}
                     />
                 </Col>
-                {tokenDrawn && TOKEN_MAP_POSITIONS[displayedToken.imgStr] && (() => {
+                {(() => {
                     const MAP_W = 1338;
                     const MAP_H = 1480;
-                    const pos = TOKEN_MAP_POSITIONS[displayedToken.imgStr];
                     const mapSrc = require('../img/tokens/reducedTerrainTokens/map.jpg') as string;
-                    const leftPct = (pos.x / MAP_W) * 100;
-                    const topPct  = (pos.y / MAP_H) * 100;
+                    const pos = tokenDrawn ? TOKEN_MAP_POSITIONS[displayedToken.imgStr] : undefined;
+                    const leftPct = pos ? (pos.x / MAP_W) * 100 : 0;
+                    const topPct  = pos ? (pos.y / MAP_H) * 100 : 0;
                     return (
-                        <Col xs={12} md={6} lg={5} className='mt-3 mt-md-0'>
+                        <Col xs={12} md={7} lg={6} className='mt-3 mt-md-0'>
                             <div style={{ position: 'relative', width: '100%' }}>
                                 <img
                                     src={mapSrc}
@@ -212,19 +212,21 @@ export default function TerrainTokenPicker({
                                     style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
                                     onClick={() => { setEnlargedImageIsMap(true); setEnlargedImage(mapSrc); }}
                                 />
-                                <div style={{
-                                    position: 'absolute',
-                                    left: `${leftPct}%`,
-                                    top: `${topPct}%`,
-                                    transform: 'translate(-50%, -50%)',
-                                    width: 'clamp(42px, 9%, 84px)',
-                                    height: 'clamp(42px, 9%, 84px)',
-                                    borderRadius: '50%',
-                                    backgroundColor: 'rgba(220, 53, 69, 0.85)',
-                                    border: '2px solid white',
-                                    boxShadow: '0 0 6px rgba(0,0,0,0.7)',
-                                    pointerEvents: 'none',
-                                }} />
+                                {pos && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        left: `${leftPct}%`,
+                                        top: `${topPct}%`,
+                                        transform: 'translate(-50%, -50%)',
+                                        width: 'clamp(42px, 9%, 84px)',
+                                        height: 'clamp(42px, 9%, 84px)',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'rgba(220, 53, 69, 0.85)',
+                                        border: '2px solid white',
+                                        boxShadow: '0 0 6px rgba(0,0,0,0.7)',
+                                        pointerEvents: 'none',
+                                    }} />
+                                )}
                             </div>
                         </Col>
                     );

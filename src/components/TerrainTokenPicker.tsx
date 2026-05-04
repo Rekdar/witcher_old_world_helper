@@ -114,6 +114,7 @@ export default function TerrainTokenPicker({
         setFormNote('');
         setFormErrors([]);
         setShowForm(false);
+        setToken(new ForestToken());
     };
 
     const handleSaveManualTask = () => {
@@ -195,14 +196,34 @@ export default function TerrainTokenPicker({
                         id={t("exps.skellige")}
                         label={t("exps.skellige")}
                     />
+                    {tokenDrawn && (
+                        <Button variant="outline-secondary" size="sm" className='mt-2'
+                            onClick={() => setToken(new ForestToken())}
+                        >
+                            {t('locationTokens.clearSelection')}
+                        </Button>
+                    )}
                 </Col>
                 {(() => {
                     const MAP_W = 1338;
                     const MAP_H = 1480;
                     const mapSrc = require('../img/tokens/reducedTerrainTokens/map.jpg') as string;
+                    const questSrc = require('../img/inventory/quest.png') as string;
                     const pos = tokenDrawn ? TOKEN_MAP_POSITIONS[displayedToken.imgStr] : undefined;
                     const leftPct = pos ? (pos.x / MAP_W) * 100 : 0;
                     const topPct  = pos ? (pos.y / MAP_H) * 100 : 0;
+
+                    // Quest markers: group by imgStr to horizontally offset duplicates
+                    const positionCounts: Record<string, number> = {};
+                    const questMarkers = tasks
+                        .map(task => ({ task, pos: TOKEN_MAP_POSITIONS[task.imgStr] }))
+                        .filter(({ pos: p }) => p !== undefined)
+                        .map(({ task, pos: p }) => {
+                            const idx = positionCounts[task.imgStr] ?? 0;
+                            positionCounts[task.imgStr] = idx + 1;
+                            return { task, p: p!, idx };
+                        });
+
                     return (
                         <Col xs={12} md={7} lg={6} className='mt-3 mt-md-0'>
                             <div style={{ position: 'relative', width: '100%' }}>
@@ -212,6 +233,21 @@ export default function TerrainTokenPicker({
                                     style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
                                     onClick={() => { setEnlargedImageIsMap(true); setEnlargedImage(mapSrc); }}
                                 />
+                                {questMarkers.map(({ task, p, idx }) => (
+                                    <img
+                                        key={task.id}
+                                        src={questSrc}
+                                        alt="quest"
+                                        style={{
+                                            position: 'absolute',
+                                            left: `${(p.x / MAP_W) * 100 + idx * 3}%`,
+                                            top: `${(p.y / MAP_H) * 100}%`,
+                                            transform: 'translate(-50%, 0)',
+                                            width: 'clamp(7px, 1.5%, 14px)',
+                                            pointerEvents: 'none',
+                                        }}
+                                    />
+                                ))}
                                 {pos && (
                                     <div style={{
                                         position: 'absolute',

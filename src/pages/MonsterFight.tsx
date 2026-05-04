@@ -131,6 +131,7 @@ export default function MonsterFight({ t }): JSX.Element {
     const [monsterAttackKey, setMonsterAttackKey] = useState(0);
     const [musicPlaying, setMusicPlaying] = useState(false);
     const [resultModalOpen, setResultModalOpen] = useState(false);
+    const [wildHuntEndLevel, setWildHuntEndLevel] = useState<number | null>(null);
     const [trollModalOpen, setTrollModalOpen] = useState(false);
     const [trollSelectedCard, setTrollSelectedCard] = useState<string | null>(null);
     const [peekOpen, setPeekOpen] = useState(false);
@@ -213,7 +214,7 @@ export default function MonsterFight({ t }): JSX.Element {
     }
 
     function handleReset() {
-        setState(prev => ({ ...DEFAULT_STATE, note: prev.note }));
+        setState(prev => ({ ...DEFAULT_STATE, note: prev.note, wildHunt: prev.wildHunt }));
     }
 
     // ── Fight handlers ───────────────────────────────────────────────────────
@@ -304,7 +305,10 @@ export default function MonsterFight({ t }): JSX.Element {
     function handleEndFight() {
         audioRef.current?.pause();
         setMusicPlaying(false);
-        setState(prev => ({ ...DEFAULT_STATE, note: prev.note }));
+        if (state.wildHunt && selectedMonster) {
+            setWildHuntEndLevel(selectedMonster.level);
+        }
+        setState(prev => ({ ...DEFAULT_STATE, note: prev.note, wildHunt: prev.wildHunt }));
         localStorage.removeItem(STORAGE_KEY);
     }
 
@@ -645,6 +649,21 @@ export default function MonsterFight({ t }): JSX.Element {
 
     // ── Setup view ───────────────────────────────────────────────────────────
 
+    // Wild Hunt end-fight reminder — rendered here so it survives the fight→setup transition
+    const wildHuntEndModal = (
+        <Modal show={wildHuntEndLevel !== null} onHide={() => setWildHuntEndLevel(null)} centered>
+            <Modal.Header closeButton><Modal.Title>Dodatek Dziki Gon</Modal.Title></Modal.Header>
+            <Modal.Body>
+                <p className="mb-0">
+                    Jeżeli potwór został pokonany, odejmij <strong>{wildHuntEndLevel}</strong> tarcz Rycerzowi Dzikiego Gonu.
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setWildHuntEndLevel(null)}>OK</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+
     return (
         <Container id="MonsterFight">
             <PageTitle HeaderText={t('monsterFight.title')} />
@@ -820,6 +839,8 @@ export default function MonsterFight({ t }): JSX.Element {
 
                 </Col>
             </Row>
+
+            {wildHuntEndModal}
 
             {/* Enlarge modal (setup view) */}
             <Modal show={enlargedImage !== null} onHide={() => setEnlargedImage(null)} centered size="lg">

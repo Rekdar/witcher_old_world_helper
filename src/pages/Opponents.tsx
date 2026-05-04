@@ -256,6 +256,7 @@ export default function Opponents({ t }): JSX.Element {
     // Modals
     const [preparationOpen, setPreparationOpen] = useState(false);
     const [houndRulesOpen, setHoundRulesOpen] = useState(false);
+    const [knightFightRulesOpen, setKnightFightRulesOpen] = useState(false);
     const [knightHelpOpen, setKnightHelpOpen] = useState(false);
     const [peekOpen, setPeekOpen] = useState(false);
     const [peekPhase, setPeekPhase] = useState<'input' | 'arrange'>('input');
@@ -1067,13 +1068,21 @@ export default function Opponents({ t }): JSX.Element {
                                         </InputGroup>
                                     </Form.Group>
 
-                                    <Button
-                                        variant="secondary"
-                                        disabled={state.knightHp <= 0}
-                                        onClick={handleStartKnightFight}
-                                    >
-                                        Rozpocznij walkę
-                                    </Button>
+                                    <div className="d-flex gap-2 flex-wrap">
+                                        <Button
+                                            variant="secondary"
+                                            disabled={state.knightHp <= 0}
+                                            onClick={handleStartKnightFight}
+                                        >
+                                            Rozpocznij walkę
+                                        </Button>
+                                        <Button
+                                            variant="outline-secondary"
+                                            onClick={() => setKnightFightRulesOpen(true)}
+                                        >
+                                            Instrukcja walki
+                                        </Button>
+                                    </div>
                                 </>
                             )}
                         </Card.Body>
@@ -1101,6 +1110,52 @@ export default function Opponents({ t }): JSX.Element {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setPreparationOpen(false)}>Zamknij</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Knight fight rules modal */}
+            <Modal show={knightFightRulesOpen} onHide={() => setKnightFightRulesOpen(false)} centered size="lg">
+                <Modal.Header closeButton><Modal.Title>Instrukcja walki z jeźdźcem</Modal.Title></Modal.Header>
+                <Modal.Body>
+                    <p className="fw-bold">Przygotowanie</p>
+                    <ul>
+                        <li>Zachowaj karty na ręce.</li>
+                        <li>Potasuj talię akcji + stos kart odrzuconych.</li>
+                        <li>Najpierw zbij tarcze jeźdźca (1 obrażenie = 1 tarcza), potem trafienia idą w talię.</li>
+                    </ul>
+
+                    <p className="fw-bold mt-3">Przebieg walki</p>
+                    <ol>
+                        <li>Gracze na tym samym obszarze walczą (dowolna kolejność).</li>
+                        <li>Pozostali gracze dołączają do walki (bez swojej tury).</li>
+                        <li>Tura jeźdźca.</li>
+                        <li>Znów tury graczy (którzy nie zostali powaleni).</li>
+                        <li>Powtarzaj kroki 3–4 aż do końca walki.</li>
+                    </ol>
+
+                    <p className="fw-bold mt-3">Tura gracza</p>
+                    <ul>
+                        <li>Gracze ustalają kolejność.</li>
+                        <li>Każdy rozgrywa pełną turę jak w normalnej walce.</li>
+                        <li>Odrzucenie karty walki jeźdźca = aktywacja jej ataku pasywnego.</li>
+                    </ul>
+
+                    <p className="fw-bold mt-3">Tura jeźdźca</p>
+                    <p>Odkryj 1 kartę z jego talii wytrzymałości:</p>
+                    <ul>
+                        <li><strong>Karta Dzikiego Gonu</strong> → wszyscy wykonują efekt z karty.</li>
+                        <li><strong>Zwykła karta</strong> → każdy z graczy losuje czy gryzie czy szarżuje i rozpatrz efekt.</li>
+                    </ul>
+
+                    <p className="fw-bold mt-3">Powalenie i koniec walki</p>
+                    <ul>
+                        <li>Brak kart + pusta talia = wiedźmin powalony (wypada z walki).</li>
+                        <li><strong>Przegrana:</strong> wszyscy wiedźmini powaleni.</li>
+                        <li><strong>Wygrana:</strong> talia jeźdźca się skończy i ktoś przetrwa.</li>
+                    </ul>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setKnightFightRulesOpen(false)}>Zamknij</Button>
                 </Modal.Footer>
             </Modal>
 

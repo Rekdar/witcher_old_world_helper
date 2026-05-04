@@ -304,6 +304,27 @@ export function getTokenImgSrc(imgStr: string): string {
     return require(`../img/tokens/reducedTerrainTokens/${imgStr}.png`) as string;
 }
 
+export const TOKEN_MAP_POSITIONS: Record<string, { x: number; y: number }> = {
+    Forest10HaernCaduch:  { x: 669,  y: 824  },
+    Forest16Dhuwod:       { x: 534,  y: 1385 },
+    Forest17Stygga:       { x: 960,  y: 1350 },
+    Forest6Novigrad:      { x: 291,  y: 399  },
+    Forest7Vizima:        { x: 647,  y: 426  },
+    Forest8Vengerberg:    { x: 1166, y: 485  },
+    Mountain11Beauclair:  { x: 1107, y: 851  },
+    Mountain13Doldeth:    { x: 285,  y: 1229 },
+    Mountain18ArdModron:  { x: 1300, y: 1385 },
+    Mountain2Hengfors:    { x: 711,  y: 192  },
+    Mountain3KaerMorhen:  { x: 1217, y: 119  },
+    Mountain9Cintra:      { x: 171,  y: 740  },
+    Water12Glenmore:      { x: 240,  y: 995  },
+    Water14LocIchaer:     { x: 794,  y: 1154 },
+    Water15GorthurGvaed:  { x: 1319, y: 1089 },
+    Water1KaerSeren:      { x: 174,  y: 209  },
+    Water4BanArd:         { x: 1266, y: 278  },
+    Water5Cidaris:        { x: 101,  y: 512  },
+};
+
 export default class TerrainTokenDeck {
     mountainDeck: ReadonlyDeck<MountainToken>;
     forestDeck: ReadonlyDeck<ForestToken>;

@@ -7,7 +7,8 @@ import { Alert, Form, Modal, Table } from 'react-bootstrap';
 import TerrainTokenDeck, {
     MountainToken, ForestToken, WaterToken, getTokenImgSrc,
     MountainTokens, ForestTokens, WaterTokens,
-    MountainTokensSkellige, ForestTokensSkellige, WaterTokensSkellige
+    MountainTokensSkellige, ForestTokensSkellige, WaterTokensSkellige,
+    TOKEN_MAP_POSITIONS
 } from '../classes/terrains';
 import { useState } from 'react';
 import PageTitle from './PageTitle';
@@ -72,6 +73,7 @@ export default function TerrainTokenPicker({
     const [manualFormErrors, setManualFormErrors] = useState<string[]>([]);
 
     const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+    const [enlargedImageIsMap, setEnlargedImageIsMap] = useState(false);
 
     const witcherPlayers = loadWitcherPlayerNames();
 
@@ -165,41 +167,68 @@ export default function TerrainTokenPicker({
     return (
         <Container fluid className="mx-auto min-h-screen">
             <PageTitle HeaderText={HeaderText} />
-            <Row id='tokensRow' className='p-2 mb-2'>
-                <Col className='d-flex justify-content-center'>
-                    {displayedToken?.img()}
+            <Row className='p-2 mb-2 align-items-start justify-content-center'>
+                <Col xs={12} md="auto" className='d-flex flex-column align-items-center'>
+                    <div className='d-flex justify-content-center mb-2'>
+                        {displayedToken?.img()}
+                    </div>
+                    <div className='d-flex justify-content-center gap-1 mb-2'>
+                        <Button variant="secondary" size="lg" className='px-1'
+                            onClick={() => setToken(localTerrainDeck.drawMountainToken())}
+                        >
+                            {t('locationTokens.mountain')}
+                        </Button>
+                        <Button variant="success" size="lg"
+                            onClick={() => setToken(localTerrainDeck.drawForestToken())}
+                        >
+                            {t('locationTokens.forest')}
+                        </Button>
+                        <Button variant="primary" size="lg" className='px-3'
+                            onClick={() => setToken(localTerrainDeck.drawWaterToken())}
+                        >
+                            {t('locationTokens.water')}
+                        </Button>
+                    </div>
+                    <Form.Switch
+                        checked={skellige}
+                        onChange={() => handleSkellige()}
+                        id={t("exps.skellige")}
+                        label={t("exps.skellige")}
+                    />
                 </Col>
-            </Row>
-            <Row id='TerrainTokenButtons' className='justify-content-center p-2 mb-2'>
-                <Col xs="auto" className='p-1'>
-                    <Button variant="secondary" size="lg" className='px-1'
-                        onClick={() => setToken(localTerrainDeck.drawMountainToken())}
-                    >
-                        {t('locationTokens.mountain')}
-                    </Button>
-                </Col>
-                <Col xs="auto" className='p-1'>
-                    <Button variant="success" size="lg"
-                        onClick={() => setToken(localTerrainDeck.drawForestToken())}
-                    >
-                        {t('locationTokens.forest')}
-                    </Button>
-                </Col>
-                <Col xs="auto" className='p-1'>
-                    <Button variant="primary" size="lg" className='px-3'
-                        onClick={() => setToken(localTerrainDeck.drawWaterToken())}
-                    >
-                        {t('locationTokens.water')}
-                    </Button>
-                </Col>
-            </Row>
-            <Row id='skelligeToggleRow' className='justify-content-center p-2'>
-                <Form.Switch
-                    checked={skellige}
-                    onChange={() => handleSkellige()}
-                    id={t("exps.skellige")}
-                    label={t("exps.skellige")}
-                />
+                {tokenDrawn && TOKEN_MAP_POSITIONS[displayedToken.imgStr] && (() => {
+                    const MAP_W = 1338;
+                    const MAP_H = 1480;
+                    const pos = TOKEN_MAP_POSITIONS[displayedToken.imgStr];
+                    const mapSrc = require('../img/tokens/reducedTerrainTokens/map.jpg') as string;
+                    const leftPct = (pos.x / MAP_W) * 100;
+                    const topPct  = (pos.y / MAP_H) * 100;
+                    return (
+                        <Col xs={12} md={6} lg={5} className='mt-3 mt-md-0'>
+                            <div style={{ position: 'relative', width: '100%' }}>
+                                <img
+                                    src={mapSrc}
+                                    alt="Token placement map"
+                                    style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
+                                    onClick={() => { setEnlargedImageIsMap(true); setEnlargedImage(mapSrc); }}
+                                />
+                                <div style={{
+                                    position: 'absolute',
+                                    left: `${leftPct}%`,
+                                    top: `${topPct}%`,
+                                    transform: 'translate(-50%, -50%)',
+                                    width: 'clamp(42px, 9%, 84px)',
+                                    height: 'clamp(42px, 9%, 84px)',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'rgba(220, 53, 69, 0.85)',
+                                    border: '2px solid white',
+                                    boxShadow: '0 0 6px rgba(0,0,0,0.7)',
+                                    pointerEvents: 'none',
+                                }} />
+                            </div>
+                        </Col>
+                    );
+                })()}
             </Row>
 
             <Row className='justify-content-center p-2'>
@@ -399,10 +428,10 @@ export default function TerrainTokenPicker({
                 </Row>
             )}
 
-            <Modal show={enlargedImage !== null} onHide={() => setEnlargedImage(null)} size="lg" centered>
-                <Modal.Body className='text-center p-2' onClick={() => setEnlargedImage(null)} style={{ cursor: 'zoom-out' }}>
+            <Modal show={enlargedImage !== null} onHide={() => { setEnlargedImage(null); setEnlargedImageIsMap(false); }} size="lg" centered>
+                <Modal.Body className='text-center p-2' onClick={() => { setEnlargedImage(null); setEnlargedImageIsMap(false); }} style={{ cursor: 'zoom-out' }}>
                     {enlargedImage && (
-                        <Image src={enlargedImage} fluid roundedCircle style={{ maxHeight: '80vh' }} />
+                        <Image src={enlargedImage} fluid roundedCircle={!enlargedImageIsMap} style={{ maxHeight: '80vh' }} />
                     )}
                 </Modal.Body>
             </Modal>

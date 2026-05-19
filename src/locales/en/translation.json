@@ -42,7 +42,16 @@
         "sirenExplain": "Siren excluded as it can't be randomly selected",
         "legendary": "Legendary",
         "allLegendary": "All Legendary",
-        "title": "Roll A New Monster"
+        "title": "Roll A New Monster",
+        "drawAll": "Draw All",
+        "drawAllModalTitle": "Draw All Monsters",
+        "numPlayersLabel": "Number of Players",
+        "drawAllConfirm": "Draw",
+        "drawAllCancel": "Cancel",
+        "drawAllResultTitle": "Drawn Monsters",
+        "drawAllClose": "Close",
+        "drawAllAgain": "Draw Again",
+        "level": "lvl"
     },
     "monsterRoller": {
         "title": "Monster Roller"

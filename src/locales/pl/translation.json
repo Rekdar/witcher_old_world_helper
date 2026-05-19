@@ -54,7 +54,16 @@
         "sirenExplain": "Syrenę wykluczono, ponieważ jej się nie losuje",
         "legendary": "legendarny potwór",
         "allLegendary": "wszystkie potwory legendarne",
-        "title": "Losuj nowego potwora"
+        "title": "Losuj nowego potwora",
+        "drawAll": "Losuj wszystkie",
+        "drawAllModalTitle": "Losuj wszystkich potworów",
+        "numPlayersLabel": "Liczba graczy",
+        "drawAllConfirm": "Losuj",
+        "drawAllCancel": "Anuluj",
+        "drawAllResultTitle": "Wylosowane potwory",
+        "drawAllClose": "Zamknij",
+        "drawAllAgain": "Losuj ponownie",
+        "level": "poz."
     },
     "monsterRoller": {
         "title": "Losowanie potwora"

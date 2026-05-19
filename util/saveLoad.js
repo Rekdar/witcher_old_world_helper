@@ -8,6 +8,7 @@ exports.STATE_KEYS = [
     'wildHunt_opponents_state',
     'witcherPicker_state',
     'locationTokens_tasks',
+    'dicePoker_wildHuntMode',
 ];
 function exportState() {
     const data = {};

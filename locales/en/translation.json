@@ -1,0 +1,485 @@
+{
+    "common": {
+        "expansions": "Expansions",
+        "Step": "Step",
+        "players": "Players",
+        "player1": "Player 1",
+        "player2": "Player 2",
+        "player3": "Player 3",
+        "player4": "Player 4",
+        "player5": "Player 5",
+        "gold_one": "{{count}} gold",
+        "gold_other": "{{count}} gold",
+        "card_one": "{{count}} card",
+        "card_other": "{{count}} cards",
+        "card_witchertrophy_one": "{{count}} Witcher Trophy Card",
+        "card_witchertrophy_other": "{{count}} Witcher Trophy Cards",
+        "card_witchermagetrophy_one": "{{count}} Witcher/Mage Trophy Card",
+        "card_witchermagetrophy_other": "{{count}} Witcher/Mage Trophy Cards",
+        "token_level1_one": "{{count}} Level I token",
+        "token_level1_other": "{{count}} Level I tokens",
+        "token_shield_one": "{{count}} Shield Token",
+        "token_shield_other": "{{count}} Shield Tokens",
+        "underConstruction": "Under Construction!"
+    },
+    "navbar": {
+        "titleLong": "The Witcher: Old World Helper",
+        "titleShort": "Old World Helper",
+        "gameplayTools": "Gameplay Tools",
+        "setupHelper": "$t(setupHelper.title)",
+        "locationTokens": "$t(locationTokens.title)",
+        "monsterRoller": "$t(monsterRoller.title)",
+        "lostMount": "$t(lostMount.title)",
+        "witcherPicker": "$t(witcherPicker.title)",
+        "opponents": "$t(opponents.title)",
+        "monsterFight": "$t(monsterFight.title)",
+        "dicePoker": "$t(dicePoker.title)",
+        "browseAllTools": "Browse All Tools",
+        "__flag": "🇬🇧"
+    },
+    "monsterPicker": {
+        "toggle": "Toggle changes:",
+        "sirenExplain": "Siren excluded as it can't be randomly selected",
+        "legendary": "Legendary",
+        "allLegendary": "All Legendary",
+        "title": "Roll A New Monster",
+        "drawAll": "Draw All",
+        "drawAllModalTitle": "Draw All Monsters",
+        "numPlayersLabel": "Number of Players",
+        "drawAllConfirm": "Draw",
+        "drawAllCancel": "Cancel",
+        "drawAllResultTitle": "Drawn Monsters",
+        "drawAllClose": "Close",
+        "drawAllAgain": "Draw Again",
+        "level": "lvl"
+    },
+    "monsterRoller": {
+        "title": "Monster Roller"
+    },
+    "exps": {
+        "adventurePack": "Adventure Pack",
+        "lostMount": "Lost Mount",
+        "ciri": "Ciri",
+        "wildHunt": "Wild Hunt",
+        "monsterTrail": "Monster Trail",
+        "mages": "Mages",
+        "legendaryHunt": "Legendary Hunt",
+        "skellige": "Skellige",
+        "monsterPack": "Monster Pack",
+        "mountedEredin": "$t(monsters.Mounted Eredin)"
+    },
+    "locationTokens": {
+        "title": "Location Tokens",
+        "mountain": "Mountain",
+        "forest": "Forest",
+        "water": "Water",
+        "Behelt Nar": "Behelt Nar",
+        "Kaer Seren": "Kaer Seren",
+        "Hengfors": "Hengfors",
+        "Kaer Morhen": "Kaer Morhen",
+        "Ban Ard": "Ban Ard",
+        "Cidaris": "Cidaris",
+        "Novigrad": "Novigrad",
+        "Vizima": "Vizima",
+        "Vengerberg": "Vengerberg",
+        "Cintra": "Cintra",
+        "Haern Caduch": "Haern Caduch",
+        "Beauclair": "Beauclair",
+        "Glenmore": "Glenmore",
+        "Doldeth": "Doldeth",
+        "Loc Ichaer": "Loc Ichaer",
+        "Gorthur Gvaed": "Gorthur Gvaed",
+        "Dhuwod": "Dhuwod",
+        "Stygga": "Stygga",
+        "Ard Modron": "Ard Modron",
+        "Ard Skellig": "Ard Skellig",
+        "Isle of Mists": "Isle of Mists",
+        "Eyna": "Eyna",
+        "addAction": "Add Action",
+        "clearSelection": "Clear selection",
+        "playerNameLabel": "Player name",
+        "noteLabel": "Note",
+        "save": "Save",
+        "cancel": "Cancel",
+        "done": "Done",
+        "tasksTitle": "Actions",
+        "tokenColumn": "Token",
+        "errorEmptyName": "Player name cannot be empty.",
+        "errorEmptyNote": "Note cannot be empty.",
+        "addManualAction": "Add action manually",
+        "selectTokenLabel": "Select token",
+        "errorNoToken": "You must select a token."
+    },
+    "home": {
+        "linkedPages": [
+            {
+                "name": "$t(setupHelper.title)",
+                "link": "#/setupHelper",
+                "desc": "A dynamically updated set of consolidated instructions for any expansion and player combination.",
+                "btn": "Wind's howling…"
+            },
+            {
+                "name": "$t(monsterRoller.title)",
+                "link": "#/monsterRoller",
+                "desc": "Tired of shuffling your tokens, monster cards, and hunting down the mini?",
+                "btn": "Damn, you're ugly"
+            },
+            {
+                "name": "$t(witcherPicker.title)",
+                "link": "#/witcherPicker",
+                "desc": "Randomly assign a Witcher School to each player, draw the starting player, and track positions on the victory track.",
+                "btn": "Draw Schools"
+            },
+            {
+                "name": "$t(locationTokens.title)",
+                "link": "#/locationTokens",
+                "desc": "Easily draw any terrain token type. Always randomized. No shuffling of cardboard tokens.",
+                "btn": "Explore the Continent"
+            },
+            {
+                "name": "$t(opponents.title)",
+                "link": "#/opponents",
+                "desc": "Actions from the Wild Hunt expansion.",
+                "btn": "Face Your Foes"
+            },
+            {
+                "name": "$t(monsterFight.title)",
+                "link": "#/monsterFight",
+                "desc": "Set up a monster fight — choose your foe, adjust HP and select weakness tokens.",
+                "btn": "Prepare for Battle"
+            },
+            {
+                "name": "$t(dicePoker.title)",
+                "link": "#/dicePoker",
+                "desc": "Dice poker rules — instructions, hand rankings and clarifications.",
+                "btn": "Play Poker"
+            }
+        ],
+        "saveState": "Save state",
+        "loadState": "Load state",
+        "resetState": "Reset state",
+        "resetConfirmTitle": "Reset state",
+        "resetConfirmBody": "Are you sure? All saved progress will be lost.",
+        "resetConfirmCancel": "Cancel",
+        "resetConfirmOk": "Reset"
+    },
+    "dicePoker": {
+        "title": "Dice Poker"
+    },
+    "monsters": {
+        "Nekker's Nest": "Nekker's Nest",
+        "Arachas": "Arachas",
+        "Archespore": "Archespore",
+        "Barghest": "Barghest",
+        "Foglet": "Foglet",
+        "Harpy": "Harpy",
+        "Ghoul's Nest": "Ghoul's Nest",
+        "Griffin": "Griffin",
+        "Wyvern": "Wyvern",
+        "Werewolf": "Werewolf",
+        "Fiend": "Fiend",
+        "Noonwraith": "Noonwraith",
+        "Leshen": "Leshen",
+        "Striga": "Striga",
+        "Bruxa": "Bruxa",
+        "Drowner's Nest": "Drowner's Nest",
+        "Rotfiend": "Rotfiend",
+        "Ekimmara": "Ekimmara",
+        "Nightwraith": "Nightwraith",
+        "Water Hag": "Water Hag",
+        "Manticore": "Manticore",
+        "Whispess": "Whispess",
+        "Weavess": "Weavess",
+        "Penitent": "Penitent",
+        "Grave Hag": "Grave Hag",
+        "Glustyworp": "Glustyworp",
+        "Brewess": "Brewess",
+        "Yghern": "Yghern",
+        "Troll": "Troll",
+        "Dagon": "Dagon",
+        "Hound": "Hound",
+        "Hounds": "Hounds",
+        "Imperial Golem": "Imperial Golem",
+        "Cyclops": "Cyclops",
+        "Cave Troll": "Cave Troll",
+        "Toad": "Toad",
+        "Frightener": "Frightener",
+        "Unseen Elder": "Unseen Elder",
+        "Ice Giant": "Ice Giant",
+        "Gaunter O'Dimm": "Gaunter O'Dimm",
+        "Eredin": "Eredin",
+        "Nithral": "Nithral",
+        "Imlerith": "Imlerith",
+        "Caranthir": "Caranthir",
+        "Koshchey": "Koshchey",
+        "Kayran": "Kayran",
+        "Siren": "Siren",
+        "Mounted Eredin": "Mounted Eredin",
+        "lvl1": "Level I Monster",
+        "lvl2": "Level II Monster",
+        "lvl3": "Level III Monster",
+        "legendaryHunt": [
+            "$t(monsters.Imperial Golem)",
+            "$t(monsters.Cyclops)",
+            "$t(monsters.Cave Troll)",
+            "$t(monsters.Toad)",
+            "$t(monsters.Frightener)",
+            "$t(monsters.Unseen Elder)",
+            "$t(monsters.Ice Giant)",
+            "$t(monsters.Gaunter O'Dimm)"
+        ]
+    },
+    "setupHelper": {
+        "title": "Setup Helper",
+        "error": "Error, number of players is invalid. Must be between 1 and 5.",
+        "collapse": "Collapse All",
+        "expand": "Expand All",
+        "base": {
+            "1": "Set out the playmat or game boards.",
+            "actionCards": "Shuffle the Action Card deck and place it above the Action Card slots. Reveal cards until you have 3 “0-cost” cards, which go in the 3 lowest spaces (face up). Reshuffle any other revealed cards, then reveal 3 more cards for the remaining spaces (face up).",
+            "attrTrophies": [
+                "Draw 1 random Attribute Trophy and place it on the edge of the board, below the Exploration Card slots, face up.",
+                "Draw 1 random Attribute Trophy and place it on the edge of the board, below the Exploration Card slots, face up.",
+                "Draw 4 Attribute Trophies, one for each attribute, and place them on the edge of the board, below the Exploration Card slots, face up.",
+                "Draw 4 Attribute Trophies, one for each attribute, and place them on the edge of the board, below the Exploration Card slots, face up.",
+                "Place all 8 Attribute Trophies on the edge of the board, below the Exploration Card slots, face up.",
+                "Place all 8 Attribute Trophies on the edge of the board, below the Exploration Card slots, face up."
+            ],
+            "potions": "Shuffle the Potion deck and place it on the edge of the board, below the Action Cards.",
+            "decks": "Shuffle the City Exploration deck and Wilds Exploration deck. Do not shuffle the Event deck! Place each in the appropriate slot on the game board.",
+            "tokens": "Place Gold Tokens, Poker Dice, and Closed Tavern token or mini near the game board.",
+            "locationTokens": "Sort Location Tokens into 3 piles by terrain type. Shuffle each pile and place them (face down) near the game board. Draw 1 token from each pile and place them (face up) on their slots on the game board (to the right of the Monster slots).",
+            "monsterSetup": {
+                "0": "Sort Monster Cards and Monster Tokens by level (I, II, and III). Place the cards near the game board (face up). Shuffle the tokens and place them near the game board (face down).",
+                "1": "Move $t(common.token, { 'context': 'level1', 'count': {{count}}}) into a separate “additional monsters” stack. See p. 26 of core rules for how these are used.",
+                "2": [
+                    "Draw 3 Monster Tokens: One of each level.",
+                    "Draw 3 Monster Tokens: One of each level.",
+                    "Draw 3 Monster Tokens: 2 × Level I and 1 × Level II.",
+                    "Draw 3 Monster Tokens: 3 × Level I.",
+                    "Draw 3 Monster Tokens: 3 × Level I.",
+                    "Draw 3 Monster Tokens: 3 × Level I."
+                ],
+                "3": "Place the three Monster Tokens (randomly) in locations on the map matching the three face-up Location Tokens.",
+                "4": "Turn the three Monster Tokens face up and place their corresponding Monster Cards in the slots on the game board matching the corresponding Location Tokens. Replace the tokens with miniatures if you have them.",
+                "5": "Set up Monsters:"
+            },
+            "monsterFightDeck": "Shuffle the Monster Fight deck and place it (face down) near the game board.",
+            "startingPlayer": "Determine the starting player randomly, or it is whoever most recently read a Witcher book. Players choose Player Boards via any method they wish; see p. 7 of core rules for a fair drafting method.",
+            "playerSetup": {
+                "base": "Take a Help Card, player board, and matching miniature (with colored ring), cubes, Shield marker, scoring token, and starting deck of 10 cards. (Starting cards have a School icon in the top right corner.)",
+                "baseMages": "Take a Help Card, player board, and matching miniature (with colored ring), cubes, Shield or Energy marker, scoring token, and starting deck of 10 cards. (Starting cards have a School icon in the top right corner.)",
+                "baseMonsterTrail": "Take a Help Card, player board, and matching miniature (with colored ring), cubes, Shield marker, scoring token, and starting deck of 11 cards. (Starting cards have a School icon in the top right corner.)",
+                "baseMagesMonsterTrail": "Take a Help Card, player board, and matching miniature (with colored ring), cubes, Shield or Energy marker, scoring token, and starting deck of 11 cards. (Starting cards have a School icon in the top right corner.)",
+                "wildHunt": "Take a Wild Hunt Help Card, player board, and matching miniature (with colored ring), cubes, Shield marker, scoring token, and starting deck of 10 cards. (Starting cards have a School icon in the top right corner.)",
+                "wildHuntMages": "Take a Wild Hunt Help Card, player board, and matching miniature (with colored ring), cubes, Shield or Energy marker, scoring token, and starting deck of 10 cards. (Starting cards have a School icon in the top right corner.)",
+                "wildHuntMonsterTrail": "Take a Wild Hunt Help Card, player board, and matching miniature (with colored ring), cubes, Shield marker, scoring token, and starting deck of 11 cards. (Starting cards have a School icon in the top right corner.)",
+                "wildHuntMagesMonsterTrail": "Take a Wild Hunt Help Card, player board, and matching miniature (with colored ring), cubes, Shield or Energy marker, scoring token, and starting deck of 11 cards. (Starting cards have a School icon in the top right corner.)",
+                "trophyCards": "Take $t(common.card, {'count': {{count}}, 'context': '{{context}}'}) (equal to the other players).",
+                "ifMage": "If a mage, place their School and Specialty tokens on the map, covering those of an unused Witcher School.",
+                "markers": "Place the 5 cubes and Shield marker on the “level 1” spots of each player board track.",
+                "markersMages": "Place the 5 cubes and Shield or Energy marker on the “level 1” spots of each player board track.",
+                "raiseAttr": "Choose one Attribute to raise to level 2.",
+                "token": "Place the scoring token on the lowest spot of the Trophy Track.",
+                "cards": "Shuffle their starting cards and set the deck to the left of their board.",
+                "miniature": "Place their miniature on their School location on the map.",
+                "drawBaseHeader": "Draw the following cards and gold based on player position: ",
+                "drawWildHunt": "Draw 5 cards and take 3 Gold.",
+                "title": "Each player must:",
+                "drawBaseResources": [
+                    [
+                        "placeholder for 0 players"
+                    ],
+                    [
+                        "$t(common.player1): $t(common.card, {'count': 5}), $t(common.gold, {'count': 3})"
+                    ],
+                    [
+                        "$t(common.player1): $t(common.card, {'count': 3}), $t(common.gold, {'count': 2})",
+                        "$t(common.player2): $t(common.card, {'count': 5}), $t(common.gold, {'count': 4})"
+                    ],
+                    [
+                        "$t(common.player1): $t(common.card, {'count': 3}), $t(common.gold, {'count': 2})",
+                        "$t(common.player2): $t(common.card, {'count': 4}), $t(common.gold, {'count': 4})",
+                        "$t(common.player3): $t(common.card, {'count': 5}), $t(common.gold, {'count': 6})"
+                    ],
+                    [
+                        "$t(common.player1): $t(common.card, {'count': 2}), $t(common.gold, {'count': 4})",
+                        "$t(common.player2): $t(common.card, {'count': 3}), $t(common.gold, {'count': 5})",
+                        "$t(common.player3): $t(common.card, {'count': 4}), $t(common.gold, {'count': 6})",
+                        "$t(common.player4): $t(common.card, {'count': 5}), $t(common.gold, {'count': 7})"
+                    ],
+                    [
+                        "$t(common.player1): $t(common.card, {'count': 2}), $t(common.gold, {'count': 5})",
+                        "$t(common.player2): $t(common.card, {'count': 3}), $t(common.gold, {'count': 5})",
+                        "$t(common.player3): $t(common.card, {'count': 4}), $t(common.gold, {'count': 7})",
+                        "$t(common.player4): $t(common.card, {'count': 4}), $t(common.gold, {'count': 7})",
+                        "$t(common.player5): $t(common.card, {'count': 5}), $t(common.gold, {'count': 7})"
+                    ]
+                ]
+            }
+        },
+        "legendaryHunt": {
+            "help": "Put the large Legendary Hunt help near the board. Use Side B for a longer game.",
+            "choose": "Choose a Legendary Monster. Place its large card and the Special Fight cards (shuffled) near the game board. Place its miniature on the location shown on its card. Shuffle the Destruction Tokens and keep them (face-down) near the board.",
+            "movementDeck": "The last player in turn order takes the Legendary Monster Movement deck (shuffled, face down)."
+        },
+        "wildHunt": {
+            "difficultyTitle": "Choose the game difficulty on the table below. This determines starting monsters and shields later.",
+            "difficultyValues": [
+                [
+                    "placeholder for 0 players"
+                ],
+                [
+                    "$t(monsters.lvl1)\n$t(common.token, { 'context': 'shield', 'count': 5 })",
+                    "$t(monsters.lvl1)\n$t(common.token, { 'context': 'shield', 'count': 7 })",
+                    "$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 9 })",
+                    "$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 11 })"
+                ],
+                [
+                    "$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 28 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 31 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 34 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 37 })"
+                ],
+                [
+                    "$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 54 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl2)\n$t(common.token, { 'context': 'shield', 'count': 58 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 62 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 66 })"
+                ],
+                [
+                    "2 × $t(monsters.lvl1)\n$t(common.token, { 'context': 'shield', 'count': 77 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 82 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 87 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 92 })"
+                ],
+                [
+                    "2 × $t(monsters.lvl1)\n$t(common.token, { 'context': 'shield', 'count': 97 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 106 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 113 })",
+                    "$t(monsters.lvl1)\n$t(monsters.lvl3)\n$t(common.token, { 'context': 'shield', 'count': 120 })"
+                ]
+            ],
+            "easy": "Just the Story!",
+            "medium": "Story and Sword!",
+            "hard": "Blood and Broken Bones!",
+            "veryHard": "Death March!",
+            "manage": "Choose a player to manage the Round Tracking board. Hand them the board that matches the number of players. Place the Tracking Token on the \"1\" spot in the top-left corner.",
+            "createExplorationDeck": "Create the Wild Hunt Exploration deck by placing 3 random, face-down \"Stage II\" cards and then placing {{num}} random, face-down \"Stage I\" cards atop them.",
+            "decks": "Without shuffling, place the Wild Hunt Exploration and Wild Hunt Event decks on their slots on the game board. (Standard City and Wilds Exploration decks are not used in Wild Hunt).",
+            "tokens": "Place Gold Tokens, Blue Quest Tokens, Poker Dice, and Closed Tavern token or mini near the game board.",
+            "monsterSetup": [
+                "Draw a Monster Token of level based on the game difficulty. Draw a Forest Location Token. Place the monster token or miniature on the map there and place its Monster Card and the Location Token in the matching space on the game board.",
+                "If the game difficulty indicates a second monster, repeat the above step but with a Water location."
+            ],
+            "monsterFightDeck": "Shuffle the Monster Fight deck and place it (face down) near the game board. Place the Charge/Bite token near the deck.",
+            "enemies": [
+                "Choose a member of the Wild Hunt to face this game. Place its card (Side A up) and its 4 Special Attack cards near the board.",
+                "Place Shield Tokens on the Wild Hunt member based on the difficulty.",
+                "Draw a Mountain Location Token, place the Wild Hunt miniature there, and shuffle that token back in.",
+                "Place the 6 Hound tokens or miniatures and the Hound card matching the player count nearby."
+            ],
+            "movementPool": "Create a Wild Hunt Movement pool by combining every player's scoring token and the Closed Tavern token. Shuffle these face down."
+        },
+        "skellige": {
+            "playmat": [
+                "If using the playmat:",
+                "Ignore tokens, Harbor tokens are printed on the map",
+                "Place ship miniatures at the following randomized locations:"
+            ],
+            "board": [
+                "If using the board:",
+                "Shuffle the Harbor tokens, anchor side up",
+                "Place them on the coastal locations (1, 5, 6, 9, 12, 13) and flip them over",
+                "Place a ship miniature on the three locations with a ship symbol",
+                "Flip them back to the anchor side, as a reminder"
+            ],
+            "decks": "Shuffle the Skellige Exploration deck. Do not shuffle the Skellige Event deck! Place both in their slots above the islands on the game board.",
+            "dagon": "Place the Dagon miniature on the starting space corresponding to player count. Shuffle the Dagon Bonus cards and place them, Dagon monster card (Special Ability face-up), and Dagon Trail tokens near its track.",
+            "dagonMT": "Place the Dagon miniature on the starting space corresponding to player count. Shuffle the Dagon Bonus cards and place them, Dagon monster card (4 Special Attacks face-up), and Dagon Trail tokens near its track.",
+            "siren": "Place the Siren miniature on the Dagon location, with its Monster Card nearby."
+        },
+        "magesExp": {
+            "actionCards": "Repeat the above step for the Mage Action Cards. (Or replace that step if everyone is playing a mage.)"
+        },
+        "monsterTrail": {
+            "mutagen": "Shuffle the Mutagen Deck and place it below the Attribute Trophy deck.",
+            "bomb": "Shuffle the Bomb deck and place it below the Potion deck.",
+            "lgCards": "Place the corresponding large Monster Cards near the board.",
+            "spFightCards": "Remove 8 Monster Fight cards from the deck. Put 4 back in the box and set 4 aside for later (when a Level III monster appears). Add the Special Attack cards to the Monster Fight deck.",
+            "weaknessTokens": "Draw 3 Location Tokens (1 of each terrain). If a Witcher is in that location, draw again. Place a random, face-down Monster Weakness token matching that terrain type at each location. Shuffle these location tokens back into their stacks."
+        },
+        "adventurePack": {
+            "tokens": "Place Gold Tokens, Green Quest Tokens, Poker Dice, and Closed Tavern token or mini near the game board.",
+            "lostMount": "The last player draws two Location Tokens (of any 1 type of terrain), chooses one to put the Lost Mount miniature at, and shuffles the tokens back in."
+        }
+    },
+    "lostMount": {
+        "title": "Lost Mount Locations"
+    },
+    "witcherPicker": {
+        "title": "Witcher Picker",
+        "numPlayersLabel": "Number of Players",
+        "playerNameLabel": "Player {{player}} name",
+        "playerNamePlaceholder": "Player {{player}}",
+        "rollButton": "Draw Schools",
+        "resultsTitle": "Results",
+        "startsFirst": "Starts First",
+        "resetButton": "Roll Again",
+        "fullResetButton": "Reset All",
+        "ciri": "Ciri",
+        "ciriLabel": "Include Ciri",
+        "errorEmptyName": "Player {{player}} name cannot be empty.",
+        "schools": [
+            "Wolf School",
+            "Bear School",
+            "Cat School",
+            "Viper School",
+            "Griffin School",
+            "Manticore School"
+        ]
+    },
+    "monsterFight": {
+        "title": "Monster Fight",
+        "level1Label": "Level I",
+        "level2Label": "Level II",
+        "level3Label": "Level III",
+        "selectPlaceholder": "-- Select monster --",
+        "monsterTrailLabel": "Monster Trail expansion",
+        "noteLabel": "Note",
+        "hpLabel": "Hit Points",
+        "weaknessTokensCheckbox": "Witcher has weakness tokens",
+        "weaknessTokensTitle": "Select weakness tokens (max 6)",
+        "startFightBtn": "Start Fight",
+        "resetBtn": "Reset",
+        "fightHpLabel": "Hit Points",
+        "endFightBtn": "End Fight",
+        "weaknessTokensLabel": "Weakness Tokens",
+        "deckLabel": "Monster Deck",
+        "deckEmptyLabel": "Deck exhausted",
+        "currentCardLabel": "Last Card",
+        "addCardBtn": "Add Card",
+        "peekDeckBtn": "Scout Deck",
+        "peekDeckTitle": "Scout Deck",
+        "peekCountLabel": "How many top cards to reveal?",
+        "peekConfirmBtn": "Reveal",
+        "peekReturnBtn": "Return to Fight"
+    },
+    "opponents": {
+        "title": "Wild Hunt",
+        "monsterAttackTitle": "Monster Attack",
+        "monsterBite": "Monster Bites!",
+        "monsterCharge": "Monster Charges!",
+        "wildHuntTitle": "Wild Hunt Movement",
+        "wildHuntDesc": "Special rules from the Wild Hunt expansion.",
+        "wildHuntBtn": "Draw Player",
+        "playerChooses": "Player Chooses",
+        "numPlayersLabel": "Number of players",
+        "playerNameLabel": "Player {{player}} name",
+        "playerNamePlaceholder": "Player {{player}}",
+        "savePlayersBtn": "Save Players",
+        "resetPlayersBtn": "Change Players",
+        "errorEmptyName": "Player {{player}} name cannot be empty.",
+        "currentPlayers": "Players"
+    }
+}

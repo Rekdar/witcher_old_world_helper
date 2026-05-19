@@ -1,0 +1,54 @@
+[
+    {
+        "name_pl": "Caranthir",
+        "level": 3,
+        "base_heal": 20,
+        "front_name": "caranthir_front",
+        "back_name": "caranthir_back",
+        "abilities": [
+            "caranthir_ability_1",
+            "caranthir_ability_2",
+            "caranthir_ability_3",
+            "caranthir_ability_4"
+        ]
+    },
+    {
+        "name_pl": "Eredin",
+        "level": 3,
+        "base_heal": 20,
+        "front_name": "eredin_front",
+        "back_name": "eredin_back",
+        "abilities": [
+            "eredin_ability_1",
+            "eredin_ability_2",
+            "eredin_ability_3",
+            "eredin_ability_4"
+        ]
+    },
+    {
+        "name_pl": "Nithral",
+        "level": 3,
+        "base_heal": 20,
+        "front_name": "nithral_front",
+        "back_name": "nithral_back",
+        "abilities": [
+            "nithral_ability_1",
+            "nithral_ability_2",
+            "nithral_ability_3",
+            "nithral_ability_4"
+        ]
+    },
+    {
+        "name_pl": "Imlerith",
+        "level": 3,
+        "base_heal": 20,
+        "front_name": "imlerith_front",
+        "back_name": "imlerith_back",
+        "abilities": [
+            "imlerith_ability_1",
+            "imlerith_ability_2",
+            "imlerith_ability_3",
+            "imlerith_ability_4"
+        ]
+    }
+]

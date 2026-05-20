@@ -111,6 +111,7 @@
         "clearSelection": "Usuń zaznaczenie",
         "playerNameLabel": "Imię gracza",
         "noteLabel": "Notatka",
+        "markerLabel": "Znacznik na mapie",
         "save": "Zapisz",
         "cancel": "Anuluj",
         "done": "Wykonane",
@@ -438,6 +439,7 @@
         "fullResetButton": "Resetuj wszystko",
         "ciri": "Ciri",
         "ciriLabel": "Uwzględnij Ciri",
+        "magowiLabel": "Uwzględnij Magów",
         "errorEmptyName": "Imię gracza {{player}} nie może być puste.",
         "schools": [
             "Szkoła Wilka",

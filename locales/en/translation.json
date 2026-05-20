@@ -99,6 +99,7 @@
         "clearSelection": "Clear selection",
         "playerNameLabel": "Player name",
         "noteLabel": "Note",
+        "markerLabel": "Map marker",
         "save": "Save",
         "cancel": "Cancel",
         "done": "Done",
@@ -429,6 +430,7 @@
         "fullResetButton": "Reset All",
         "ciri": "Ciri",
         "ciriLabel": "Include Ciri",
+        "magowiLabel": "Include Mages",
         "errorEmptyName": "Player {{player}} name cannot be empty.",
         "schools": [
             "Wolf School",
